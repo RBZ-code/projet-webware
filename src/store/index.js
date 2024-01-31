@@ -241,11 +241,28 @@ export default createStore({
             localStorage.setItem(`user_${user.id}`, JSON.stringify(user));
             localStorage.setItem("lastUserId", state.lastUser);
         },
+        deleteProduct(state, productId) {
+            // Supprimer le produit du tableau produits
+            state.produits = state.produits.filter((prod) => prod.id !== productId);
+    
+            // Mettre à jour le localStorage "copiedProduits"
+            localStorage.setItem("copiedProduits", JSON.stringify(state.produits));
+        },
         setUsers(state, user) {
             state.users = user;
         },
+        setProducts(state, products) {
+             state.produits = products;
+        },
+        copyProduitsToLocalStorage(state) {
+            localStorage.setItem("copiedProduits", JSON.stringify(state.produits));
+        },
     },
     actions: {
+        deleteProduct(context, productId) {
+            context.commit("deleteProduct", productId);
+        },
+
         loadUsers(context) {
             let users = Object.keys(localStorage)
                 .filter((key) => key.startsWith("user_"))
@@ -254,6 +271,8 @@ export default createStore({
         
             context.commit("setUsers", users);
         },
+        copyProduitsToLocalStorage(context) {
+            context.commit("copyProduitsToLocalStorage");
+        },
     },
-    
 });
