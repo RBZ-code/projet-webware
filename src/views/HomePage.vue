@@ -5,6 +5,7 @@
             <h2>{{ prod.titre }}</h2>
             <img :src="prod.image" :alt="prod.titre" />
             <h1>H1 de chouanibe</h1>
+            <h2>Ajout titre</h2>
         </div>
     </div>
 </template>
