@@ -1,13 +1,23 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-   
-  </div>
+    <div class="home">
+        <img alt="Vue logo" src="../assets/logo.png" />
+        <div v-for="(prod, index) in products" :key="index">
+            <h2>{{ prod.titre }}</h2>
+            <img :src="prod.image" :alt="prod.titre" />
+        </div>
+    </div>
 </template>
 
 <script>
 
 export default {
-  
-}
+    components: {
+   
+    },
+    computed: {
+        products() {
+            return this.$store.state.produits;
+        },
+    },
+};
 </script>
