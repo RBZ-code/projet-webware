@@ -35,7 +35,6 @@ export default {
         this.$emit('addVisitor', this.localVisitor);
         this.addToLocalStorage(this.localVisitor);
         this.resetForm();
-        console.log(this.localVisitor)
       },
 
       resetForm() {

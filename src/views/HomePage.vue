@@ -1,9 +1,3 @@
-
-Vous pouvez utiliser mapState pour simplifier la récupération de l'état Vuex dans votre composant HomePage. Cela peut rendre votre code plus concis et plus lisible. Voici comment vous pouvez le faire :
-
-HomePage.vue avec mapState
-html
-Copy code
 <template>
   <div class="banniere">
     <img alt="Vue logo" src="../assets/banniere.jpg" />
