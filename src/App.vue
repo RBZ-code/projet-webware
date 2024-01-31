@@ -2,8 +2,9 @@
   <nav>
     <router-link to="/">Home</router-link> |
     <router-link to="/add">Inscription</router-link> |
-    <router-link to="/connexion">Connexion</router-link> 
-
+    <router-link to="/catalogue">Catalogue</router-link> |
+    <router-link to="/connexion">Connexion</router-link> |
+    <router-link to="/back-products">Back-office</router-link>
   </nav>
   <router-view/>
 </template>
@@ -17,7 +18,7 @@ export default {
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: system-ui, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

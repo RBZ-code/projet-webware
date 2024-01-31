@@ -20,8 +20,7 @@ export default {
         btnClass() {
             return {
                 "green-btn": this.backgroundColor === "green",
-                "red-btn": this.backgroundColor === 
-                "red",
+                "red-btn": this.backgroundColor === "red",
                 "blue-btn": this.backgroundColor === "blue",
             };
         },
@@ -31,6 +30,7 @@ export default {
 
 <style>
 .green-btn {
+    padding: 5px 15px;
     background-color: green;
     color: white;
 }

@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomePage.vue";
 import AddUser from "@/views/RegisterPage.vue";
 import PageConnexion from "@/views/LoginPage.vue";
+import BackProducts from "@/views/BackProducts.vue"
+import Catalogue from "@/views/CataloguePage.vue"
 
 const routes = [
     {
@@ -15,9 +17,19 @@ const routes = [
         component: HomeView,
     },
     {
+        path: "/catalogue",
+        name: "catalogue",
+        component: Catalogue,
+    },
+    {
         path: "/connexion",
         name: "connexion",
         component: PageConnexion,
+    },
+    {
+        path: "/back-products",
+        name: "back-products",
+        component: BackProducts,
     },
 ];
 
