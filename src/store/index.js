@@ -7,6 +7,7 @@ function getLastUser() {
 
 export default createStore({
     state: {
+        contact: [],
         users: [],
         lastUser: getLastUser(),
         categories: [
