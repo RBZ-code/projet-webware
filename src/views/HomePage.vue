@@ -1,6 +1,10 @@
 <template>
     <div class="home">
-
+        <img alt="Vue logo" src="../assets/logo.png" />
+        <div v-for="(prod, index) in products" :key="index">
+            <h2>{{ prod.titre }}</h2>
+            <img :src="prod.image" :alt="prod.titre" />
+        </div>
     </div>
 </template>
 
