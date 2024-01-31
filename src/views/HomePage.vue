@@ -4,6 +4,7 @@
         <div v-for="(prod, index) in products" :key="index">
             <h2>{{ prod.titre }}</h2>
             <img :src="prod.image" :alt="prod.titre" />
+            <h1>Commit</h1>
         </div>
     </div>
 </template>
