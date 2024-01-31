@@ -32,30 +32,5 @@ export default {
 </script>
 
 <style>
-.listing-products {
-    width: 90%;
-    margin: 0 auto;
-}
-.listing-box {
-    display: flex;
-    gap: 1rem;
-    color: #000;
-    background-color: #e7e7e7;
-    margin: 1rem 0;
-    padding: 1rem;
-    border-radius: 15px;
-}
 
-.listing-box figure {
-    width: 100px;
-    height: 100px;
-    border-radius: 15px;
-    overflow: hidden;
-}
-
-.listing-box img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
 </style>
