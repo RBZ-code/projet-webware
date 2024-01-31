@@ -9,7 +9,7 @@
 export default {
     props: {
         label: String,
-        backgroundColor: String,
+        modifier: String,
     },
     methods: {
         GeneralEventBtn() {
@@ -19,6 +19,7 @@ export default {
     computed: {
         btnClass() {
             return {
+                "edit-btn": this.modifier === "edit",
                 "green-btn": this.backgroundColor === "green",
                 "red-btn": this.backgroundColor === "red",
                 "blue-btn": this.backgroundColor === "blue",
@@ -29,8 +30,15 @@ export default {
 </script>
 
 <style>
-.green-btn {
+.edit-btn {
     padding: 5px 15px;
+    border-radius: 9999px;
+    background-color: var(--clr-blue);
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+.green-btn {
     background-color: green;
     color: white;
 }

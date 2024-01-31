@@ -1,10 +1,11 @@
 <template>
-    <nav>
-        <router-link to="/back-products">Listing produits</router-link> |
-        <!-- <router-link to="/add">Inscription</router-link> |
-    <router-link to="/connexion">Connexion</router-link>  -->
+    <nav class="back-nav">
+        <router-link to="/back-products">Produits</router-link>
+        <router-link to="/back-categories">Catégories</router-link>
+        <router-link to="/back-users">Utilisateurs</router-link>
+        <router-link to="/back-orders">Commandes</router-link>
     </nav>
-    <div class="listing-products">
+    <div class="listing-template">
         <div class="listing-box" v-for="(prod, index) in products" :key="index">
             <figure>
                 <img :src="prod.image" :alt="prod.titre" />
@@ -32,15 +33,38 @@ export default {
 </script>
 
 <style>
-.listing-products {
+.back-nav {
+    background-color: var(--clr-dark);
     width: 90%;
     margin: 0 auto;
+    border-radius: 5px;
+    padding: 15px;
+    color: #fff;
+    text-align: center;
 }
+
+.back-nav a {
+    color: var(--clr-white);
+    text-decoration: none;
+    transition: 200ms ease-in-out;
+    margin: 0 15px
+}
+
+.back-nav a.router-link-exact-active {
+    font-weight: bold;
+    color: var(--clr-blue);
+}
+
+.listing-template {
+    width: 90%;
+    margin: 25px auto;
+}
+
 .listing-box {
     display: flex;
     gap: 1rem;
     color: #000;
-    background-color: #e7e7e7;
+    background-color: var(--clr-light-grey);
     margin: 1rem 0;
     padding: 1rem;
     border-radius: 15px;

@@ -10,18 +10,14 @@
             <thead>
                 <tr>
                     <th>Id</th>
-                    <th>Raison sociale</th>
-                    <th>SIRET</th>
-                    <th>Role</th>
+                    <th>Nom de catégorie</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(user, index) in users" :key="index">
-                    <td>{{ user.id }}</td>
-                    <td>{{ user.raisonSociale }}</td>
-                    <td>{{ user.siret }}</td>
-                    <td>{{ user.role }}</td>
+                <tr v-for="(cat, index) in categories" :key="index">
+                    <td>{{ cat.id }}</td>
+                    <td>{{ cat.name }}</td>
                     <td>
                         <MyButton label="Modifier" modifier="edit" @GeneralEventBtn="login" />
                     </td>
@@ -39,13 +35,27 @@ export default {
         MyButton
     },
     computed: {
-        users() {
-            return this.$store.state.users;
+        categories() {
+            return this.$store.state.categories;
         },
     },
 };
 </script>
 
 <style>
+table {
+    text-align: left;
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 1rem;
+}
 
+table th,
+table td {
+    padding: .5rem 0;
+}
+
+table tbody tr:nth-child(odd) {
+    background-color: var(--clr-light-grey);
+}
 </style>
