@@ -19,7 +19,7 @@
                     <td>{{ cat.id }}</td>
                     <td>{{ cat.name }}</td>
                     <td>
-                        <MyButton label="Modifier" modifier="edit" @GeneralEventBtn="login" />
+                        <MyButton label="Modifier" modifier="edit" @GeneralEventBtn="editData" />
                     </td>
                 </tr>
             </tbody>
@@ -38,6 +38,9 @@ export default {
         categories() {
             return this.$store.state.categories;
         },
+        editData() {
+            return console.log("edit")
+        }
     },
 };
 </script>

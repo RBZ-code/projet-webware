@@ -10,6 +10,7 @@ export default {
     props: {
         label: String,
         modifier: String,
+        backgroundColor: String
     },
     methods: {
         GeneralEventBtn() {
