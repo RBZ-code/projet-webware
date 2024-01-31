@@ -14,20 +14,32 @@
                 <h2>{{ prod.titre }}</h2>
                 <p>{{ prod.description }}</p>
                 <p>{{ prod.prix + "€" + " - MOQ " + prod.moq }}</p>
+                <MyButton label="supprimer" modifier="edit" @GeneralEventBtn="deleteProduct(prod.id)" />
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import MyButton from "@/components/FrontOffice/MyButton.vue";
+
+
 export default {
     components: {
-
+        MyButton
     },
     computed: {
         products() {
             return this.$store.state.produits;
         },
+    },
+    methods: {
+        deleteProduct(productId) {
+            this.$store.dispatch("deleteProduct", productId);
+        },
+    },
+    created() {
+        this.$store.dispatch("copyProduitsToLocalStorage");
     },
 };
 </script>
@@ -47,7 +59,7 @@ export default {
     color: var(--clr-white);
     text-decoration: none;
     transition: 200ms ease-in-out;
-    margin: 0 15px
+    margin: 0 15px;
 }
 
 .back-nav a.router-link-exact-active {
