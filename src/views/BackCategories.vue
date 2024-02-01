@@ -1,10 +1,5 @@
 <template>
-    <nav class="back-nav">
-        <router-link to="/back-products">Produits</router-link>
-        <router-link to="/back-categories">Catégories</router-link>
-        <router-link to="/back-users">Utilisateurs</router-link>
-        <router-link to="/back-orders">Commandes</router-link>
-    </nav>
+    <BackNav />
     <div class="listing-template">
         <table class="listing-tab">
             <thead>
@@ -28,10 +23,12 @@
 </template>
 
 <script>
+import BackNav from "@/components/FrontOffice/BackNav.vue";
 import MyButton from "@/components/FrontOffice/MyButton.vue";
 
 export default {
     components: {
+        BackNav,
         MyButton
     },
     computed: {
@@ -47,7 +44,7 @@ export default {
 
 <style>
 table {
-    text-align: left;
+    text-align: center;
     width: 100%;
     border-collapse: collapse;
     border-spacing: 1rem;
@@ -57,6 +54,11 @@ table th,
 table td {
     padding: .5rem 0;
 }
+
+/* table th:first-child,
+table td:first-child {
+    padding-left: 0.5rem;
+} */
 
 table tbody tr:nth-child(odd) {
     background-color: var(--clr-light-grey);

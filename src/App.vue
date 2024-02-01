@@ -32,6 +32,7 @@ export default {
 
 :root {
   --clr-blue: #44B9DA;
+  --clr-light-blue: #C5F4FF;
   --clr-light-grey: #e7e7e7;
   --clr-dark: #252525;
   --clr-white: #fff;

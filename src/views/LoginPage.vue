@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent>
+    <form class="" @submit.prevent>
         <label for="siret">SIRET:</label>
         <input type="text" v-model="siret" class="input-field" />
 
