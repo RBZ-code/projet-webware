@@ -8,7 +8,7 @@
       label="En savoir plus"
       backgroundColor="black"
     />
-
+  </div>
     <div>
         <MyButton
             label="LogOut"
@@ -19,10 +19,6 @@
 
     </div>
    
-    <!-- <div v-for="(prod, index) in products" :key="index">
-        <h2>{{ prod.titre }}</h2>
-        <img :src="prod.image" :alt="prod.titre" />
-    </div> -->
 
     <ContactForm @addVisitor="handleAddVisitor" />
     
@@ -31,7 +27,6 @@
 <script>
 import MyButton from "@/components/FrontOffice/MyButton.vue";
 
-import MyButton from "@/components/FrontOffice/MyButton.vue";
 import ContactForm from "@/components/FrontOffice/ContactForm.vue";
 import { mapState } from 'vuex';
 
@@ -70,14 +65,7 @@ export default {
         ...mapState(['visitorData'])
     }
 
-    methods: {
-    logout() {
-        this.$store.commit("setUserConnected", null);
-        localStorage.removeItem("connectedUserId");
-        alert("Vous avez été déconnecté !");
-    },
-    // ... autres méthodes ...
-},
+
 
 };
 </script>
