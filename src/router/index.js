@@ -2,11 +2,8 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomePage.vue";
 import AddUser from "@/views/RegisterPage.vue";
 import PageConnexion from "@/views/LoginPage.vue";
-import Catalogue from "@/views/CataloguePage.vue"
 import BackProducts from "@/views/BackProducts.vue"
-import BackCategories from "@/views/BackCategories.vue"
-import BackUsers from "@/views/BackUsers.vue"
-import BackOrders from "@/views/BackOrders.vue"
+import Catalogue from "@/views/CataloguePage.vue"
 
 const routes = [
     {
@@ -33,21 +30,6 @@ const routes = [
         path: "/back-products",
         name: "back-products",
         component: BackProducts,
-    },
-    {
-        path: "/back-categories",
-        name: "back-categories",
-        component: BackCategories,
-    },
-    {
-        path: "/back-users",
-        name: "back-users",
-        component: BackUsers,
-    },
-    {
-        path: "/back-orders",
-        name: "back-orders",
-        component: BackOrders,
     },
 ];
 
