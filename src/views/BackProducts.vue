@@ -179,6 +179,10 @@ export default {
     text-align: center;
 }
 
+.modal-content form {
+    width: 100%;
+}
+
 .close-button {
     position: absolute;
     top: 10px;
@@ -200,14 +204,14 @@ export default {
 .modal-content textarea,
 .modal-content select {
     display: block;
-    width: 250px;
+    width: 100%;
     font-size: 1rem;
     padding: 10px 0;
     outline: none;
     border: none;
     background-color: var(--clr-light-grey);
     text-align: center;
-
+    border-radius: 5px;
 }
 
 textarea {

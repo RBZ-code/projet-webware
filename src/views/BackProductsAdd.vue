@@ -96,6 +96,7 @@ export default {
     padding: 10px 0;
     outline: none;
     border: none;
+    border-radius: 5px;
 }
 
 .product-creation-container button {
