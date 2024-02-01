@@ -42,6 +42,7 @@ export default {
             this.$store.commit("setQuery", this.query);
         },
     },
+    
 };
 </script>
 

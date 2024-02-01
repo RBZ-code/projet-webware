@@ -9,7 +9,8 @@
 export default {
     props: {
         label: String,
-        backgroundColor: String,
+        modifier: String,
+        backgroundColor: String
     },
     methods: {
         GeneralEventBtn() {
@@ -19,9 +20,13 @@ export default {
     computed: {
         btnClass() {
             return {
+                "edit-btn": this.modifier === "edit",
                 "green-btn": this.backgroundColor === "green",
                 "red-btn": this.backgroundColor === "red",
                 "blue-btn": this.backgroundColor === "blue",
+                "black-btn": this.backgroundColor === "black",
+                "connexion-btn" : this.backgroundColor === "green",
+
             };
         },
     },
@@ -29,8 +34,24 @@ export default {
 </script>
 
 <style>
-.green-btn {
+.edit-btn {
     padding: 5px 15px;
+    border-radius: 9999px;
+    background-color: var(--clr-blue);
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.connexion-btn {
+    padding: 10px 20px;
+    border-radius: 9999px;
+    color: white;
+    border: none;
+    cursor: pointer;
+
+}
+.green-btn {
     background-color: green;
     color: white;
 }
@@ -39,7 +60,22 @@ export default {
     color: white;
 }
 .blue-btn {
-    background-color: blue;
+    padding: 10px 20px;
+    border-radius: 9999px;
+    background-color: var(--clr-blue);
     color: white;
+    border: none;
+    cursor: pointer;
 }
+.black-btn{
+    background-color: #000;
+    color: white;
+    padding: 20px;
+    font-size: 20px;
+    border-radius: 15px;
+    width: 300px;
+    border: none;
+    cursor: pointer;
+}
+
 </style>
