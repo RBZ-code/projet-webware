@@ -253,6 +253,13 @@ export default createStore({
             localStorage.setItem(`user_${user.id}`, JSON.stringify(user));
             localStorage.setItem("lastUserId", state.lastUser);
         },
+        addProduct(state, item) {
+            state.produits.push(item);
+            localStorage.setItem(
+                "copiedProduits",
+                JSON.stringify(state.produits)
+            );
+        },
         deleteProduct(state, productId) {
             // Supprimer le produit du tableau produits
             state.produits = state.produits.filter(
