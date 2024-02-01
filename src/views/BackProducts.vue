@@ -1,10 +1,8 @@
 <template>
-    <nav class="back-nav">
-        <router-link to="/back-products">Produits</router-link>
-        <router-link to="/back-categories">Catégories</router-link>
-        <router-link to="/back-users">Utilisateurs</router-link>
-        <router-link to="/back-orders">Commandes</router-link>
-    </nav>
+    <BackNav />
+    <header class="action-bar">
+        <MyButton label="Ajouter un produit" modifier="action" @GeneralEventBtn="goToAddProduct()" />
+    </header>
     <div class="listing-template">
         <div class="listing-box" v-for="(prod, index) in products" :key="index">
             <figure>
@@ -13,19 +11,23 @@
             <div>
                 <h2>{{ prod.titre }}</h2>
                 <p>{{ prod.description }}</p>
-                <p>{{ prod.prix + "€" + " - MOQ " + prod.moq }}</p>
-                <MyButton label="supprimer" modifier="edit" @GeneralEventBtn="deleteProduct(prod.id)" />
+                <p class="box-numbers">{{ prod.prix + "€" + " - MOQ " + prod.moq }}</p>
+                <div class="box-actions">
+                    <MyButton label="Modifier" modifier="edit" @GeneralEventBtn="modifyProduct(prod.id)" />
+                    <MyButton label="Supprimer" modifier="edit" @GeneralEventBtn="deleteProduct(prod.id)" />
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import BackNav from "@/components/FrontOffice/BackNav.vue";
 import MyButton from "@/components/FrontOffice/MyButton.vue";
-
 
 export default {
     components: {
+        BackNav,
         MyButton
     },
     computed: {
@@ -34,34 +36,24 @@ export default {
         },
     },
     methods: {
+        goToAddProduct(){
+            this.$router.push("/back-products-add");
+        },
         deleteProduct(productId) {
-            this.$store.dispatch("deleteProduct", productId);
+            let check = confirm("Êtes-vous sûr de vouloir supprimer ce produit ?");
+            if (check) {
+                this.$store.dispatch("deleteProduct", productId);
+            }
         },
     },
 };
 </script>
 
 <style>
-.back-nav {
-    background-color: var(--clr-dark);
+
+.action-bar {
     width: 90%;
-    margin: 0 auto;
-    border-radius: 5px;
-    padding: 15px;
-    color: #fff;
-    text-align: center;
-}
-
-.back-nav a {
-    color: var(--clr-white);
-    text-decoration: none;
-    transition: 200ms ease-in-out;
-    margin: 0 15px;
-}
-
-.back-nav a.router-link-exact-active {
-    font-weight: bold;
-    color: var(--clr-blue);
+    margin: 25px auto;
 }
 
 .listing-template {
@@ -90,5 +82,17 @@ export default {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.listing-box p {
+    margin: .5rem 0;
+}
+
+.box-numbers {
+    font-style: italic;
+}
+
+.box-actions {
+    display: flex;
 }
 </style>

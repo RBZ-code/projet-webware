@@ -4,6 +4,7 @@ import AddUser from "@/views/RegisterPage.vue";
 import PageConnexion from "@/views/LoginPage.vue";
 import Catalogue from "@/views/CataloguePage.vue"
 import BackProducts from "@/views/BackProducts.vue"
+import BackProductsAdd from "@/views/BackProductsAdd.vue"
 import BackCategories from "@/views/BackCategories.vue"
 import BackUsers from "@/views/BackUsers.vue"
 import BackOrders from "@/views/BackOrders.vue"
@@ -33,6 +34,11 @@ const routes = [
         path: "/back-products",
         name: "back-products",
         component: BackProducts,
+    },
+    {
+        path: "/back-products-add",
+        name: "back-products-add",
+        component: BackProductsAdd,
     },
     {
         path: "/back-categories",

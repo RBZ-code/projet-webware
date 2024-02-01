@@ -1,10 +1,5 @@
 <template>
-    <nav class="back-nav">
-        <router-link to="/back-products">Produits</router-link>
-        <router-link to="/back-categories">Catégories</router-link>
-        <router-link to="/back-users">Utilisateurs</router-link>
-        <router-link to="/back-orders">Commandes</router-link>
-    </nav>
+    <BackNav />
     <div class="listing-template">
         <table class="listing-tab">
             <thead>
@@ -32,16 +27,21 @@
 </template>
 
 <script>
+import BackNav from "@/components/FrontOffice/BackNav.vue";
 import MyButton from "@/components/FrontOffice/MyButton.vue";
 
 export default {
     components: {
+        BackNav,
         MyButton
     },
     computed: {
         users() {
             return this.$store.state.users;
         },
+    },
+    created() {
+        this.$store.dispatch("loadUsers");
     },
 };
 </script>
