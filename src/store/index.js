@@ -248,6 +248,9 @@ export default createStore({
         ],
     },
     mutations: {
+
+        // Utilisateurs
+
         setUserConnected(state, userId) {
             state.currentUser = userId;
         },
@@ -259,6 +262,13 @@ export default createStore({
             localStorage.setItem(`user_${user.id}`, JSON.stringify(user));
             localStorage.setItem("lastUserId", state.lastUser);
         },
+
+        setUsers(state, user) {
+            state.users = user;
+        },
+
+        // Produits
+
         addProduct(state, item) {
             state.produits.push(item);
         },
@@ -283,10 +293,6 @@ export default createStore({
             );
         },
 
-        setUsers(state, user) {
-            state.users = user;
-        },
-
         setQuery(state, query) {
             state.query = query;
         },
@@ -298,6 +304,12 @@ export default createStore({
                 JSON.stringify(state.produits)
             );
         },
+
+        // Catégories
+
+
+        // Commandes
+        
         changeOrderStatus(state, orderId) {
             state.commandes[orderId-1].toBeDelivered = false;
         }

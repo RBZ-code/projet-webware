@@ -2,7 +2,7 @@
     <BackNav />
     <header class="action-bar">
         <h1>Gestion des catégories</h1>
-        <MyButton label="Ajouter un produit" modifier="action" @GeneralEventBtn="addCategory()" />
+        <MyButton label="Ajouter une catégorie" modifier="action" @GeneralEventBtn="addCategory()" />
     </header>
     <div class="listing-template">
         <table class="listing-tab">
