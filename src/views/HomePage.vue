@@ -1,40 +1,26 @@
 <template>
-
-  <div class="banniere">
-    <img alt="Vue logo" src="../assets/banniere.jpg" />
-    <h1 v-text="message"></h1>
-    <MyButton
-        @click="toRegisterPage"
-      label="En savoir plus"
-      backgroundColor="black"
-    />
-  </div>
-    <div>
+    <div class="banniere">
+        <h1 v-text="message"></h1>
         <MyButton
-            label="LogOut"
-            modifier="edit"
-            @click="logout"
-            v-if="$store.state.currentUser != null"
+            @click="toRegisterPage"
+            label="En savoir plus"
+            backgroundColor="black"
         />
-
     </div>
-   
 
     <ContactForm @addVisitor="handleAddVisitor" />
-    
-</template>    
+</template>
 
 <script>
 import MyButton from "@/components/FrontOffice/MyButton.vue";
-
 import ContactForm from "@/components/FrontOffice/ContactForm.vue";
-import { mapState } from 'vuex';
+import { mapState } from "vuex";
 
 export default {
-    data(){
+    data() {
         return {
-            message: 'Bienvenue chez Webwares !',
-            
+            message: "Bienvenue chez Webwares !",
+
             visitorData: {
                 fistName: "",
                 lastName: "",
@@ -45,56 +31,44 @@ export default {
     },
 
     components: {
-
         MyButton,
         ContactForm,
-
     },
 
     methods: {
-        handleAddVisitor(visitor){
-            this.$store.commit ('uptdateVisitorData',{...visitor});
+        handleAddVisitor(visitor) {
+            this.$store.commit("uptdateVisitorData", { ...visitor });
         },
-        toRegisterPage(){
-            this.$router.push('/add');
-        }
+        toRegisterPage() {
+            this.$router.push("/add");
+        },
     },
 
-
-    computed:{
-        ...mapState(['visitorData'])
-    }
-
-
-
+    computed: {
+        ...mapState(["visitorData"]),
+    },
 };
 </script>
 
 <style>
-*, ::after, ::before{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
-img{
-    position: relative;
+
+.banniere{
+    display: flex; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: url("../assets/banniere.jpg");
+    background-size: cover;
     width: 100%;
     height: 700px;
-    background-size: contain;
     opacity: 90%;
 }
-h1{
-    position: absolute;
-    text-align: center;
-    top: 10vw;
-    left: 50%;
-    transform: translate(-50%, -50%);
+
+h1 {
+  
     color: #fff;
     padding: 20px;
     font-size: 40px;
-};
-
-
-
+}
 </style>
