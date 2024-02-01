@@ -22,6 +22,7 @@ export default {
         return {
             siret: "",
             password: "",
+             
         };
     },
     components: { MyButton },

@@ -38,9 +38,6 @@ export default {
             this.$store.dispatch("deleteProduct", productId);
         },
     },
-    created() {
-        this.$store.dispatch("copyProduitsToLocalStorage");
-    },
 };
 </script>
 

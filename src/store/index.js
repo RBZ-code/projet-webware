@@ -16,7 +16,7 @@ export default createStore({
             { id: 4, name: "Tapis" },
             { id: 1, name: "Objets de décorations" },
         ],
-        produits: [
+        produits: localStorage.getItem("copiedProduits") ? JSON.parse(localStorage.getItem("copiedProduits")) : [
             {
                 id: 1,
                 image: require("../assets/deco-1.jpg"),
@@ -238,6 +238,7 @@ export default createStore({
         addUser(state, user) {
             state.lastUser += 1;
             user.id = state.lastUser;
+            user.connected = false;
             localStorage.setItem(`user_${user.id}`, JSON.stringify(user));
             localStorage.setItem("lastUserId", state.lastUser);
         },
@@ -252,9 +253,7 @@ export default createStore({
             state.users = user;
         },
         setProducts(state, products) {
-             state.produits = products;
-        },
-        copyProduitsToLocalStorage(state) {
+            state.produits = products;
             localStorage.setItem("copiedProduits", JSON.stringify(state.produits));
         },
     },
@@ -270,9 +269,6 @@ export default createStore({
     
         
             context.commit("setUsers", users);
-        },
-        copyProduitsToLocalStorage(context) {
-            context.commit("copyProduitsToLocalStorage");
         },
     },
 });
