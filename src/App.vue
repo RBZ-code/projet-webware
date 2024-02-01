@@ -1,9 +1,9 @@
 <template>
   <nav class="main-nav">
     <router-link to="/">Home</router-link>
-    <router-link to="/add">Inscription</router-link>
+    <router-link v-if="$store.state.currentUser === null" to="/add">Inscription</router-link>
     <router-link to="/catalogue">Catalogue</router-link>
-    <router-link to="/connexion">Connexion</router-link>
+    <router-link to="/connexion" v-if="$store.state.currentUser === null">Connexion</router-link>
     <router-link to="/back-products">Back-office</router-link>
   </nav>
   <router-view/>

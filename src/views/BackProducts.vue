@@ -41,9 +41,6 @@ export default {
             }
         },
     },
-    created() {
-        this.$store.dispatch("copyProduitsToLocalStorage");
-    },
 };
 </script>
 
