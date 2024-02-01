@@ -23,7 +23,7 @@
     <!-- Modal -->
     <div v-if="modalIsOpened" v-cloak id="editModal" class="modal">
             <div class="modal-content">
-                <span v-on:click="closeModal()" class="close-button">X</span>
+                <span v-on:click="closeModal" class="close-button">X</span>
                 <h2>Modifier le produit</h2>
                 <form>
                     <label for="editName">Nom du produit :</label>
@@ -81,6 +81,7 @@ export default {
             let check = confirm("Êtes-vous sûr de vouloir supprimer ce produit ?");
             if (check) {
                 this.$store.dispatch("deleteProduct", productId);
+                this.$store.commit("saveProducts");
             }
         },
         closeModal() {

@@ -278,12 +278,6 @@ export default createStore({
             state.produits = state.produits.filter(
                 (prod) => prod.id !== productId
             );
-
-            // Mettre à jour le localStorage "copiedProduits"
-            localStorage.setItem(
-                "copiedProduits",
-                JSON.stringify(state.produits)
-            );
         },
 
         saveProducts(state) {
@@ -307,6 +301,16 @@ export default createStore({
 
         // Catégories
 
+        addCat(state, item) {
+            state.categories.push(item);
+        },
+
+        saveCat(state) {
+            localStorage.setItem(
+                "copiedCategories",
+                JSON.stringify(state.categories)
+            );
+        },
 
         // Commandes
         
