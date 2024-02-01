@@ -131,7 +131,7 @@
 
         <MyButton
             label="Inscription"
-            modifier="edit"
+            backgroundColor ="blue"
             @click="addUser"
             class="btn"
         />
