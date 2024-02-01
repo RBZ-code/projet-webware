@@ -1,5 +1,4 @@
 <template>
-
   <div class="banniere">
     <img alt="Vue logo" src="../assets/banniere.jpg" />
     <h1 v-text="message"></h1>
@@ -8,15 +7,6 @@
       label="En savoir plus"
       backgroundColor="black"
     />
-
-    <div>
-        <MyButton
-            label="LogOut"
-            modifier="edit"
-            @click="logout"
-            v-if="$store.state.currentUser != null"
-        />
-
     </div>
    
     <!-- <div v-for="(prod, index) in products" :key="index">
@@ -29,7 +19,6 @@
 </template>    
 
 <script>
-import MyButton from "@/components/FrontOffice/MyButton.vue";
 
 import MyButton from "@/components/FrontOffice/MyButton.vue";
 import ContactForm from "@/components/FrontOffice/ContactForm.vue";
@@ -50,10 +39,8 @@ export default {
     },
 
     components: {
-
         MyButton,
         ContactForm,
-
     },
 
     methods: {
@@ -65,20 +52,9 @@ export default {
         }
     },
 
-
     computed:{
         ...mapState(['visitorData'])
     }
-
-    methods: {
-    logout() {
-        this.$store.commit("setUserConnected", null);
-        localStorage.removeItem("connectedUserId");
-        alert("Vous avez été déconnecté !");
-    },
-    // ... autres méthodes ...
-},
-
 };
 </script>
 

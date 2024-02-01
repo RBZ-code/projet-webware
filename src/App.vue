@@ -1,9 +1,9 @@
 <template>
-  <nav class="main-nav">
-    <router-link to="/">Home</router-link>
-    <router-link v-if="$store.state.currentUser === null" to="/add">Inscription</router-link>
-    <router-link to="/catalogue">Catalogue</router-link>
-    <router-link to="/connexion" v-if="$store.state.currentUser === null">Connexion</router-link>
+  <nav>
+    <router-link to="/">Home</router-link> |
+    <router-link to="/add">Inscription</router-link> |
+    <router-link to="/catalogue">Catalogue</router-link> |
+    <router-link to="/connexion">Connexion</router-link> |
     <router-link to="/back-products">Back-office</router-link>
   </nav>
   <router-view/>
@@ -21,43 +21,20 @@ export default {
   font-family: system-ui, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-align: center;
   color: #2c3e50;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-:root {
-  --clr-blue: #44B9DA;
-  --clr-light-grey: #e7e7e7;
-  --clr-dark: #252525;
-  --clr-white: #fff;
-}
-
-.main-nav {
+nav {
   padding: 30px;
-  text-align: center;
 }
 
-.main-nav a {
-  color: #000;
-  text-decoration: none;
-  margin: 0 15px;
-  transition: 200ms ease-in-out;
-}
-
-nav a:hover {
-    color: var(--clr-blue);
-}
-
-.main-nav a.router-link-exact-active {
+nav a {
   font-weight: bold;
-  color: #ffffff;
-  background-color: var(--clr-blue);
-  border-radius: 9999px;
-  padding: 5px 15px;
+  color: #2c3e50;
+}
+
+nav a.router-link-exact-active {
+  color: #42b983;
 }
 </style>
