@@ -1,31 +1,74 @@
 <template>
-    <div>
+    <div class="banniere">
+        <h1 v-text="message"></h1>
         <MyButton
-            label="LogOut"
-            modifier="edit"
-            @click="logout"
-            v-if="$store.state.currentUser != null"
+            @click="toRegisterPage"
+            label="En savoir plus"
+            backgroundColor="black"
         />
     </div>
+
+    <ContactForm @addVisitor="handleAddVisitor" />
 </template>
 
 <script>
 import MyButton from "@/components/FrontOffice/MyButton.vue";
+import ContactForm from "@/components/FrontOffice/ContactForm.vue";
+import { mapState } from "vuex";
 
 export default {
-    components: {
-        MyButton
-    },
-    computed: {
+    data() {
+        return {
+            message: "Bienvenue chez Webwares !",
 
+            visitorData: {
+                fistName: "",
+                lastName: "",
+                email: "",
+                message: "",
+            },
+        };
     },
+
+    components: {
+        MyButton,
+        ContactForm,
+    },
+
     methods: {
-    logout() {
-        this.$store.commit("setUserConnected", null);
-        localStorage.removeItem("connectedUserId");
-        alert("Vous avez été déconnecté !");
+        handleAddVisitor(visitor) {
+            this.$store.commit("uptdateVisitorData", { ...visitor });
+        },
+        toRegisterPage() {
+            this.$router.push("/add");
+        },
     },
-    // ... autres méthodes ...
-},
+
+    computed: {
+        ...mapState(["visitorData"]),
+    },
 };
 </script>
+
+<style>
+
+
+.banniere{
+    display: flex; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: url("../assets/banniere.jpg");
+    background-size: cover;
+    width: 100%;
+    height: 700px;
+    opacity: 90%;
+}
+
+h1 {
+  
+    color: #fff;
+    padding: 20px;
+    font-size: 40px;
+}
+</style>

@@ -25,7 +25,9 @@ export default {
                 "green-btn": this.backgroundColor === "green",
                 "red-btn": this.backgroundColor === "red",
                 "blue-btn": this.backgroundColor === "blue",
+                "black-btn": this.backgroundColor === "black",
                 "connexion-btn" : this.backgroundColor === "green",
+
             };
         },
     },
@@ -64,9 +66,11 @@ export default {
 }
 
 .connexion-btn {
+
     padding: 15px 20px;
     border-radius: 5px;
     background-color: var(--clr-green);
+
     color: white;
     border: none;
     cursor: pointer;
@@ -88,4 +92,15 @@ export default {
     border: none;
     cursor: pointer;
 }
+.black-btn{
+    background-color: #000;
+    color: white;
+    padding: 20px;
+    font-size: 20px;
+    border-radius: 15px;
+    width: 300px;
+    border: none;
+    cursor: pointer;
+}
+
 </style>
