@@ -1,5 +1,5 @@
 <template>
-    <form class="" @submit.prevent>
+    <form class="login-form" @submit.prevent>
         <label for="siret">SIRET:</label>
         <input type="text" v-model="siret" class="input-field" />
 
@@ -73,7 +73,7 @@ export default {
 </script>
 
 <style>
-form {
+.login-form {
     max-width: 400px;
     margin: 0 auto;
     padding: 20px;
@@ -82,13 +82,13 @@ form {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-label {
+.login-form label {
     display: block;
     color: #ffffff;
     margin-bottom: 8px;
 }
 
-.input-field {
+.login-form .input-field {
     width: 100%;
     padding: 8px;
     margin-bottom: 16px;
@@ -97,12 +97,12 @@ label {
     border-radius: 4px;
 }
 
-.input-field:focus {
+.login-form .input-field:focus {
     outline: none;
     border-color: #44b9da;
 }
 
-MyButton {
+.login-form button {
     margin-top: 16px;
 }
 </style>

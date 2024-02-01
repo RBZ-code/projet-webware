@@ -59,8 +59,8 @@ export default {
 }
 
 .action-btn:hover {
-    color: var(--clr-dark);
-    background-color: var(--clr-light-blue);
+    color: #fff;
+    background-color: var(--clr-dark);
 }
 
 .connexion-btn {

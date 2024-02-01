@@ -1,26 +1,31 @@
 <template>
     <BackNav></BackNav>
-    <div>
+    <div class="product-creation-container">
         <form>
-                <label for="name">Nom du produit :</label>
-                <input v-model="newItem.titre" type="text" id="name" name="name"><br>
+            <h2>Ajout d'un produit au catalogue</h2>
+            <label for="name">Nom du produit :
+                <input v-model="newItem.titre" type="text" id="name" name="name">
+            </label>
 
-                <label for="price">Prix du produit :</label>
-                <input v-model="newItem.prix" type="number" id="price" name="price"><br>
+            <label for="price">Prix du produit :
+                <input v-model="newItem.prix" type="number" id="price" name="price">
+            </label>
 
-                <label for="quantity">MOQ :</label>
-                <input v-model="newItem.moq" type="number" id="quantity" name="quantity"><br>
+            <label for="quantity">MOQ :
+                <input v-model="newItem.moq" type="number" id="quantity" name="quantity">
+            </label>
 
-                <label for="category">Catégorie du produit :</label>
+            <label for="category">Catégorie du produit :
                 <select v-model="newItem.categorieId" id="category" name="category">
-                    <option value="category1">Catégorie 1</option>
-                    <option value="category2">Catégorie 2</option>
-                    <option value="category3">Catégorie 3</option>
-                </select><br>
-                <br><br>
-                
-                <MyButton label="Ajouter le produit" modifier="action" @GeneralEventBtn="addProduct()" />
-            </form>
+                    <option value="1">Catégorie 1</option>
+                    <option value="2">Catégorie 2</option>
+                    <option value="3">Catégorie 3</option>
+                    <option value="4">Catégorie 4</option>
+                </select>
+            </label>
+
+            <MyButton label="Ajouter le produit" modifier="action" @GeneralEventBtn="addProduct()" />
+        </form>
     </div>
 </template>
 
@@ -56,5 +61,43 @@ export default {
 </script>
 
 <style>
+.product-creation-container {
+    width: 90%;
+    margin: 1rem auto;
+    padding: 1rem;
+}
 
+.product-creation-container form {
+    background-color: var(--clr-light-grey);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    border-radius: 5px;
+    padding: 2rem;
+}
+
+.product-creation-container h2 {
+    margin-bottom: 1rem;
+}
+
+.product-creation-container label {
+    display: block;
+    margin-top: 1rem;
+}
+
+.product-creation-container input,
+.product-creation-container select {
+    display: block;
+    width: 250px;
+    font-size: 1rem;
+    margin-top: 5px;
+    padding: 10px 0;
+    outline: none;
+    border: none;
+}
+
+.product-creation-container button {
+    margin-top: 2rem;
+}
 </style>
