@@ -9,6 +9,7 @@ export default createStore({
     state: {
         users: [],
         lastUser: getLastUser(),
+        
         categories: [
             { id: 3, name: "Mobilier d'intérieur" },
             { id: 2, name: "Luminaires" },
@@ -212,6 +213,7 @@ export default createStore({
                 categorieId: 4,
             },
         ],
+        
         commandes: [
             {
                 id: 1,
@@ -243,6 +245,9 @@ export default createStore({
         setUsers(state, user) {
             state.users = user;
         },
+        setQuery(state, query) {
+            state.query = query;
+        },
     },
     actions: {
         loadUsers(context) {
@@ -254,5 +259,13 @@ export default createStore({
             context.commit("setUsers", users);
         },
     },
-    
+    getters: {
+        filteredUsers(state) {
+            if (!state.query) return state.produits;
+            let query = state.query.toLowerCase();
+            return state.produits.filter(prod =>
+                prod.titre.toLowerCase().includes(query)
+            );
+        }
+    }
 });
