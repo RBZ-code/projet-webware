@@ -50,6 +50,7 @@ export default {
         addProduct() {
             if (this.newItem.titre && this.newItem.prix && this.newItem.moq && this.newItem.categorieId) {
                 this.$store.commit("addProduct", this.newItem);
+                this.$store.commit("saveProducts");
                 this.newItem = {};
                 this.$router.push("/back-products");
             } else {

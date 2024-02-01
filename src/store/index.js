@@ -249,6 +249,7 @@ export default createStore({
         setUserConnected(state, userId) {
             state.currentUser = userId;
         },
+        
         addUser(state, user) {
             state.lastUser += 1;
             user.id = state.lastUser;
@@ -258,11 +259,8 @@ export default createStore({
         },
         addProduct(state, item) {
             state.produits.push(item);
-            localStorage.setItem(
-                "copiedProduits",
-                JSON.stringify(state.produits)
-            );
         },
+
         deleteProduct(state, productId) {
             // Supprimer le produit du tableau produits
             state.produits = state.produits.filter(
@@ -275,13 +273,21 @@ export default createStore({
                 JSON.stringify(state.produits)
             );
         },
+
+        saveProducts(state) {
+            localStorage.setItem(
+                "copiedProduits",
+                JSON.stringify(state.produits)
+            );
+        },
+
         setUsers(state, user) {
             state.users = user;
         },
 
         setQuery(state, query) {
             state.query = query;
-        }
+        },
 
         setProducts(state, products) {
             state.produits = products;
@@ -289,7 +295,6 @@ export default createStore({
                 "copiedProduits",
                 JSON.stringify(state.produits)
             );
-
         },
     },
     actions: {
