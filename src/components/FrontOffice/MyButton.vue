@@ -21,6 +21,7 @@ export default {
         btnClass() {
             return {
                 "edit-btn": this.modifier === "edit",
+                "action-btn": this.modifier === "action",
                 "green-btn": this.backgroundColor === "green",
                 "red-btn": this.backgroundColor === "red",
                 "blue-btn": this.backgroundColor === "blue",
@@ -33,17 +34,38 @@ export default {
 
 <style>
 .edit-btn {
+    margin: .5rem .5rem;
     padding: 5px 15px;
     border-radius: 9999px;
     background-color: var(--clr-blue);
     color: white;
     border: none;
     cursor: pointer;
+    transition: 200ms ease-in-out;
+}
+
+.edit-btn:hover {
+    background-color: var(--clr-dark);
+}
+
+.action-btn {
+    padding: 15px 25px;
+    border-radius: 5px;
+    background-color: var(--clr-blue);
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: 200ms ease-in-out;
+}
+
+.action-btn:hover {
+    color: var(--clr-dark);
+    background-color: var(--clr-light-blue);
 }
 
 .connexion-btn {
-    padding: 10px 20px;
-    border-radius: 9999px;
+    padding: 15px 20px;
+    border-radius: 5px;
     background-color: var(--clr-green);
     color: white;
     border: none;
