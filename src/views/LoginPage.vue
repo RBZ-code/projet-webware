@@ -6,6 +6,7 @@
         <label for="password">Mot de passe:</label>
         <input type="password" v-model="password" class="input-field" />
 
+
         <MyButton
             label="Connexion"
             backgroundColor="green"
@@ -20,6 +21,7 @@ import MyButton from "@/components/FrontOffice/MyButton.vue";
 export default {
     data() {
         return {
+            user:[],
             siret: "",
             password: "",
         };
@@ -66,6 +68,7 @@ export default {
             alert("Vous avez été déconnecté !");
         },
     },
+
     created() {
         this.$store.dispatch("loadUsers");
     },

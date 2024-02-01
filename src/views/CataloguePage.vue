@@ -18,5 +18,6 @@ export default {
             return this.$store.state.produits;
         },
     },
+    
 };
 </script>

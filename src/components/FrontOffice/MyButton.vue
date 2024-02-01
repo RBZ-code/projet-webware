@@ -44,7 +44,6 @@ export default {
 .connexion-btn {
     padding: 10px 20px;
     border-radius: 9999px;
-    background-color: var(--clr-green);
     color: white;
     border: none;
     cursor: pointer;
