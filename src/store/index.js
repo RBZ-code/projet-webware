@@ -233,6 +233,7 @@ export default createStore({
                 ],
                 coutTotal: 689.97,
                 userId: 1,
+                toBeDelivered: true
             },
             {
                 id: 2,
@@ -242,6 +243,7 @@ export default createStore({
                 ],
                 coutTotal: 539.96,
                 userId: 2,
+                toBeDelivered: false
             },
         ],
     },
@@ -249,7 +251,7 @@ export default createStore({
         setUserConnected(state, userId) {
             state.currentUser = userId;
         },
-        
+
         addUser(state, user) {
             state.lastUser += 1;
             user.id = state.lastUser;
@@ -296,6 +298,9 @@ export default createStore({
                 JSON.stringify(state.produits)
             );
         },
+        changeOrderStatus(state, orderId) {
+            state.commandes[orderId-1].toBeDelivered = false;
+        }
     },
     actions: {
         deleteProduct(context, productId) {

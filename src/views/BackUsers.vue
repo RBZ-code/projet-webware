@@ -1,5 +1,8 @@
 <template>
     <BackNav />
+    <header class="action-bar">
+        <h1>Gestion des utilisateurs</h1>
+    </header>
     <div class="listing-template">
         <table class="listing-tab">
             <thead>
@@ -18,7 +21,7 @@
                     <td>{{ user.siret }}</td>
                     <td>{{ user.role }}</td>
                     <td>
-                        <MyButton label="Modifier" modifier="edit" @GeneralEventBtn="login" />
+                        <MyButton label="Changer rôle" modifier="edit" @GeneralEventBtn="login" />
                     </td>
                 </tr>
             </tbody>

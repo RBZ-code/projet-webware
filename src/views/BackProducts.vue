@@ -1,6 +1,7 @@
 <template>
     <BackNav />
     <header class="action-bar">
+        <h1>Gestion des produits </h1>
         <MyButton label="Ajouter un produit" modifier="action" @GeneralEventBtn="goToAddProduct()" />
     </header>
     <div class="listing-template">
@@ -106,6 +107,12 @@ export default {
 .action-bar {
     width: 90%;
     margin: 25px auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.action-bar h1 {
+    font-size: 1.5rem;
 }
 
 .listing-template {
@@ -138,6 +145,10 @@ export default {
 
 .listing-box p {
     margin: .5rem 0;
+}
+
+.listing-box h2 {
+    font-size: 1.2rem;
 }
 
 .box-numbers {

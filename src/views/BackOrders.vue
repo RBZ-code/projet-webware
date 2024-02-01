@@ -1,5 +1,8 @@
 <template>
     <BackNav />
+    <header class="action-bar">
+        <h1>Gestion des commandes</h1>
+    </header>
     <div class="listing-products">
         <div class="listing-template">
         <table class="listing-tab">
@@ -17,7 +20,7 @@
                     <td>{{ order.coutTotal + "€" }}</td>
                     <td>{{ order.userId }}</td>
                     <td>
-                        <MyButton label="Modifier" modifier="edit" @GeneralEventBtn="changeOrderStatus()" />
+                        <MyButton label="Signaler l'expédition" modifier="edit" @GeneralEventBtn="changeOrderStatus(order.id)" v-if="order.toBeDelivered"/>
                     </td>
                 </tr>
             </tbody>
@@ -34,6 +37,11 @@ export default {
     components: {
         BackNav,
         MyButton
+    },
+    methods: {
+        changeOrderStatus(orderId) {
+            this.$store.commit("changeOrderStatus", orderId)
+        }
     },
     computed: {
         orders() {
