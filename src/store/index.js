@@ -11,12 +11,14 @@ export default createStore({
         contact: [],
         users: [],
         lastUser: getLastUser(),
+        
         categories: [
             { id: 3, name: "Mobilier d'intérieur" },
             { id: 2, name: "Luminaires" },
             { id: 4, name: "Tapis" },
             { id: 1, name: "Objets de décorations" },
         ],
+
         produits: localStorage.getItem("copiedProduits")
             ? JSON.parse(localStorage.getItem("copiedProduits"))
             : [
@@ -221,6 +223,7 @@ export default createStore({
                       categorieId: 4,
                   },
               ],
+      
         commandes: [
             {
                 id: 1,
@@ -268,12 +271,18 @@ export default createStore({
         setUsers(state, user) {
             state.users = user;
         },
+
+        setQuery(state, query) {
+            state.query = query;
+        }
+
         setProducts(state, products) {
             state.produits = products;
             localStorage.setItem(
                 "copiedProduits",
                 JSON.stringify(state.produits)
             );
+
         },
     },
     actions: {
@@ -294,4 +303,15 @@ export default createStore({
             }
         },
     },
+
+    getters: {
+        filteredUsers(state) {
+            if (!state.query) return state.produits;
+            let query = state.query.toLowerCase();
+            return state.produits.filter(prod =>
+                prod.titre.toLowerCase().includes(query)
+            );
+        }
+    }
+
 });
