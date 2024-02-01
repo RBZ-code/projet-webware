@@ -14,7 +14,7 @@
                 <h2>{{ prod.titre }}</h2>
                 <p>{{ prod.description }}</p>
                 <p>{{ prod.prix + "€" + " - MOQ " + prod.moq }}</p>
-                <MyButton label="supprimer" modifier="edit" @GeneralEventBtn="deleteProduct(prod.id)" />
+                <MyButton label="Supprimer" modifier="edit" @GeneralEventBtn="deleteProduct(prod.id)" />
             </div>
         </div>
     </div>
@@ -35,7 +35,10 @@ export default {
     },
     methods: {
         deleteProduct(productId) {
-            this.$store.dispatch("deleteProduct", productId);
+            let check = confirm("Êtes-vous sûr de vouloir supprimer ce produit ?");
+            if (check) {
+                this.$store.dispatch("deleteProduct", productId);
+            }
         },
     },
     created() {
