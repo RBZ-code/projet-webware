@@ -4,8 +4,13 @@
         <h1>Gestion des produits </h1>
         <MyButton label="Ajouter un produit" modifier="action" @GeneralEventBtn="goToAddProduct()" />
     </header>
+    <form class="filter-bar">
+        <label for="back-product-search">Rechercher un produit :
+            <input id="back-product-search" name="search" type="search" placeholder="Nom du produit" v-model="searchQuery">
+        </label>
+    </form>
     <div class="listing-template">
-        <div class="listing-box" v-for="(prod, index) in products" :key="index">
+        <div class="listing-box" v-for="(prod, index) in filteredProducts" :key="index">
             <figure>
                 <img :src="prod.image" :alt="prod.titre" />
             </figure>
@@ -22,34 +27,34 @@
     </div>
     <!-- Modal -->
     <div v-if="modalIsOpened" v-cloak id="editModal" class="modal">
-            <div class="modal-content">
-                <span v-on:click="closeModal" class="close-button">X</span>
-                <h2>Modifier le produit</h2>
-                <form>
-                    <label for="editName">Nom du produit :</label>
-                    <input v-model="editItem.titre" type="text" id="editName">
+        <div class="modal-content">
+            <span v-on:click="closeModal" class="close-button">X</span>
+            <h2>Modifier le produit</h2>
+            <form>
+                <label for="editName">Nom du produit :</label>
+                <input v-model="editItem.titre" type="text" id="editName">
 
-                    <label for="editDesc">Description produit :</label>
-                    <textarea v-model="editItem.description" type="text" id="editDesc" rows="5"></textarea>
+                <label for="editDesc">Description produit :</label>
+                <textarea v-model="editItem.description" type="text" id="editDesc" rows="5"></textarea>
 
-                    <label for="editPrice">Prix du produit :</label>
-                    <input v-model="editItem.prix" type="number" id="editPrice">
+                <label for="editPrice">Prix du produit :</label>
+                <input v-model="editItem.prix" type="number" id="editPrice">
 
-                    <label for="editQuantity">MOQ :</label>
-                    <input v-model="editItem.moq" type="number" id="editQuantity">
+                <label for="editQuantity">MOQ :</label>
+                <input v-model="editItem.moq" type="number" id="editQuantity">
 
-                    <label for="editCategory">Catégorie produit:</label>
-                    <select v-model="editItem.categorieId" id="editCategory">
-                        <option value="1">Catégorie 1</option>
-                        <option value="2">Catégorie 2</option>
-                        <option value="3">Catégorie 3</option>
-                        <option value="4">Catégorie 4</option>
-                    </select>
+                <label for="editCategory">Catégorie produit:</label>
+                <select v-model="editItem.categorieId" id="editCategory">
+                    <option value="1">Catégorie 1</option>
+                    <option value="2">Catégorie 2</option>
+                    <option value="3">Catégorie 3</option>
+                    <option value="4">Catégorie 4</option>
+                </select>
 
-                    <MyButton label="Modifier" modifier="action" @GeneralEventBtn="updateProduct()" />
-                </form>
-            </div>
+                <MyButton label="Modifier" modifier="action" @GeneralEventBtn="updateProduct()" />
+            </form>
         </div>
+    </div>
 </template>
 
 <script>
@@ -65,16 +70,24 @@ export default {
         return {
             modalIsOpened: false,
             editItem: {},
-            editIndex: -1
+            editIndex: -1,
+            searchQuery: ""
         }
     },
     computed: {
         products() {
             return this.$store.state.produits;
         },
+        filteredProducts() {
+            if (!this.searchQuery) return this.products;
+            let query = this.searchQuery.toLowerCase();
+            return this.products.filter((prod) =>
+                prod.titre.toLowerCase().includes(query)
+            );
+        },
     },
     methods: {
-        goToAddProduct(){
+        goToAddProduct() {
             this.$router.push("/back-products-add");
         },
         deleteProduct(productId) {
@@ -89,7 +102,7 @@ export default {
         },
         openModal(productId) {
             this.modalIsOpened = true;
-            this.editItem = {...this.$store.state.produits[productId-1]};
+            this.editItem = { ...this.$store.state.produits[productId - 1] };
             this.editIndex = productId;
         },
         // updateProduct() {
@@ -104,16 +117,28 @@ export default {
 </script>
 
 <style>
-
 .action-bar {
     width: 90%;
     margin: 25px auto;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .action-bar h1 {
     font-size: 1.5rem;
+}
+
+.filter-bar {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.filter-bar input {
+    padding: 5px;
+    border: none;
+    border-bottom: 1px solid var(--clr-dark);
+    outline: none;
 }
 
 .listing-template {
@@ -169,9 +194,9 @@ export default {
     transform: translate(-50%, -50%);
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7); 
-    z-index: 1; 
-    display: flex; 
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+    display: flex;
     justify-content: center;
     align-items: center;
 }
@@ -184,7 +209,7 @@ export default {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
     max-width: 390px;
     width: 100%;
-    display: flex; 
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -201,7 +226,7 @@ export default {
     right: 15px;
     cursor: pointer;
     font-size: 1rem;
-    z-index: 2; 
+    z-index: 2;
 }
 
 .modal-content label {
@@ -210,7 +235,7 @@ export default {
     font-weight: bold;
     color: var(--clr-dark);
     margin-bottom: 5px;
-} 
+}
 
 .modal-content input,
 .modal-content textarea,

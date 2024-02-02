@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form class="product-form" @submit.prevent="searchProducts">
+    <form class="product-form">
       <label for="search">Recherche :</label>
       <input type="search" id="search" name="search" placeholder="Recherche..." autocomplete="on" v-model="query">
     </form>
@@ -45,9 +45,6 @@ export default {
     },
   },
   methods: {
-    searchProducts() {
-      this.$store.commit("setQuery", this.query);
-    },
    
   },
 };
@@ -70,11 +67,10 @@ export default {
 }
 
 .product-card {
-  background-color: #c4c4c4;
+  background-color: var(--clr-light-grey);
   padding: 15px;
   border-radius: 8px;
   text-align: center;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
   justify-content: space-between;

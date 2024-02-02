@@ -85,14 +85,14 @@ export default {
     max-width: 400px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #252525;
+    background-color: var(--clr-light-grey);
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 .login-form label {
     display: block;
-    color: #ffffff;
+    color: var(--clr-dark);
     margin-bottom: 8px;
 }
 
