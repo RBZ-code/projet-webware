@@ -281,7 +281,7 @@ export default createStore({
 
         setQuery(state, query) {
             state.query = query;
-        }
+        },
 
         setProducts(state, products) {
             state.produits = products;
