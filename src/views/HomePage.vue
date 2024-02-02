@@ -50,8 +50,7 @@ export default {
 };
 </script>
 
-<style>
-
+<style scoped>
 
 .banniere{
     display: flex; 
@@ -66,7 +65,6 @@ export default {
 }
 
 h1 {
-  
     color: #fff;
     padding: 20px;
     font-size: 40px;

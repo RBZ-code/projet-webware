@@ -1,5 +1,9 @@
 <template>
     <BackNav />
+    <header class="action-bar">
+        <h1>Gestion des catégories</h1>
+        <MyButton label="Ajouter une catégorie" modifier="action" @GeneralEventBtn="addCat" />
+    </header>
     <div class="listing-template">
         <table class="listing-tab">
             <thead>
@@ -15,6 +19,7 @@
                     <td>{{ cat.name }}</td>
                     <td>
                         <MyButton label="Modifier" modifier="edit" @GeneralEventBtn="editData" />
+                        <MyButton label="Supprimer" modifier="edit" @GeneralEventBtn="deleteCat()" />
                     </td>
                 </tr>
             </tbody>
@@ -31,13 +36,33 @@ export default {
         BackNav,
         MyButton
     },
+    data() {
+        return {
+            newCat: {},
+        }
+    },
+    methods: {
+        addCat() {
+            let catId = "Test"; // A mettre à jour
+            let catName = prompt("Veuillez entrer le nom de la catégorie à ajouter :");
+
+            if (catName) {
+                this.newCat.id = catId;
+                this.newCat.name = catName;
+                this.$store.commit("addCat", this.newCat);
+                this.$store.commit("saveCat");
+            } else {
+                alert("Veuillez renseigner un nom");
+            }
+        },
+        editData() {
+            return console.log("edit")
+        },
+    },
     computed: {
         categories() {
             return this.$store.state.categories;
         },
-        editData() {
-            return console.log("edit")
-        }
     },
 };
 </script>
@@ -53,12 +78,8 @@ table {
 table th,
 table td {
     padding: .5rem 0;
+    line-height: 1.5rem;
 }
-
-/* table th:first-child,
-table td:first-child {
-    padding-left: 0.5rem;
-} */
 
 table tbody tr:nth-child(odd) {
     background-color: var(--clr-light-grey);

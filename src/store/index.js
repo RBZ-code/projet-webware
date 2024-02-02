@@ -233,6 +233,7 @@ export default createStore({
                 ],
                 coutTotal: 689.97,
                 userId: 1,
+                toBeDelivered: true
             },
             {
                 id: 2,
@@ -242,13 +243,18 @@ export default createStore({
                 ],
                 coutTotal: 539.96,
                 userId: 2,
+                toBeDelivered: false
             },
         ],
     },
     mutations: {
+
+        // Utilisateurs
+
         setUserConnected(state, userId) {
             state.currentUser = userId;
         },
+
         addUser(state, user) {
             state.lastUser += 1;
             user.id = state.lastUser;
@@ -256,27 +262,29 @@ export default createStore({
             localStorage.setItem(`user_${user.id}`, JSON.stringify(user));
             localStorage.setItem("lastUserId", state.lastUser);
         },
+
+        setUsers(state, user) {
+            state.users = user;
+        },
+
+        // Produits
+
         addProduct(state, item) {
             state.produits.push(item);
-            localStorage.setItem(
-                "copiedProduits",
-                JSON.stringify(state.produits)
-            );
         },
+
         deleteProduct(state, productId) {
             // Supprimer le produit du tableau produits
             state.produits = state.produits.filter(
                 (prod) => prod.id !== productId
             );
+        },
 
-            // Mettre à jour le localStorage "copiedProduits"
+        saveProducts(state) {
             localStorage.setItem(
                 "copiedProduits",
                 JSON.stringify(state.produits)
             );
-        },
-        setUsers(state, user) {
-            state.users = user;
         },
 
         setQuery(state, query) {
@@ -289,8 +297,26 @@ export default createStore({
                 "copiedProduits",
                 JSON.stringify(state.produits)
             );
-
         },
+
+        // Catégories
+
+        addCat(state, item) {
+            state.categories.push(item);
+        },
+
+        saveCat(state) {
+            localStorage.setItem(
+                "copiedCategories",
+                JSON.stringify(state.categories)
+            );
+        },
+
+        // Commandes
+        
+        changeOrderStatus(state, orderId) {
+            state.commandes[orderId-1].toBeDelivered = false;
+        }
     },
     actions: {
         deleteProduct(context, productId) {
