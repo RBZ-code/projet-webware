@@ -5,24 +5,33 @@
       <h1>Gestion des produits </h1>
       <MyButton label="Ajouter un produit" modifier="action" @GeneralEventBtn="goToAddProduct()" />
     </header>
+    <form class="filter-bar">
+        <label for="back-product-search">Rechercher un produit :
+            <input id="back-product-search" name="search" type="search" placeholder="Nom du produit" v-model="searchQuery">
+        </label>
+    </form>
     <div class="listing-template">
-      <div class="listing-box" v-for="(prod, index) in products" :key="index">
-        <figure>
-          <img :src="prod.image" :alt="prod.titre" />
-        </figure>
-        <div>
-          <h2>{{ prod.titre }}</h2>
-          <p>{{ prod.description }}</p>
-          <p class="box-numbers">{{ prod.prix + "€" + " - MOQ " + prod.moq }}</p>
-          <div class="box-actions">
-            <MyButton label="Modifier" modifier="edit" @GeneralEventBtn="openModal(index)" />
-            <MyButton label="Supprimer" modifier="edit" @GeneralEventBtn="deleteProduct(prod.id)" />
-          </div>
+
+        <div class="listing-box" v-for="(prod, index) in filteredProducts" :key="index">
+            <figure>
+                <img :src="prod.image" :alt="prod.titre" />
+            </figure>
+            <div>
+                <h2>{{ prod.titre }}</h2>
+                <p>{{ prod.description }}</p>
+                <p class="box-numbers">{{ prod.prix + "€" + " - MOQ " + prod.moq }}</p>
+                <div class="box-actions">
+                    <MyButton label="Modifier" modifier="edit" @GeneralEventBtn="openModal(index)" />
+                    <MyButton label="Supprimer" modifier="edit" @GeneralEventBtn="deleteProduct(prod.id)" />
+                </div>
+            </div>
+
         </div>
       </div>
     </div>
     <!-- Modal -->
     <div v-if="modalIsOpened" v-cloak id="editModal" class="modal">
+
       <div class="modal-content">
         <span v-on:click="closeModal" class="close-button">X</span>
         <h2>Modifier le produit</h2>
@@ -49,6 +58,7 @@
       </div>
     </div>
   </div>
+
 </template>
 
 <script>
@@ -79,6 +89,41 @@ export default {
     goToAddProduct() {
       this.$router.push("/back-products-add");
     },
+
+    data() {
+        return {
+            modalIsOpened: false,
+            editItem: {},
+            editIndex: -1,
+            searchQuery: ""
+        }
+    },
+    computed: {
+        products() {
+            return this.$store.state.produits;
+        },
+        filteredProducts() {
+            if (!this.searchQuery) return this.products;
+            let query = this.searchQuery.toLowerCase();
+            return this.products.filter((prod) =>
+                prod.titre.toLowerCase().includes(query)
+            );
+        },
+    },
+    methods: {
+        goToAddProduct() {
+            this.$router.push("/back-products-add");
+        },
+        deleteProduct(productId) {
+            let check = confirm("Êtes-vous sûr de vouloir supprimer ce produit ?");
+            if (check) {
+                this.$store.dispatch("deleteProduct", productId);
+                this.$store.commit("saveProducts");
+            }
+        },
+      
+       
+
     deleteProduct(productId) {
       let check = confirm("Êtes-vous sûr de vouloir supprimer ce produit ?");
       if (check) {
@@ -93,6 +138,7 @@ export default {
       this.modalIsOpened = true;
       this.editItem = { ...this.$store.state.produits[productId] };
       this.editIndex = productId;
+
     },
     updateProduct() {
       if (this.editItem.titre && this.editItem.description && this.editItem.prix && this.editItem.moq && this.editItem.categorieId) {
@@ -111,16 +157,28 @@ export default {
 </script>
 
 <style>
-
 .action-bar {
     width: 90%;
     margin: 25px auto;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .action-bar h1 {
     font-size: 1.5rem;
+}
+
+.filter-bar {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.filter-bar input {
+    padding: 5px;
+    border: none;
+    border-bottom: 1px solid var(--clr-dark);
+    outline: none;
 }
 
 .listing-template {
@@ -176,9 +234,9 @@ export default {
     transform: translate(-50%, -50%);
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7); 
-    z-index: 1; 
-    display: flex; 
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+    display: flex;
     justify-content: center;
     align-items: center;
 }
@@ -191,7 +249,7 @@ export default {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
     max-width: 390px;
     width: 100%;
-    display: flex; 
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -208,7 +266,7 @@ export default {
     right: 15px;
     cursor: pointer;
     font-size: 1rem;
-    z-index: 2; 
+    z-index: 2;
 }
 
 .modal-content label {
@@ -217,7 +275,7 @@ export default {
     font-weight: bold;
     color: var(--clr-dark);
     margin-bottom: 5px;
-} 
+}
 
 .modal-content input,
 .modal-content textarea,

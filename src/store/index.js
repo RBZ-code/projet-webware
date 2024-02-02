@@ -277,11 +277,10 @@ export default createStore({
         // Produits
 
         addProduct(state, item) {
-            state.produits.push(item);
+            state.produits.unshift(item);
         },
 
         deleteProduct(state, productId) {
-            // Supprimer le produit du tableau produits
             state.produits = state.produits.filter(
                 (prod) => prod.id !== productId
             );
@@ -300,10 +299,6 @@ export default createStore({
                 "copiedProduits",
                 JSON.stringify(state.produits)
             );
-        },
-
-        setQuery(state, query) {
-            state.query = query;
         },
 
         setProducts(state, products) {
