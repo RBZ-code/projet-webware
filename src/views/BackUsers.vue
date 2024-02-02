@@ -43,9 +43,7 @@ export default {
             return this.$store.state.users;
         },
     },
-    created() {
-        this.$store.dispatch("loadUsers");
-    },
+   
 };
 </script>
 

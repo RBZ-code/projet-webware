@@ -11,7 +11,7 @@ export default createStore({
         contact: [],
         users: [],
         lastUser: getLastUser(),
-        
+
         categories: [
             { id: 3, name: "Mobilier d'intérieur" },
             { id: 2, name: "Luminaires" },
@@ -223,7 +223,7 @@ export default createStore({
                       categorieId: 4,
                   },
               ],
-      
+
         commandes: [
             {
                 id: 1,
@@ -233,7 +233,7 @@ export default createStore({
                 ],
                 coutTotal: 689.97,
                 userId: 1,
-                toBeDelivered: true
+                toBeDelivered: true,
             },
             {
                 id: 2,
@@ -243,12 +243,11 @@ export default createStore({
                 ],
                 coutTotal: 539.96,
                 userId: 2,
-                toBeDelivered: false
+                toBeDelivered: false,
             },
         ],
     },
     mutations: {
-
         // Utilisateurs
 
         setUserConnected(state, userId) {
@@ -279,6 +278,14 @@ export default createStore({
                 (prod) => prod.id !== productId
             );
         },
+        updateProduct(state, updatedProduct) {
+            state.produits = state.produits.map((prod) => {
+                if (prod.id === updatedProduct.id) {
+                    return updatedProduct;
+                }
+                return prod;
+            });
+        },
 
         saveProducts(state) {
             localStorage.setItem(
@@ -301,9 +308,6 @@ export default createStore({
 
         // Catégories
 
-        addCat(state, item) {
-            state.categories.push(item);
-        },
 
         saveCat(state) {
             localStorage.setItem(
@@ -311,14 +315,22 @@ export default createStore({
                 JSON.stringify(state.categories)
             );
         },
+        setCategories(state, categories) {
+            state.categories = categories;
+        },
+
 
         // Commandes
-        
+
         changeOrderStatus(state, orderId) {
-            state.commandes[orderId-1].toBeDelivered = false;
-        }
+            state.commandes[orderId - 1].toBeDelivered = false;
+        },
     },
     actions: {
+        updateProduct(context, productId ){
+            context.commit("updateProduct", productId);
+        },
+
         deleteProduct(context, productId) {
             context.commit("deleteProduct", productId);
         },
@@ -335,16 +347,24 @@ export default createStore({
                 context.commit("setUserConnected", parseInt(connectedUserId));
             }
         },
+        loadCategories(context) {
+            let categoriesStockees = localStorage.getItem("copiedCategories");
+
+            if (categoriesStockees) {
+                let categories = JSON.parse(categoriesStockees);
+
+                context.commit("setCategories", categories);
+            }
+        },
     },
 
     getters: {
         filteredUsers(state) {
             if (!state.query) return state.produits;
             let query = state.query.toLowerCase();
-            return state.produits.filter(prod =>
+            return state.produits.filter((prod) =>
                 prod.titre.toLowerCase().includes(query)
             );
-        }
-    }
-
+        },
+    },
 });

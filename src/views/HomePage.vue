@@ -47,6 +47,7 @@ export default {
     computed: {
         ...mapState(["visitorData"]),
     },
+
 };
 </script>
 

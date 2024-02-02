@@ -5,6 +5,7 @@
     <router-link to="/catalogue">Catalogue</router-link>
     <router-link to="/connexion" v-if="$store.state.currentUser === null">Connexion</router-link>
     <router-link to="/back-products">Back-office</router-link>
+    <a href="#" @click="LogOut" v-if="$store.state.currentUser !== null">Log Out</a>
   </nav>
   <router-view/>
 </template>
@@ -12,6 +13,18 @@
 <script>
     
 export default {
+    created() {
+        this.$store.dispatch("loadUsers");
+        this.$store.dispatch("loadCategories");
+    },
+    methods:{
+        LogOut(){
+            this.$store.commit("setUserConnected", null);
+            localStorage.removeItem("connectedUserId");
+            alert("Vous avez été déconnecté !");
+            this.$router.push("/");
+        }
+    }
 }
 </script>
 
