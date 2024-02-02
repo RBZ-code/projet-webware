@@ -12,7 +12,8 @@ export default createStore({
         users: [],
         lastUser: getLastUser(),
 
-        categories: [
+        categories: localStorage.getItem("copiedCategories")
+        ? JSON.parse(localStorage.getItem("copiedCategories")) : [
             { id: 3, name: "Mobilier d'intérieur" },
             { id: 2, name: "Luminaires" },
             { id: 4, name: "Tapis" },
@@ -261,6 +262,13 @@ export default createStore({
             localStorage.setItem(`user_${user.id}`, JSON.stringify(user));
             localStorage.setItem("lastUserId", state.lastUser);
         },
+        addCatlocal(state, user) {
+            state.lastCatId += 1;
+            user.id = state.lastCatId;
+            user.connected = false;
+            localStorage.setItem(user.id, JSON.stringify(user));
+            localStorage.setItem("lastCatId", state.lastCatId);
+        },
 
         setUsers(state, user) {
             state.users = user;
@@ -307,7 +315,9 @@ export default createStore({
         },
 
         // Catégories
-
+        addCat(state, item) {
+            state.categories.push(item);
+        },
 
         saveCat(state) {
             localStorage.setItem(
@@ -319,7 +329,6 @@ export default createStore({
             state.categories = categories;
         },
 
-
         // Commandes
 
         changeOrderStatus(state, orderId) {
@@ -327,7 +336,7 @@ export default createStore({
         },
     },
     actions: {
-        updateProduct(context, productId ){
+        updateProduct(context, productId) {
             context.commit("updateProduct", productId);
         },
 

@@ -54,9 +54,27 @@ export default {
         };
     },
     methods: {
-      
         addCat() {
-            
+            let lastCatId = this.$store.state.categories.reduce(
+                (maxId, category) =>
+                    category.id > maxId ? category.id : maxId,
+                0
+            ); 
+            let catId = lastCatId + 1;
+            let catName = prompt(
+                "Veuillez entrer le nom de la catégorie à ajouter :"
+            );
+
+            if (catName) {
+                this.newCat.id = catId;
+                this.newCat.name = catName;
+                this.$store.commit("addCat", this.newCat);
+                this.$store.commit("saveCat");
+                this.newCat = {}
+                
+            } else {
+                alert("Veuillez renseigner un nom");
+            }
         },
         editData() {
             return console.log("edit");
