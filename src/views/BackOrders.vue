@@ -3,6 +3,12 @@
     <header class="action-bar">
         <h1>Gestion des commandes</h1>
     </header>
+    <form class="filter-bar" @submit.prevent="">
+            <label for="back-order-search">Rechercher un produit :
+                <input id="back-order-search" name="search" type="search" placeholder="Numéro de commande"
+                    v-model="searchQuery" />
+            </label>
+        </form>
     <div class="listing-products">
         <div class="listing-template">
         <table class="listing-tab">
@@ -15,12 +21,13 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(order, index) in orders" :key="index">
-                    <td>{{ order.id }}</td>
+                <tr v-for="(order, index) in filteredOrders" :key="index">
+                    <td>{{ "#" + order.id }}</td>
                     <td>{{ order.coutTotal + "€" }}</td>
                     <td>{{ order.userId }}</td>
                     <td>
                         <MyButton label="Signaler l'expédition" modifier="edit" @GeneralEventBtn="changeOrderStatus(order.id)" v-if="order.toBeDelivered"/>
+                        <p class="delivered" v-else>Expédié</p>
                     </td>
                 </tr>
             </tbody>
@@ -38,6 +45,11 @@ export default {
         BackNav,
         MyButton
     },
+    data() {
+        return {
+            searchQuery: "",
+        };
+    },
     methods: {
         changeOrderStatus(orderId) {
             if (confirm("Passer la commande en statut livré ?")) {
@@ -49,11 +61,20 @@ export default {
         orders() {
             return this.$store.state.commandes;
         },
+        filteredOrders() {
+            if (!this.searchQuery) return this.orders;
+            let query = this.searchQuery.toLowerCase();
+            return this.orders.filter((prod) =>
+                prod.id.toLowerCase().includes(query)
+            );
+        },
     },
 
 };
 </script>
 
 <style>
-
+.delivered {
+    color: green;
+}
 </style>
