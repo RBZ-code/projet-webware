@@ -84,7 +84,7 @@ export default {
 
 .img-produit {
   width: 100%;
-  height: 100%;
+  aspect-ratio: 1;
   max-width: 100%;
   object-fit: cover;
   border-radius: 8px;

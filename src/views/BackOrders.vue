@@ -40,7 +40,9 @@ export default {
     },
     methods: {
         changeOrderStatus(orderId) {
-            this.$store.commit("changeOrderStatus", orderId)
+            if (confirm("Passer la commande en statut livré ?")) {
+                this.$store.commit("changeOrderStatus", orderId)
+            }
         }
     },
     computed: {
