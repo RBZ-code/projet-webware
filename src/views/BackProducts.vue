@@ -1,64 +1,99 @@
 <template>
-  <div>
-    <BackNav />
-    <header class="action-bar">
-      <h1>Gestion des produits </h1>
-      <MyButton label="Ajouter un produit" modifier="action" @GeneralEventBtn="goToAddProduct()" />
-    </header>
-    <form class="filter-bar">
-        <label for="back-product-search">Rechercher un produit :
-            <input id="back-product-search" name="search" type="search" placeholder="Nom du produit" v-model="searchQuery">
-        </label>
-    </form>
-    <div class="listing-template">
-
-        <div class="listing-box" v-for="(prod, index) in filteredProducts" :key="index">
-            <figure>
-                <img :src="prod.image" :alt="prod.titre" />
-            </figure>
-            <div>
-                <h2>{{ prod.titre }}</h2>
-                <p>{{ prod.description }}</p>
-                <p class="box-numbers">{{ prod.prix + "€" + " - MOQ " + prod.moq }}</p>
-                <div class="box-actions">
-                    <MyButton label="Modifier" modifier="edit" @GeneralEventBtn="openModal(index)" />
-                    <MyButton label="Supprimer" modifier="edit" @GeneralEventBtn="deleteProduct(prod.id)" />
+    <div>
+        <BackNav />
+        <header class="action-bar">
+            <h1>Gestion des produits</h1>
+            <MyButton
+                label="Ajouter un produit"
+                modifier="action"
+                @GeneralEventBtn="goToAddProduct()"
+            />
+        </header>
+        <form class="filter-bar">
+            <label for="back-product-search"
+                >Rechercher un produit :
+                <input
+                    id="back-product-search"
+                    name="search"
+                    type="search"
+                    placeholder="Nom du produit"
+                    v-model="searchQuery"
+                />
+            </label>
+        </form>
+        <div class="listing-template">
+            <div
+                class="listing-box"
+                v-for="(prod, index) in filteredProducts"
+                :key="index"
+            >
+                <figure>
+                    <img :src="prod.image" :alt="prod.titre" />
+                </figure>
+                <div>
+                    <h2>{{ prod.titre }}</h2>
+                    <p>{{ prod.description }}</p>
+                    <p class="box-numbers">
+                        {{ prod.prix + "€" + " - MOQ " + prod.moq }}
+                    </p>
+                    <div class="box-actions">
+                        <MyButton
+                            label="Modifier"
+                            modifier="edit"
+                            @GeneralEventBtn="openModal(index)"
+                        />
+                        <MyButton
+                            label="Supprimer"
+                            modifier="edit"
+                            @GeneralEventBtn="deleteProduct(prod.id)"
+                        />
+                    </div>
                 </div>
             </div>
-
         </div>
-      </div>
     </div>
     <!-- Modal -->
     <div v-if="modalIsOpened" v-cloak id="editModal" class="modal">
+        <div class="modal-content">
+            <span v-on:click="closeModal" class="close-button">X</span>
+            <h2>Modifier le produit</h2>
+            <form>
+                <label for="editName">Nom du produit :</label>
+                <input v-model="editItem.titre" type="text" id="editName" />
 
-      <div class="modal-content">
-        <span v-on:click="closeModal" class="close-button">X</span>
-        <h2>Modifier le produit</h2>
-        <form>
-          <label for="editName">Nom du produit :</label>
-          <input v-model="editItem.titre" type="text" id="editName">
+                <label for="editDesc">Description produit :</label>
+                <textarea
+                    v-model="editItem.description"
+                    type="text"
+                    id="editDesc"
+                    rows="5"
+                ></textarea>
 
-          <label for="editDesc">Description produit :</label>
-          <textarea v-model="editItem.description" type="text" id="editDesc" rows="5"></textarea>
+                <label for="editPrice">Prix du produit :</label>
+                <input v-model="editItem.prix" type="number" id="editPrice" />
 
-          <label for="editPrice">Prix du produit :</label>
-          <input v-model="editItem.prix" type="number" id="editPrice">
+                <label for="editQuantity">MOQ :</label>
+                <input v-model="editItem.moq" type="number" id="editQuantity" />
 
-          <label for="editQuantity">MOQ :</label>
-          <input v-model="editItem.moq" type="number" id="editQuantity">
+                <label for="editCategory">Catégorie produit:</label>
+                <select v-model="editItem.categorieId" id="editCategory">
+                    <option
+                        v-for="category in categories"
+                        :key="category.id"
+                        :value="category.id"
+                    >
+                        {{ category.name }}
+                    </option>
+                </select>
 
-          <label for="editCategory">Catégorie produit:</label>
-          <select v-model="editItem.categorieId" id="editCategory">
-            <option v-for="category in categories" :key="category.id" :value="category.id">{{ category.name }}</option>
-          </select>
-
-          <MyButton label="Modifier" modifier="action" @GeneralEventBtn="updateProduct()" />
-        </form>
-      </div>
+                <MyButton
+                    label="Modifier"
+                    modifier="action"
+                    @GeneralEventBtn="updateProduct()"
+                />
+            </form>
+        </div>
     </div>
-  </div>
-
 </template>
 
 <script>
@@ -66,38 +101,19 @@ import BackNav from "@/components/FrontOffice/BackNav.vue";
 import MyButton from "@/components/FrontOffice/MyButton.vue";
 
 export default {
-  components: {
-    BackNav,
-    MyButton
-  },
-  data() {
-    return {
-      modalIsOpened: false,
-      editItem: {},
-      editIndex: 0,
-    };
-  },
-  computed: {
-    products() {
-      return this.$store.state.produits;
+    components: {
+        BackNav,
+        MyButton,
     },
-    categories() {
-      return this.$store.state.categories;
-    }
-  },
-  methods: {
-    goToAddProduct() {
-      this.$router.push("/back-products-add");
-    },
-
     data() {
         return {
             modalIsOpened: false,
             editItem: {},
-            editIndex: -1,
-            searchQuery: ""
-        }
+            editIndex: 0,
+            earchQuery: "",
+        };
     },
+
     computed: {
         products() {
             return this.$store.state.produits;
@@ -109,50 +125,49 @@ export default {
                 prod.titre.toLowerCase().includes(query)
             );
         },
+        categories() {
+            return this.$store.state.categories;
+        },
     },
     methods: {
-        goToAddProduct() {
-            this.$router.push("/back-products-add");
-        },
         deleteProduct(productId) {
-            let check = confirm("Êtes-vous sûr de vouloir supprimer ce produit ?");
+            let check = confirm(
+                "Êtes-vous sûr de vouloir supprimer ce produit ?"
+            );
             if (check) {
                 this.$store.dispatch("deleteProduct", productId);
                 this.$store.commit("saveProducts");
             }
         },
-      
-       
+        goToAddProduct() {
+            this.$router.push("/back-products-add");
+        },
 
-    deleteProduct(productId) {
-      let check = confirm("Êtes-vous sûr de vouloir supprimer ce produit ?");
-      if (check) {
-        this.$store.dispatch("deleteProduct", productId);
-        this.$store.commit("saveProducts");
-      }
+        closeModal() {
+            this.modalIsOpened = false;
+        },
+        openModal(productId) {
+            this.modalIsOpened = true;
+            this.editItem = { ...this.$store.state.produits[productId] };
+            this.editIndex = productId;
+        },
+        updateProduct() {
+            if (
+                this.editItem.titre &&
+                this.editItem.description &&
+                this.editItem.prix &&
+                this.editItem.moq &&
+                this.editItem.categorieId
+            ) {
+                this.$store.commit("updateProduct", this.editItem);
+
+                this.$store.commit("saveProducts");
+
+                this.editItem = {};
+                this.closeModal();
+            }
+        },
     },
-    closeModal() {
-      this.modalIsOpened = false;
-    },
-    openModal(productId) {
-      this.modalIsOpened = true;
-      this.editItem = { ...this.$store.state.produits[productId] };
-      this.editIndex = productId;
-
-    },
-    updateProduct() {
-      if (this.editItem.titre && this.editItem.description && this.editItem.prix && this.editItem.moq && this.editItem.categorieId) {
-       
-        this.$store.commit("updateProduct", this.editItem);
-
-        
-        this.$store.commit("saveProducts");
-
-        this.editItem = {};
-        this.closeModal();
-      }
-    }
-  }
 };
 </script>
 
@@ -210,7 +225,7 @@ export default {
 }
 
 .listing-box p {
-    margin: .5rem 0;
+    margin: 0.5rem 0;
 }
 
 .listing-box h2 {
@@ -294,7 +309,9 @@ export default {
 textarea {
     resize: none;
     font-size: 1rem;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+        sans-serif;
 }
 
 .modal-content button {
