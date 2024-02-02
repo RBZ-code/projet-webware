@@ -50,6 +50,7 @@ export default {
             return this.$store.state.commandes;
         },
     },
+
 };
 </script>
 

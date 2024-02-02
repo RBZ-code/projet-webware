@@ -1,8 +1,9 @@
 <template>
+  <div>
     <BackNav />
     <header class="action-bar">
-        <h1>Gestion des produits </h1>
-        <MyButton label="Ajouter un produit" modifier="action" @GeneralEventBtn="goToAddProduct()" />
+      <h1>Gestion des produits </h1>
+      <MyButton label="Ajouter un produit" modifier="action" @GeneralEventBtn="goToAddProduct()" />
     </header>
     <form class="filter-bar">
         <label for="back-product-search">Rechercher un produit :
@@ -10,6 +11,7 @@
         </label>
     </form>
     <div class="listing-template">
+
         <div class="listing-box" v-for="(prod, index) in filteredProducts" :key="index">
             <figure>
                 <img :src="prod.image" :alt="prod.titre" />
@@ -19,42 +21,44 @@
                 <p>{{ prod.description }}</p>
                 <p class="box-numbers">{{ prod.prix + "€" + " - MOQ " + prod.moq }}</p>
                 <div class="box-actions">
-                    <MyButton label="Modifier" modifier="edit" @GeneralEventBtn="openModal(prod.id)" />
+                    <MyButton label="Modifier" modifier="edit" @GeneralEventBtn="openModal(index)" />
                     <MyButton label="Supprimer" modifier="edit" @GeneralEventBtn="deleteProduct(prod.id)" />
                 </div>
             </div>
+
         </div>
+      </div>
     </div>
     <!-- Modal -->
     <div v-if="modalIsOpened" v-cloak id="editModal" class="modal">
-        <div class="modal-content">
-            <span v-on:click="closeModal" class="close-button">X</span>
-            <h2>Modifier le produit</h2>
-            <form>
-                <label for="editName">Nom du produit :</label>
-                <input v-model="editItem.titre" type="text" id="editName">
 
-                <label for="editDesc">Description produit :</label>
-                <textarea v-model="editItem.description" type="text" id="editDesc" rows="5"></textarea>
+      <div class="modal-content">
+        <span v-on:click="closeModal" class="close-button">X</span>
+        <h2>Modifier le produit</h2>
+        <form>
+          <label for="editName">Nom du produit :</label>
+          <input v-model="editItem.titre" type="text" id="editName">
 
-                <label for="editPrice">Prix du produit :</label>
-                <input v-model="editItem.prix" type="number" id="editPrice">
+          <label for="editDesc">Description produit :</label>
+          <textarea v-model="editItem.description" type="text" id="editDesc" rows="5"></textarea>
 
-                <label for="editQuantity">MOQ :</label>
-                <input v-model="editItem.moq" type="number" id="editQuantity">
+          <label for="editPrice">Prix du produit :</label>
+          <input v-model="editItem.prix" type="number" id="editPrice">
 
-                <label for="editCategory">Catégorie produit:</label>
-                <select v-model="editItem.categorieId" id="editCategory">
-                    <option value="1">Catégorie 1</option>
-                    <option value="2">Catégorie 2</option>
-                    <option value="3">Catégorie 3</option>
-                    <option value="4">Catégorie 4</option>
-                </select>
+          <label for="editQuantity">MOQ :</label>
+          <input v-model="editItem.moq" type="number" id="editQuantity">
 
-                <MyButton label="Modifier" modifier="action" @GeneralEventBtn="updateProduct()" />
-            </form>
-        </div>
+          <label for="editCategory">Catégorie produit:</label>
+          <select v-model="editItem.categorieId" id="editCategory">
+            <option v-for="category in categories" :key="category.id" :value="category.id">{{ category.name }}</option>
+          </select>
+
+          <MyButton label="Modifier" modifier="action" @GeneralEventBtn="updateProduct()" />
+        </form>
+      </div>
     </div>
+  </div>
+
 </template>
 
 <script>
@@ -62,10 +66,30 @@ import BackNav from "@/components/FrontOffice/BackNav.vue";
 import MyButton from "@/components/FrontOffice/MyButton.vue";
 
 export default {
-    components: {
-        BackNav,
-        MyButton
+  components: {
+    BackNav,
+    MyButton
+  },
+  data() {
+    return {
+      modalIsOpened: false,
+      editItem: {},
+      editIndex: 0,
+    };
+  },
+  computed: {
+    products() {
+      return this.$store.state.produits;
     },
+    categories() {
+      return this.$store.state.categories;
+    }
+  },
+  methods: {
+    goToAddProduct() {
+      this.$router.push("/back-products-add");
+    },
+
     data() {
         return {
             modalIsOpened: false,
@@ -97,22 +121,38 @@ export default {
                 this.$store.commit("saveProducts");
             }
         },
-        closeModal() {
-            this.modalIsOpened = false;
-        },
-        openModal(productId) {
-            this.modalIsOpened = true;
-            this.editItem = { ...this.$store.state.produits[productId - 1] };
-            this.editIndex = productId;
-        },
-        // updateProduct() {
-        //     if (editItem.titre && editItem.description && editItem.prix && editItem.moq && editItem.categorieId) {
-        //         this.$store.state.produits[this.editIndex] = this.editItem;
-        //         this.editItem = {};
-        //         this.closeModal();
-        //     }
-        // }
+      
+       
+
+    deleteProduct(productId) {
+      let check = confirm("Êtes-vous sûr de vouloir supprimer ce produit ?");
+      if (check) {
+        this.$store.dispatch("deleteProduct", productId);
+        this.$store.commit("saveProducts");
+      }
     },
+    closeModal() {
+      this.modalIsOpened = false;
+    },
+    openModal(productId) {
+      this.modalIsOpened = true;
+      this.editItem = { ...this.$store.state.produits[productId] };
+      this.editIndex = productId;
+
+    },
+    updateProduct() {
+      if (this.editItem.titre && this.editItem.description && this.editItem.prix && this.editItem.moq && this.editItem.categorieId) {
+       
+        this.$store.commit("updateProduct", this.editItem);
+
+        
+        this.$store.commit("saveProducts");
+
+        this.editItem = {};
+        this.closeModal();
+      }
+    }
+  }
 };
 </script>
 

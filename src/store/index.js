@@ -11,8 +11,9 @@ export default createStore({
         contact: [],
         users: [],
         lastUser: getLastUser(),
-        
-        categories: [
+
+        categories: localStorage.getItem("copiedCategories")
+        ? JSON.parse(localStorage.getItem("copiedCategories")) : [
             { id: 3, name: "Mobilier d'intérieur" },
             { id: 2, name: "Luminaires" },
             { id: 4, name: "Tapis" },
@@ -223,7 +224,7 @@ export default createStore({
                       categorieId: 4,
                   },
               ],
-      
+
         commandes: [
             {
                 id: 1,
@@ -233,7 +234,7 @@ export default createStore({
                 ],
                 coutTotal: 689.97,
                 userId: 1,
-                toBeDelivered: true
+                toBeDelivered: true,
             },
             {
                 id: 2,
@@ -243,12 +244,11 @@ export default createStore({
                 ],
                 coutTotal: 539.96,
                 userId: 2,
-                toBeDelivered: false
+                toBeDelivered: false,
             },
         ],
     },
     mutations: {
-
         // Utilisateurs
 
         setUserConnected(state, userId) {
@@ -261,6 +261,13 @@ export default createStore({
             user.connected = false;
             localStorage.setItem(`user_${user.id}`, JSON.stringify(user));
             localStorage.setItem("lastUserId", state.lastUser);
+        },
+        addCatlocal(state, user) {
+            state.lastCatId += 1;
+            user.id = state.lastCatId;
+            user.connected = false;
+            localStorage.setItem(user.id, JSON.stringify(user));
+            localStorage.setItem("lastCatId", state.lastCatId);
         },
 
         setUsers(state, user) {
@@ -277,6 +284,14 @@ export default createStore({
             state.produits = state.produits.filter(
                 (prod) => prod.id !== productId
             );
+        },
+        updateProduct(state, updatedProduct) {
+            state.produits = state.produits.map((prod) => {
+                if (prod.id === updatedProduct.id) {
+                    return updatedProduct;
+                }
+                return prod;
+            });
         },
 
         saveProducts(state) {
@@ -295,7 +310,6 @@ export default createStore({
         },
 
         // Catégories
-
         addCat(state, item) {
             state.categories.push(item);
         },
@@ -306,14 +320,21 @@ export default createStore({
                 JSON.stringify(state.categories)
             );
         },
+        setCategories(state, categories) {
+            state.categories = categories;
+        },
 
         // Commandes
-        
+
         changeOrderStatus(state, orderId) {
-            state.commandes[orderId-1].toBeDelivered = false;
-        }
+            state.commandes[orderId - 1].toBeDelivered = false;
+        },
     },
     actions: {
+        updateProduct(context, productId) {
+            context.commit("updateProduct", productId);
+        },
+
         deleteProduct(context, productId) {
             context.commit("deleteProduct", productId);
         },
@@ -330,16 +351,24 @@ export default createStore({
                 context.commit("setUserConnected", parseInt(connectedUserId));
             }
         },
+        loadCategories(context) {
+            let categoriesStockees = localStorage.getItem("copiedCategories");
+
+            if (categoriesStockees) {
+                let categories = JSON.parse(categoriesStockees);
+
+                context.commit("setCategories", categories);
+            }
+        },
     },
 
     getters: {
         filteredUsers(state) {
             if (!state.query) return state.produits;
             let query = state.query.toLowerCase();
-            return state.produits.filter(prod =>
+            return state.produits.filter((prod) =>
                 prod.titre.toLowerCase().includes(query)
             );
-        }
-    }
-
+        },
+    },
 });

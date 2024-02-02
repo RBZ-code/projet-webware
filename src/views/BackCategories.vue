@@ -2,7 +2,11 @@
     <BackNav />
     <header class="action-bar">
         <h1>Gestion des catégories</h1>
-        <MyButton label="Ajouter une catégorie" modifier="action" @GeneralEventBtn="addCat" />
+        <MyButton
+            label="Ajouter une catégorie"
+            modifier="action"
+            @GeneralEventBtn="addCat"
+        />
     </header>
     <div class="listing-template">
         <table class="listing-tab">
@@ -18,8 +22,16 @@
                     <td>{{ cat.id }}</td>
                     <td>{{ cat.name }}</td>
                     <td>
-                        <MyButton label="Modifier" modifier="edit" @GeneralEventBtn="editData" />
-                        <MyButton label="Supprimer" modifier="edit" @GeneralEventBtn="deleteCat()" />
+                        <MyButton
+                            label="Modifier"
+                            modifier="edit"
+                            @GeneralEventBtn="editData"
+                        />
+                        <MyButton
+                            label="Supprimer"
+                            modifier="edit"
+                            @GeneralEventBtn="deleteCat"
+                        />
                     </td>
                 </tr>
             </tbody>
@@ -34,29 +46,38 @@ import MyButton from "@/components/FrontOffice/MyButton.vue";
 export default {
     components: {
         BackNav,
-        MyButton
+        MyButton,
     },
     data() {
         return {
             newCat: {},
-        }
+        };
     },
     methods: {
         addCat() {
-            let catId = "Test"; // A mettre à jour
-            let catName = prompt("Veuillez entrer le nom de la catégorie à ajouter :");
+            let lastCatId = this.$store.state.categories.reduce(
+                (maxId, category) =>
+                    category.id > maxId ? category.id : maxId,
+                0
+            ); 
+            let catId = lastCatId + 1;
+            let catName = prompt(
+                "Veuillez entrer le nom de la catégorie à ajouter :"
+            );
 
             if (catName) {
                 this.newCat.id = catId;
                 this.newCat.name = catName;
                 this.$store.commit("addCat", this.newCat);
                 this.$store.commit("saveCat");
+                this.newCat = {}
+                
             } else {
                 alert("Veuillez renseigner un nom");
             }
         },
         editData() {
-            return console.log("edit")
+            return console.log("edit");
         },
     },
     computed: {
@@ -77,7 +98,7 @@ table {
 
 table th,
 table td {
-    padding: .5rem 0;
+    padding: 0.5rem 0;
     line-height: 1.5rem;
 }
 

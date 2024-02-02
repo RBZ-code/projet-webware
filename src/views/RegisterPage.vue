@@ -231,6 +231,7 @@ export default {
     components: {
         MyButton,
     },
+   
 };
 </script>
 
