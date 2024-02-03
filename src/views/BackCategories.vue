@@ -8,6 +8,16 @@
             @GeneralEventBtn="addCat"
         />
     </header>
+    <form class="filter-bar">
+        <label for="back-product-search">Rechercher un produit :</label>
+        <input
+            id="back-product-search"
+            name="search"
+            type="search"
+            placeholder="Nom de la categorie"
+            v-model="searchQuery"
+        />
+    </form>
     <div class="listing-template">
         <table class="listing-tab">
             <thead>
@@ -18,7 +28,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(cat, index) in categories" :key="index">
+                <tr v-for="(cat, index) in filteredCategories" :key="index">
                     <td>{{ cat.id }}</td>
                     <td>{{ cat.name }}</td>
                     <td>
@@ -30,7 +40,7 @@
                         <MyButton
                             label="Supprimer"
                             modifier="edit"
-                            @GeneralEventBtn="deleteCat"
+                            @GeneralEventBtn="deleteCat(cat.id)"
                         />
                     </td>
                 </tr>
@@ -51,15 +61,25 @@ export default {
     data() {
         return {
             newCat: {},
+            editCat: {},
+            searchQuery: "",
         };
     },
     methods: {
+        deleteCat(categorieId) {
+        let check = confirm(
+            "Êtes-vous sûr de vouloir supprimer cette catégorie ?"
+        );
+        if (check) {
+            this.$store.dispatch("deleteCat", categorieId);
+        }
+    },
         addCat() {
             let lastCatId = this.$store.state.categories.reduce(
                 (maxId, category) =>
                     category.id > maxId ? category.id : maxId,
                 0
-            ); 
+            );
             let catId = lastCatId + 1;
             let catName = prompt(
                 "Veuillez entrer le nom de la catégorie à ajouter :"
@@ -70,8 +90,7 @@ export default {
                 this.newCat.name = catName;
                 this.$store.commit("addCat", this.newCat);
                 this.$store.commit("saveCat");
-                this.newCat = {}
-                
+                this.newCat = {};
             } else {
                 alert("Veuillez renseigner un nom");
             }
@@ -83,6 +102,13 @@ export default {
     computed: {
         categories() {
             return this.$store.state.categories;
+        },
+        filteredCategories() {
+            if (!this.searchQuery) return this.categories;
+            let query = this.searchQuery.toLowerCase();
+            return this.categories.filter((cat) =>
+                cat.name.toLowerCase().includes(query)
+            );
         },
     },
 };

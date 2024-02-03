@@ -331,6 +331,16 @@ export default createStore({
             state.categories = categories;
         },
 
+        deleteCat(state, catId) {
+            state.categories = state.categories.filter(
+                (cat) => cat.id !== catId
+            );
+            localStorage.setItem(
+                "copiedCategories",
+                JSON.stringify(state.categories)
+            );
+        },
+
         // Commandes
 
         changeOrderStatus(state, orderId) {
@@ -345,6 +355,10 @@ export default createStore({
         deleteProduct(context, productId) {
             context.commit("deleteProduct", productId);
         },
+        deleteCat(context, catId) {
+            context.commit("deleteCat", catId);
+        },
+        
 
         async loadUsers(context) {
             try {
