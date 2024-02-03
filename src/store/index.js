@@ -7,18 +7,20 @@ function getLastUser() {
 
 export default createStore({
     state: {
+        lastProductID: 20,
         currentUser: null,
         contact: [],
         users: [],
         lastUser: getLastUser(),
 
         categories: localStorage.getItem("copiedCategories")
-        ? JSON.parse(localStorage.getItem("copiedCategories")) : [
-            { id: 3, name: "Mobilier d'intérieur" },
-            { id: 2, name: "Luminaires" },
-            { id: 4, name: "Tapis" },
-            { id: 1, name: "Objets de décorations" },
-        ],
+            ? JSON.parse(localStorage.getItem("copiedCategories"))
+            : [
+                  { id: 3, name: "Mobilier d'intérieur" },
+                  { id: 2, name: "Luminaires" },
+                  { id: 4, name: "Tapis" },
+                  { id: 1, name: "Objets de décorations" },
+              ],
 
         produits: localStorage.getItem("copiedProduits")
             ? JSON.parse(localStorage.getItem("copiedProduits"))
@@ -258,7 +260,7 @@ export default createStore({
         addUser(state, user) {
             state.lastUser += 1;
             user.id = state.lastUser;
-            user.connected = false;
+            user.role = "user";
             localStorage.setItem(`user_${user.id}`, JSON.stringify(user));
             localStorage.setItem("lastUserId", state.lastUser);
         },
@@ -277,6 +279,8 @@ export default createStore({
         // Produits
 
         addProduct(state, item) {
+            state.lastProductID += 1;
+            item.id = state.lastProductID;
             state.produits.unshift(item);
         },
 
@@ -286,12 +290,17 @@ export default createStore({
             );
         },
         updateProduct(state, updatedProduct) {
-            state.produits = state.produits.map((prod) => {
-                if (prod.id === updatedProduct.id) {
-                    return updatedProduct;
-                }
-                return prod;
-            });
+            const index = state.produits.findIndex(
+                (prod) => prod.id === updatedProduct.id
+            );
+
+            if (index !== -1) {
+                state.produits.splice(index, 1, updatedProduct);
+                localStorage.setItem(
+                    "copiedProduits",
+                    JSON.stringify(state.produits)
+                );
+            }
         },
 
         saveProducts(state) {
@@ -339,18 +348,29 @@ export default createStore({
             context.commit("deleteProduct", productId);
         },
 
-        loadUsers(context) {
-            let users = Object.keys(localStorage)
-                .filter((key) => key.startsWith("user_"))
-                .map((key) => JSON.parse(localStorage.getItem(key)));
+        async loadUsers(context) {
+            try {
+                let users = Object.keys(localStorage)
+                    .filter((key) => key.startsWith("user_"))
+                    .map((key) => JSON.parse(localStorage.getItem(key)));
 
-            context.commit("setUsers", users);
+                context.commit("setUsers", users);
 
-            const connectedUserId = localStorage.getItem("connectedUserId");
-            if (connectedUserId) {
-                context.commit("setUserConnected", parseInt(connectedUserId));
+                const connectedUserId = localStorage.getItem("connectedUserId");
+                if (connectedUserId) {
+                    context.commit(
+                        "setUserConnected",
+                        parseInt(connectedUserId)
+                    );
+                }
+            } catch (error) {
+                console.error(
+                    "Une erreur s'est produite lors du chargement des utilisateurs:",
+                    error
+                );
             }
         },
+
         loadCategories(context) {
             let categoriesStockees = localStorage.getItem("copiedCategories");
 

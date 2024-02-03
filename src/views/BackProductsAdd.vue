@@ -3,28 +3,56 @@
     <div class="product-creation-container">
         <form>
             <h2>Ajout d'un produit au catalogue</h2>
-            <label for="name">Nom du produit :
-                <input v-model="newItem.titre" type="text" id="name" name="name">
+            <label for="name"
+                >Nom du produit :
+                <input
+                    v-model="newItem.titre"
+                    type="text"
+                    id="name"
+                    name="name"
+                />
             </label>
 
-            <label for="price">Prix du produit :
-                <input v-model="newItem.prix" type="number" id="price" name="price">
+            <label for="price"
+                >Prix du produit :
+                <input
+                    v-model="newItem.prix"
+                    type="number"
+                    id="price"
+                    name="price"
+                />
             </label>
 
-            <label for="quantity">MOQ :
-                <input v-model="newItem.moq" type="number" id="quantity" name="quantity">
+
+            <label for="quantity"
+                >MOQ :
+                <input
+                    v-model="newItem.moq"
+                    type="number"
+                    id="quantity"
+                    name="quantity"
+                />
             </label>
 
-            <label for="category">Catégorie du produit :
+          <label for="category">Catégorie du produit :
                 <select v-model="newItem.categorieId" id="category" name="category">
-                    <option value="1">Catégorie 1</option>
-                    <option value="2">Catégorie 2</option>
-                    <option value="3">Catégorie 3</option>
-                    <option value="4">Catégorie 4</option>
+                    <option v-for="category in categories" :key="category.id" :value="category.id">
+                        {{ category.name }}
+                    </option>
                 </select>
             </label>
 
-            <MyButton label="Ajouter le produit" modifier="action" @GeneralEventBtn="addProduct()" />
+            <label for="image">Image du produit :</label>
+            <div @dragover.prevent @drop="handleDrop" class="drop-zone">
+                Faites glisser et déposez une image ici, ou cliquez pour
+                sélectionner une image.
+            </div>
+
+            <MyButton
+                label="Ajouter le produit"
+                modifier="action"
+                @GeneralEventBtn="addProduct"
+            />
         </form>
     </div>
 </template>
@@ -36,29 +64,72 @@ import MyButton from "@/components/FrontOffice/MyButton.vue";
 export default {
     components: {
         BackNav,
-        MyButton
+        MyButton,
     },
     data() {
         return {
-            newItem: {}
-        }
+            newItem: {
+              
+                id: null,
+                titre: "",
+                prix: null,
+                moq: null,
+                categorieId: null,
+            },
+        };
     },
     computed: {
-
+        categories() {
+            return this.$store.state.categories;
+        },
     },
     methods: {
+
+        handleDrop(event) {
+        event.preventDefault();
+
+        const files = event.dataTransfer.files;
+
+        if (files.length > 0) {
+            const reader = new FileReader();
+
+            reader.onload = (e) => {
+                this.newItem.image = e.target.result;
+            };
+
+            reader.readAsDataURL(files[0]);
+        }
+    },
         addProduct() {
-            if (this.newItem.titre && this.newItem.prix && this.newItem.moq && this.newItem.categorieId) {
-                this.$store.commit("addProduct", this.newItem);
+            if (
+                this.newItem.titre &&
+                this.newItem.prix &&
+                this.newItem.moq &&
+                this.newItem.categorieId
+            ) {
+               
+                this.newItem.id = this.$store.state.lastProductID;
+
+               
+                this.$store.commit("addProduct", { ...this.newItem });
+
+               
                 this.$store.commit("saveProducts");
-                this.newItem = {};
+
+             
+                this.newItem = {
+                    id: null,
+                    titre: "",
+                    prix: null,
+                    moq: null,
+                    categorieId: null,
+                };
                 this.$router.push("/back-products");
             } else {
                 alert("Veuillez remplir tous les champs");
             }
         },
     },
-
 };
 </script>
 
@@ -102,5 +173,17 @@ export default {
 
 .product-creation-container button {
     margin-top: 2rem;
+}
+
+
+.drop-zone {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.drop-zone:hover {
+    background-color: #f5f5f5;
 }
 </style>
