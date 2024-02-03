@@ -276,6 +276,18 @@ export default createStore({
             state.users = user;
         },
 
+        changeUserRole(state, index) {
+            if (index >= 0 && index < state.users.length) {
+                state.users[index].role = "admin";
+
+                // Sauvegarde les modifications dans le localStorage
+                localStorage.setItem(
+                    `user_${state.users[index].id}`,
+                    JSON.stringify(state.users[index])
+                );
+            }
+        },
+
         // Produits
 
         addProduct(state, item) {
@@ -319,6 +331,7 @@ export default createStore({
         },
 
         // Catégories
+
         addCat(state, item) {
             state.categories.push(item);
         },
@@ -349,10 +362,8 @@ export default createStore({
             );
 
             if (index !== -1) {
-               
                 state.categories[index].name = updatedCategory.name;
 
-                
                 localStorage.setItem(
                     "copiedCategories",
                     JSON.stringify(state.categories)
