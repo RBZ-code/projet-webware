@@ -33,7 +33,7 @@ export default {
         },
         isAdminUser() {
             const currentUser = this.$store.state.currentUser;
-    return currentUser && currentUser.role === "admin";
+            return currentUser && currentUser.role === "admin";
         },
     },
 };
@@ -45,6 +45,7 @@ export default {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: var(--clr-dark);
+    min-height: 100vh;
 }
 
 * {
@@ -62,6 +63,9 @@ export default {
 }
 
 .main-nav {
+    height: 100px;
+    gap: 2rem;
+    flex-wrap: wrap;
     padding: 30px;
     text-align: center;
 }

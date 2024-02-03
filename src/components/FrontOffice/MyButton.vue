@@ -5,12 +5,11 @@
 </template>
 
 <script>
-
 export default {
     props: {
         label: String,
         modifier: String,
-        backgroundColor: String
+        backgroundColor: String,
     },
     methods: {
         GeneralEventBtn() {
@@ -26,8 +25,9 @@ export default {
                 "red-btn": this.backgroundColor === "red",
                 "blue-btn": this.backgroundColor === "blue",
                 "black-btn": this.backgroundColor === "black",
-                "connexion-btn" : this.backgroundColor === "green",
-
+                "connexion-btn": this.backgroundColor === "green",
+                "action-btn-HP": this.backgroundColor === "hp",
+                "action-btn-HP-form": this.backgroundColor === "hp-form",
             };
         },
     },
@@ -36,7 +36,7 @@ export default {
 
 <style>
 .edit-btn {
-    margin: .5rem .5rem;
+    margin: 0.5rem 0.5rem;
     padding: 5px 15px;
     border-radius: 9999px;
     background-color: var(--clr-blue);
@@ -59,6 +59,36 @@ export default {
     cursor: pointer;
     transition: 200ms ease-in-out;
 }
+.action-btn-HP {
+    padding: 15px 25px;
+    border-radius: 5px;
+    background-color: var(--clr-blue);
+    color: #f1f1f1;
+    border: none;
+    cursor: pointer;
+    transition: 200ms ease-in-out;
+    font-size: 30px;
+}
+
+.action-btn-HP-form {
+    padding: 15px 25px;
+    border-radius: 5px;
+    background-color: var(--clr-blue);
+    color: #f1f1f1;
+    border: none;
+    cursor: pointer;
+    transition: 200ms ease-in-out;
+    font-size: 30px;
+}
+.action-btn-HP-form:hover {
+    color: #fff;
+    background-color: var(--clr-dark);
+}
+
+.action-btn-HP:hover {
+    color: #252525;
+    background-color: #fff;
+}
 
 .action-btn:hover {
     color: #fff;
@@ -66,7 +96,6 @@ export default {
 }
 
 .connexion-btn {
-
     padding: 15px 20px;
     border-radius: 5px;
     background-color: var(--clr-green);
@@ -74,7 +103,6 @@ export default {
     color: white;
     border: none;
     cursor: pointer;
-
 }
 .green-btn {
     background-color: green;
@@ -92,7 +120,7 @@ export default {
     border: none;
     cursor: pointer;
 }
-.black-btn{
+.black-btn {
     background-color: #000;
     color: white;
     padding: 20px;
@@ -102,5 +130,4 @@ export default {
     border: none;
     cursor: pointer;
 }
-
 </style>

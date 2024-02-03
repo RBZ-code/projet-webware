@@ -1,7 +1,7 @@
 <template>
   <div>
     <form class="product-form">
-      <label for="search">Recherche :</label>
+      <label for="search">Recherche : </label>
       <input type="search" id="search" name="search" placeholder="Recherche..." autocomplete="on" v-model="query">
     </form>
 
