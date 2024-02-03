@@ -42,7 +42,7 @@ export default {
                 );
 
                 if (connectedUser) {
-                    this.$store.commit("setUserConnected", connectedUser.id);
+                    this.$store.commit("setUserConnected", connectedUser);
                     localStorage.setItem("connectedUserId", connectedUser.id);
                     this.$router.push("/");
                 }
