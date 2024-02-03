@@ -13,12 +13,14 @@ export default createStore({
         users: [],
         lastUser: getLastUser(),
 
-        categories: localStorage.getItem("copiedCategories") ? JSON.parse(localStorage.getItem("copiedCategories")) : [
-            { id: 3, name: "Mobilier d'intérieur" },
-            { id: 2, name: "Luminaires" },
-            { id: 4, name: "Tapis" },
-            { id: 1, name: "Objets de décorations" },
-        ],
+        categories: localStorage.getItem("copiedCategories")
+            ? JSON.parse(localStorage.getItem("copiedCategories"))
+            : [
+                  { id: 3, name: "Mobilier d'intérieur" },
+                  { id: 2, name: "Luminaires" },
+                  { id: 4, name: "Tapis" },
+                  { id: 1, name: "Objets de décorations" },
+              ],
 
         produits: localStorage.getItem("copiedProduits")
             ? JSON.parse(localStorage.getItem("copiedProduits"))
@@ -274,6 +276,18 @@ export default createStore({
             state.users = user;
         },
 
+        changeUserRole(state, index) {
+            if (index >= 0 && index < state.users.length) {
+                state.users[index].role = "admin";
+
+                // Sauvegarde les modifications dans le localStorage
+                localStorage.setItem(
+                    `user_${state.users[index].id}`,
+                    JSON.stringify(state.users[index])
+                );
+            }
+        },
+
         // Produits
 
         addProduct(state, item) {
@@ -317,6 +331,7 @@ export default createStore({
         },
 
         // Catégories
+
         addCat(state, item) {
             state.categories.push(item);
         },
@@ -331,6 +346,30 @@ export default createStore({
             state.categories = categories;
         },
 
+        deleteCat(state, catId) {
+            state.categories = state.categories.filter(
+                (cat) => cat.id !== catId
+            );
+            localStorage.setItem(
+                "copiedCategories",
+                JSON.stringify(state.categories)
+            );
+        },
+
+        updateCat(state, updatedCategory) {
+            const index = state.categories.findIndex(
+                (cat) => cat.id === updatedCategory.id
+            );
+
+            if (index !== -1) {
+                state.categories[index].name = updatedCategory.name;
+
+                localStorage.setItem(
+                    "copiedCategories",
+                    JSON.stringify(state.categories)
+                );
+            }
+        },
         // Commandes
 
         changeOrderStatus(state, orderId) {
@@ -345,64 +384,72 @@ export default createStore({
         deleteProduct(context, productId) {
             context.commit("deleteProduct", productId);
         },
+        deleteCat(context, catId) {
+            context.commit("deleteCat", catId);
+        },
 
         async loadUsers(context) {
             try {
                 let users = Object.keys(localStorage)
                     .filter((key) => key.startsWith("user_"))
                     .map((key) => JSON.parse(localStorage.getItem(key)));
-        
-                
+
                 const masterUser = {
-                    id: -1,  
+                    id: -1,
                     name: "Master",
                     siret: "12345678901234",
                     password: "passWord",
                     role: "admin",
                 };
-        
+
                 users.push(masterUser);
-        
+
                 context.commit("setUsers", users);
-        
+
                 const connectedUserId = localStorage.getItem("connectedUserId");
                 if (connectedUserId) {
-                    const connectedUser = users.find(user => user.id === parseInt(connectedUserId));
+                    const connectedUser = users.find(
+                        (user) => user.id === parseInt(connectedUserId)
+                    );
                     context.commit("setUserConnected", connectedUser);
                 }
             } catch (error) {
-                console.error("Erreur lors du chargement des utilisateurs :", error);
+                console.error(
+                    "Erreur lors du chargement des utilisateurs :",
+                    error
+                );
             }
         },
-        
 
         async loadCategories(context) {
             try {
-                let categoriesStockees = localStorage.getItem("copiedCategories");
-        
-                
+                let categoriesStockees =
+                    localStorage.getItem("copiedCategories");
+
                 if (categoriesStockees) {
                     let categories = JSON.parse(categoriesStockees);
-        
-                    
+
                     context.commit("setCategories", categories);
                 } else {
-                    
                     let defaultCategories = [
                         { id: 3, name: "Mobilier d'intérieur" },
                         { id: 2, name: "Luminaires" },
                         { id: 4, name: "Tapis" },
                         { id: 1, name: "Objets de décorations" },
                     ];
-        
-                    
+
                     context.commit("setCategories", defaultCategories);
-        
-                   
-                    localStorage.setItem("copiedCategories", JSON.stringify(defaultCategories));
+
+                    localStorage.setItem(
+                        "copiedCategories",
+                        JSON.stringify(defaultCategories)
+                    );
                 }
             } catch (error) {
-                console.error("Erreur lors du chargement des catégories :", error);
+                console.error(
+                    "Erreur lors du chargement des catégories :",
+                    error
+                );
             }
         },
     },

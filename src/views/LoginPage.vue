@@ -83,7 +83,7 @@ export default {
 .login-form {
 
     max-width: 400px;
-    margin: 0 auto;
+    margin: 200px auto;
     padding: 20px;
     background-color: var(--clr-light-grey);
     border-radius: 8px;

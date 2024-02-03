@@ -21,7 +21,11 @@
                     <td>{{ user.siret }}</td>
                     <td>{{ user.role }}</td>
                     <td>
-                        <MyButton label="Changer rôle" modifier="edit" @GeneralEventBtn="login" />
+                        <MyButton
+                            label="Changer rôle"
+                            modifier="edit"
+                            @GeneralEventBtn="changeRole(index)"
+                        />
                     </td>
                 </tr>
             </tbody>
@@ -36,17 +40,21 @@ import MyButton from "@/components/FrontOffice/MyButton.vue";
 export default {
     components: {
         BackNav,
-        MyButton
+        MyButton,
     },
     computed: {
         users() {
             return this.$store.state.users;
         },
     },
-   
+    methods: {
+        changeRole(index) {
+            if (confirm("Changer le rôle de l'utilisateur?")) {
+                this.$store.commit("changeUserRole", index);
+            }
+        },
+    },
 };
 </script>
 
-<style>
-
-</style>
+<style></style>
