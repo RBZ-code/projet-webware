@@ -1,5 +1,5 @@
 <template>
-    <nav class="main-nav" v-if="isBurgerMode == false">
+    <nav class="main-nav" v-if="isLargeScreen">
         <router-link to="/">Home</router-link>
         <router-link v-if="$store.state.currentUser === null" to="/add"
             >Inscription</router-link
@@ -14,6 +14,7 @@
         <a href="#" @click="LogOut" v-if="$store.state.currentUser !== null"
             >Log Out</a
         >
+        <a href="#" v-if="currentUser" @click="redirectToPanier">Panier</a>
         <div class="dropdown">
             <a class="dropbtn">Catégories</a>
             <div class="dropdown-content">
@@ -27,37 +28,43 @@
             </div>
         </div>
     </nav>
-    <nav class="main-nav" :class="{ 'burger-mode': isBurgerMode }" v-if="isBurgerMode == true">
-        <router-link to="/">Home</router-link>
-        <router-link v-if="$store.state.currentUser === null" to="/add"
-            >Inscription</router-link
-        >
-        <router-link to="/catalogue">Catalogue</router-link>
-        <router-link to="/connexion" v-if="$store.state.currentUser === null"
-            >Connexion</router-link
-        >
-        <router-link to="/back-products" v-if="isAdminUser()"
-            >Back-office</router-link
-        >
-        <a href="#" @click="LogOut" v-if="$store.state.currentUser !== null"
-            >Log Out</a
-        >
-        <div class="dropdown">
-            <a class="dropbtn">Catégories</a>
-            <div class="dropdown-content">
-                <router-link
-                    v-for="category in $store.state.categories"
-                    :key="category.id"
-                    :to="'/category/' + category.id"
-                >
-                    {{ category.name }}
-                </router-link>
-            </div>
-        </div>
+    <nav class="main-nav burger-menu" v-else>
         <div class="burger-icon" @click="toggleBurgerMode">
             <div class="bar"></div>
             <div class="bar"></div>
             <div class="bar"></div>
+        </div>
+        <div v-if="burgerMode" class="burger-content">
+            <!-- Contenu du menu burger -->
+            <router-link to="/">Home</router-link>
+            <router-link v-if="$store.state.currentUser === null" to="/add"
+                >Inscription</router-link
+            >
+            <router-link to="/catalogue">Catalogue</router-link>
+            <router-link
+                to="/connexion"
+                v-if="$store.state.currentUser === null"
+                >Connexion</router-link
+            >
+            <router-link to="/back-products" v-if="isAdminUser()"
+                >Back-office</router-link
+            >
+            <a href="#" @click="LogOut" v-if="$store.state.currentUser !== null"
+                >Log Out</a
+            >
+            <a href="#" v-if="currentUser" @click="redirectToPanier">Panier</a>
+            <div class="dropdown">
+                <a class="dropbtn">Catégories</a>
+                <div class="dropdown-content">
+                    <router-link
+                        v-for="category in $store.state.categories"
+                        :key="category.id"
+                        :to="'/category/' + category.id"
+                    >
+                        {{ category.name }}
+                    </router-link>
+                </div>
+            </div>
         </div>
     </nav>
     <div
@@ -78,17 +85,28 @@ export default {
     data() {
         return {
             logoutModalIsVisible: false,
-            isBurgerMode: false,
+            isLargeScreen: window.innerWidth > 600,
+            burgerMode: false,
         };
     },
     created() {
         this.$store.dispatch("loadUsers");
         this.$store.dispatch("loadCategories");
         window.addEventListener("resize", this.handleResize);
-    // Initialisez la propriété isBurgerMode en fonction de la taille d'écran initiale
-    this.handleResize();
     },
+
     methods: {
+        toggleBurgerMode() {
+            this.burgerMode = !this.burgerMode;
+        },
+        handleResize() {
+            this.isLargeScreen = window.innerWidth > 600;
+
+            // Fermer le menu burger lorsqu'on passe à un écran large
+            if (this.isLargeScreen) {
+                this.burgerMode = false;
+            }
+        },
         LogOut() {
             this.$store.commit("setUserConnected", null);
             localStorage.removeItem("connectedUserId");
@@ -103,12 +121,15 @@ export default {
             const currentUser = this.$store.state.currentUser;
             return currentUser && currentUser.role === "admin";
         },
-        toggleBurgerMode() {
-            this.isBurgerMode = !this.isBurgerMode;
+
+        redirectToPanier() {
+            this.$router.push({ name: "panier" });
         },
-        handleResize() {
-      this.isBurgerMode = window.innerWidth < 600;
     },
+    computed: {
+        currentUser() {
+            return this.$store.state.currentUser !== null;
+        },
     },
 };
 </script>
@@ -245,37 +266,31 @@ nav a:hover {
     font-size: 1rem;
 }
 
+.burger-menu {
+    text-align: center;
+    z-index: 1;
+}
+
 .burger-icon {
-  display: none;
   cursor: pointer;
-  position: absolute;
-  top: 30px;
-  right: 30px;
-  z-index: 2;
-}
-
-.burger-icon .bar {
-  width: 30px;
-  height: 3px;
-  background-color: var(--clr-dark);
-  margin: 6px 0;
-  transition: 0.4s;
-}
-
-.main-nav.burger-mode {
+  display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  justify-content: space-between;
+  height: 20px;
+
 }
 
-.main-nav.burger-mode .burger-icon {
-  display: block;
+.bar {
+  background-color: #000;
+  height: 3px;
+  width: 25px;
+  transition: 0.4s;
+
 }
 
-.main-nav.burger-mode a {
-  display: block;
-  width: 100%;
-  text-align: left;
-  padding: 10px;
-  margin: 0;
+.burger-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 </style>

@@ -16,7 +16,6 @@
         </div>
         <div class="product-actions">
           <button v-if="currentUser" @click="addProduit(prod)">Ajouter au panier 🛒</button>
-          <button v-if="currentUser" @click="redirectToPanier">Voir le Panier 🛍️</button>
           <button class="details-btn" @click="redirectToDescriptionPage(prod)">Voir Détails</button>
         </div>
       </div>
@@ -54,9 +53,6 @@ export default {
     addProduit(produit) {
       produit.quantity = 1;
       this.$store.commit("addProductShop", produit);
-    },
-    redirectToPanier() {
-      this.$router.push({ name: 'panier' });
     },
   },
 };
