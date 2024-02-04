@@ -15,7 +15,7 @@
           <p>MOQ: {{ prod.moq }}</p>
         </div>
         <div class="product-actions">
-          <button @click="addToCart(prod.id)">Ajouter au panier 🛒</button>
+          <button @click="addToCart(prod.id)" v-if="$store.state.currentUser !== null">Ajouter au panier 🛒</button>
          
             <button class="details-btn">Voir Détails</button>
 
