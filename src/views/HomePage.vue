@@ -16,7 +16,7 @@
     </div>
     <div class="bordero"></div>
     <div class="form-container">
-        <h4>Contactez nous, nous repondront au mieux à vos attentes</h4>
+        <h4>Contactez-nous, nous répondrons au mieux à vos attentes.</h4>
         <ContactForm @addVisitor="handleAddVisitor" />
     </div>
 </template>
