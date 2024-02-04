@@ -13,6 +13,8 @@ export default createStore({
         users: [],
         lastUser: getLastUser(),
         selectedProduct: null,
+        productsAdd:[],
+        products: [],
         
  
 
@@ -269,13 +271,6 @@ export default createStore({
             localStorage.setItem(`user_${user.id}`, JSON.stringify(user));
             localStorage.setItem("lastUserId", state.lastUser);
         },
-        addCatlocal(state, user) {
-            state.lastCatId += 1;
-            user.id = state.lastCatId;
-            user.connected = false;
-            localStorage.setItem(user.id, JSON.stringify(user));
-            localStorage.setItem("lastCatId", state.lastCatId);
-        },
 
         setUsers(state, user) {
             state.users = user;
@@ -305,6 +300,12 @@ export default createStore({
             state.produits = state.produits.filter(
                 (prod) => prod.id !== productId
             );
+        },
+        addProductShop(state, productId) {
+            state.productsAdd.push(productId);
+        },
+        deleteProductShop(state, prod) {
+            state.productsAdd.splice(this.state.productsAdd.indexOf(prod), 1);
         },
         updateProduct(state, updatedProduct) {
             const index = state.produits.findIndex(
@@ -473,5 +474,6 @@ export default createStore({
                 prod.titre.toLowerCase().includes(query)
             );
         },
-    },
-});
+    }
+
+    });
