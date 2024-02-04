@@ -327,9 +327,6 @@ export default createStore({
             );
         },
 
-        setUsers(state, user) {
-            state.users = user;
-        },
 
 
 

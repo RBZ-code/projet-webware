@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import MyButton from '@/components/FrontOffice/MyButton.vue';
+
 export default {
 
   data() {
