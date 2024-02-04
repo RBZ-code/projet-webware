@@ -14,6 +14,19 @@
         <a href="#" @click="LogOut" v-if="$store.state.currentUser !== null"
             >Log Out</a
         >
+        <div class="dropdown">
+            <a class="dropbtn">Catégories</a>
+            <div class="dropdown-content">
+                <router-link
+                    v-for="category in $store.state.categories"
+                    :key="category.id"
+                    :to="'/category/' + category.id"
+                    
+                >
+                    {{ category.name }}
+                </router-link>
+            </div>
+        </div>
     </nav>
     <router-view />
 </template>
@@ -87,5 +100,50 @@ nav a:hover {
     background-color: var(--clr-blue);
     border-radius: 9999px;
     padding: 5px 15px;
+}
+
+
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    background-color: transparent;
+    color: #000;
+    border: none;
+    padding: 0;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: #000;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    margin: 0;
+}
+
+.dropdown-content a:hover {
+    background-color: var(--clr-light-grey);
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    color: var(--clr-blue);
 }
 </style>
