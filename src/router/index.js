@@ -9,7 +9,8 @@ import BackCategories from "@/views/BackCategories.vue";
 import BackUsers from "@/views/BackUsers.vue";
 import BackOrders from "@/views/BackOrders.vue";
 import CatalogueFiltre from "@/views/CataloguePageFiltred.vue";
-import DescriptionProduct from "@/views/DescriptionProduct.vue"
+import DescriptionProduct from "@/views/DescriptionProduct.vue";
+import Panier from "@/views/Panier.vue";
 
 
 const routes = [
@@ -68,7 +69,12 @@ const routes = [
         path: "/category/:categoryId",
         name: "CatalogueFiltre",
         component: CatalogueFiltre,
-      },
+    },
+    {
+        path: '/panier',
+        name: 'panier',
+        component: Panier,
+    },
 
 ];
 

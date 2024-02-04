@@ -13,6 +13,8 @@ export default createStore({
         users: [],
         lastUser: getLastUser(),
         selectedProduct: null,
+        productsAdd:[],
+        products: [],
         
  
 
@@ -306,6 +308,12 @@ export default createStore({
                 (prod) => prod.id !== productId
             );
         },
+        addProductShop(state, productId) {
+            state.productsAdd.push(productId);
+        },
+        deleteProductShop(state, prod) {
+            state.productsAdd.splice(this.state.productsAdd.indexOf(prod), 1);
+        },
         updateProduct(state, updatedProduct) {
             const index = state.produits.findIndex(
                 (prod) => prod.id === updatedProduct.id
@@ -473,5 +481,6 @@ export default createStore({
                 prod.titre.toLowerCase().includes(query)
             );
         },
-    },
-});
+    }
+
+    });
