@@ -8,6 +8,7 @@ import BackProductsAdd from "@/views/BackProductsAdd.vue"
 import BackCategories from "@/views/BackCategories.vue"
 import BackUsers from "@/views/BackUsers.vue"
 import BackOrders from "@/views/BackOrders.vue"
+import DescriptionProduct from "@/views/DescriptionProduct.vue"
 
 const routes = [
     {
@@ -55,6 +56,11 @@ const routes = [
         name: "back-orders",
         component: BackOrders,
     },
+    {
+        path: "/product-page",
+        name: "description-product",
+        component: DescriptionProduct,
+    }
 ];
 
 const router = createRouter({

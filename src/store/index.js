@@ -11,6 +11,7 @@ export default createStore({
         contact: [],
         users: [],
         lastUser: getLastUser(),
+        selectedProduct: null,
         
         categories: [
             { id: 3, name: "Mobilier d'intérieur" },
@@ -290,6 +291,9 @@ export default createStore({
                 JSON.stringify(state.produits)
             );
 
+        },
+        setSelectedProduct(state, product) {
+            state.selectedProduct = product;
         },
     },
     actions: {
