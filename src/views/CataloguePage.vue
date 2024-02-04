@@ -6,7 +6,7 @@
     </form>
 
     <div class="products-container">
-      <div v-for="(prod, index) in filteredProducts" :key="prod.id" class="product-card">
+      <div v-for="(prod) in filteredProducts" :key="prod.id" class="product-card">
         <img :src="prod.image" :alt="prod.titre" class="img-produit" />
         <div class="product-details">
           <h4>{{ prod.titre }}</h4>

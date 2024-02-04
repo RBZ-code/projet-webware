@@ -271,13 +271,6 @@ export default createStore({
             localStorage.setItem(`user_${user.id}`, JSON.stringify(user));
             localStorage.setItem("lastUserId", state.lastUser);
         },
-        addCatlocal(state, user) {
-            state.lastCatId += 1;
-            user.id = state.lastCatId;
-            user.connected = false;
-            localStorage.setItem(user.id, JSON.stringify(user));
-            localStorage.setItem("lastCatId", state.lastCatId);
-        },
 
         setUsers(state, user) {
             state.users = user;

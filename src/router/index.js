@@ -10,7 +10,7 @@ import BackUsers from "@/views/BackUsers.vue";
 import BackOrders from "@/views/BackOrders.vue";
 import CatalogueFiltre from "@/views/CataloguePageFiltred.vue";
 import DescriptionProduct from "@/views/DescriptionProduct.vue";
-import Panier from "@/views/Panier.vue";
+import Panier from "@/views/PanierPage.vue";
 
 
 const routes = [
