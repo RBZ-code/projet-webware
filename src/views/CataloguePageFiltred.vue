@@ -1,5 +1,4 @@
 <template>
-
   <div>
     <form class="product-form">
       <label for="search">Recherche : </label>
@@ -14,33 +13,24 @@
           <p>{{ prod.description }}</p>
           <p>{{ prod.prix }} €</p>
           <p>MOQ: {{ prod.moq }}</p>
-
         </div>
         <div class="product-actions">
           <button @click="addToCart(prod.id)" v-if="$store.state.currentUser !== null">Ajouter au panier 🛒</button>
          
-            <button class="details-btn"
-            @click="redirectToDescriptionPage(prod)"
-            >Voir Détails</button>
+            <button class="details-btn">Voir Détails</button>
 
         </div>
       </div>
     </div>
-
-
-
   </div>
-
 </template>
 
 <script>
-import MyButton from '@/components/FrontOffice/MyButton.vue';
 export default {
-
   data() {
     return {
       query: "",
-      selectedProduct: {},
+      categoryId: null,
     };
   },
   computed: {
@@ -48,22 +38,38 @@ export default {
       return this.$store.state.produits;
     },
     filteredProducts() {
-      if (!this.query) return this.products;
+      if (!this.query) return this.categoryProducts;
+
       let query = this.query.toLowerCase();
-      return this.products.filter((prod) =>
+      return this.categoryProducts.filter((prod) =>
         prod.titre.toLowerCase().includes(query)
       );
     },
+    categoryProducts() {
+      if (this.categoryId) {
+        return this.products.filter((prod) => prod.categorieId === this.categoryId);
+      }
+      return [];
+    },
   },
   methods: {
-    redirectToDescriptionPage(product) {
-            this.$store.commit("setSelectedProduct", product);
-            this.$router.push({ name: 'description-product' });
-        },
+    addToCart() {
+      // Logique pour ajouter au panier
+    },
   },
- 
+  watch: {
+    '$route.params.categoryId'(newCategoryId) {
+      this.categoryId = parseInt(newCategoryId);
+    },
+  },
+  created() {
+    this.categoryId = parseInt(this.$route.params.categoryId);
+  console.log('categoryId:', this.categoryId);
+  console.log('categoryProducts:', this.categoryProducts);
+  },
 };
 </script>
+
 
 <style scoped>
 
@@ -91,7 +97,6 @@ export default {
   justify-content: space-between;
   max-width: 500px;
   margin: 0 auto;
-
 }
 
 .img-produit {
@@ -136,10 +141,8 @@ export default {
   transition: background-color 0.3s ease;
 }
 
-
 .details-btn:hover {
   background-color: #44b9da;
   color: #ffffff;
-
 }
 </style>

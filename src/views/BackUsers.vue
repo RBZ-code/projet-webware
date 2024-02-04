@@ -1,5 +1,8 @@
 <template>
     <BackNav />
+    <header class="action-bar">
+        <h1>Gestion des utilisateurs</h1>
+    </header>
     <div class="listing-template">
         <table class="listing-tab">
             <thead>
@@ -18,7 +21,11 @@
                     <td>{{ user.siret }}</td>
                     <td>{{ user.role }}</td>
                     <td>
-                        <MyButton label="Modifier" modifier="edit" @GeneralEventBtn="login" />
+                        <MyButton
+                            label="Changer rôle"
+                            modifier="edit"
+                            @GeneralEventBtn="changeRole(index)"
+                        />
                     </td>
                 </tr>
             </tbody>
@@ -33,19 +40,22 @@ import MyButton from "@/components/FrontOffice/MyButton.vue";
 export default {
     components: {
         BackNav,
-        MyButton
+        MyButton,
     },
     computed: {
         users() {
             return this.$store.state.users;
         },
     },
-    created() {
-        this.$store.dispatch("loadUsers");
+    methods: {
+        changeRole(index) {
+        if (confirm("Changer le rôle de l'utilisateur?")) {
+            const newRole = this.$store.state.users[index].role === "admin" ? "user" : "admin";
+            this.$store.commit("changeUserRole", { index, newRole });
+        }
+    },
     },
 };
 </script>
 
-<style>
-
-</style>
+<style></style>

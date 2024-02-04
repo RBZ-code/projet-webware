@@ -7,18 +7,25 @@ function getLastUser() {
 
 export default createStore({
     state: {
+        lastProductID: 20,
         currentUser: null,
         contact: [],
         users: [],
         lastUser: getLastUser(),
         selectedProduct: null,
         
-        categories: [
-            { id: 3, name: "Mobilier d'intérieur" },
-            { id: 2, name: "Luminaires" },
-            { id: 4, name: "Tapis" },
-            { id: 1, name: "Objets de décorations" },
-        ],
+ 
+
+
+        categories: localStorage.getItem("copiedCategories")
+            ? JSON.parse(localStorage.getItem("copiedCategories"))
+            : [
+                  { id: 3, name: "Mobilier d'intérieur" },
+                  { id: 2, name: "Luminaires" },
+                  { id: 4, name: "Tapis" },
+                  { id: 1, name: "Objets de décorations" },
+              ],
+
 
         produits: localStorage.getItem("copiedProduits")
             ? JSON.parse(localStorage.getItem("copiedProduits"))
@@ -224,7 +231,7 @@ export default createStore({
                       categorieId: 4,
                   },
               ],
-      
+
         commandes: [
             {
                 id: 1,
@@ -234,6 +241,7 @@ export default createStore({
                 ],
                 coutTotal: 689.97,
                 userId: 1,
+                toBeDelivered: true,
             },
             {
                 id: 2,
@@ -243,46 +251,87 @@ export default createStore({
                 ],
                 coutTotal: 539.96,
                 userId: 2,
+                toBeDelivered: false,
             },
         ],
     },
     mutations: {
-        setUserConnected(state, userId) {
-            state.currentUser = userId;
+        // Utilisateurs
+
+        setUserConnected(state, user) {
+            state.currentUser = user;
         },
+
         addUser(state, user) {
             state.lastUser += 1;
             user.id = state.lastUser;
-            user.connected = false;
+            user.role = "user";
             localStorage.setItem(`user_${user.id}`, JSON.stringify(user));
             localStorage.setItem("lastUserId", state.lastUser);
         },
-        addProduct(state, item) {
-            state.produits.push(item);
-            localStorage.setItem(
-                "copiedProduits",
-                JSON.stringify(state.produits)
-            );
+        addCatlocal(state, user) {
+            state.lastCatId += 1;
+            user.id = state.lastCatId;
+            user.connected = false;
+            localStorage.setItem(user.id, JSON.stringify(user));
+            localStorage.setItem("lastCatId", state.lastCatId);
         },
-        deleteProduct(state, productId) {
-            // Supprimer le produit du tableau produits
-            state.produits = state.produits.filter(
-                (prod) => prod.id !== productId
-            );
 
-            // Mettre à jour le localStorage "copiedProduits"
-            localStorage.setItem(
-                "copiedProduits",
-                JSON.stringify(state.produits)
-            );
-        },
         setUsers(state, user) {
             state.users = user;
         },
 
-        setQuery(state, query) {
-            state.query = query;
+        changeUserRole(state, { index, newRole }) {
+            if (index >= 0 && index < state.users.length) {
+                state.users[index].role = newRole;
+        
+               
+                localStorage.setItem(
+                    `user_${state.users[index].id}`,
+                    JSON.stringify(state.users[index])
+                );
+            }
         },
+
+        // Produits
+
+        addProduct(state, item) {
+            state.lastProductID += 1;
+            item.id = state.lastProductID;
+            state.produits.unshift(item);
+        },
+
+        deleteProduct(state, productId) {
+            state.produits = state.produits.filter(
+                (prod) => prod.id !== productId
+            );
+        },
+        updateProduct(state, updatedProduct) {
+            const index = state.produits.findIndex(
+                (prod) => prod.id === updatedProduct.id
+            );
+
+            if (index !== -1) {
+                state.produits.splice(index, 1, updatedProduct);
+                localStorage.setItem(
+                    "copiedProduits",
+                    JSON.stringify(state.produits)
+                );
+            }
+        },
+
+        saveProducts(state) {
+            localStorage.setItem(
+                "copiedProduits",
+                JSON.stringify(state.produits)
+            );
+        },
+
+        setUsers(state, user) {
+            state.users = user;
+        },
+
+
 
         setProducts(state, products) {
             state.produits = products;
@@ -290,27 +339,131 @@ export default createStore({
                 "copiedProduits",
                 JSON.stringify(state.produits)
             );
+        },
 
+        // Catégories
+
+        addCat(state, item) {
+            state.categories.push(item);
+        },
+
+        saveCat(state) {
+            localStorage.setItem(
+                "copiedCategories",
+                JSON.stringify(state.categories)
+            );
+        },
+        setCategories(state, categories) {
+            state.categories = categories;
+        },
+
+        deleteCat(state, catId) {
+            state.categories = state.categories.filter(
+                (cat) => cat.id !== catId
+            );
+            localStorage.setItem(
+                "copiedCategories",
+                JSON.stringify(state.categories)
+            );
+        },
+
+        updateCat(state, updatedCategory) {
+            const index = state.categories.findIndex(
+                (cat) => cat.id === updatedCategory.id
+            );
+
+            if (index !== -1) {
+                state.categories[index].name = updatedCategory.name;
+
+                localStorage.setItem(
+                    "copiedCategories",
+                    JSON.stringify(state.categories)
+                );
+            }
+        },
+        // Commandes
+
+        changeOrderStatus(state, orderId) {
+            state.commandes[orderId - 1].toBeDelivered = false;
         },
         setSelectedProduct(state, product) {
             state.selectedProduct = product;
         },
     },
     actions: {
+        updateProduct(context, productId) {
+            context.commit("updateProduct", productId);
+        },
+
         deleteProduct(context, productId) {
             context.commit("deleteProduct", productId);
         },
+        deleteCat(context, catId) {
+            context.commit("deleteCat", catId);
+        },
 
-        loadUsers(context) {
-            let users = Object.keys(localStorage)
-                .filter((key) => key.startsWith("user_"))
-                .map((key) => JSON.parse(localStorage.getItem(key)));
+        async loadUsers(context) {
+            try {
+                let users = Object.keys(localStorage)
+                    .filter((key) => key.startsWith("user_"))
+                    .map((key) => JSON.parse(localStorage.getItem(key)));
 
-            context.commit("setUsers", users);
+                const masterUser = {
+                    id: -1,
+                    name: "Master",
+                    siret: "12345678901234",
+                    password: "passWord",
+                    role: "admin",
+                };
 
-            const connectedUserId = localStorage.getItem("connectedUserId");
-            if (connectedUserId) {
-                context.commit("setUserConnected", parseInt(connectedUserId));
+                users.push(masterUser);
+
+                context.commit("setUsers", users);
+
+                const connectedUserId = localStorage.getItem("connectedUserId");
+                if (connectedUserId) {
+                    const connectedUser = users.find(
+                        (user) => user.id === parseInt(connectedUserId)
+                    );
+                    context.commit("setUserConnected", connectedUser);
+                }
+            } catch (error) {
+                console.error(
+                    "Erreur lors du chargement des utilisateurs :",
+                    error
+                );
+            }
+        },
+
+        async loadCategories(context) {
+            try {
+                let categoriesStockees =
+                    localStorage.getItem("copiedCategories");
+
+                if (categoriesStockees) {
+                    let categories = JSON.parse(categoriesStockees);
+
+                    context.commit("setCategories", categories);
+                } else {
+                    let defaultCategories = [
+                        { id: 3, name: "Mobilier d'intérieur" },
+                        { id: 2, name: "Luminaires" },
+                        { id: 4, name: "Tapis" },
+                        { id: 1, name: "Objets de décorations" },
+                    ];
+
+                    context.commit("setCategories", defaultCategories);
+
+                    localStorage.setItem(
+                        "copiedCategories",
+                        JSON.stringify(defaultCategories)
+                    );
+                }
+            } catch (error) {
+                console.error(
+                    "Erreur lors du chargement des catégories :",
+                    error
+                );
             }
         },
     },
@@ -319,10 +472,9 @@ export default createStore({
         filteredUsers(state) {
             if (!state.query) return state.produits;
             let query = state.query.toLowerCase();
-            return state.produits.filter(prod =>
+            return state.produits.filter((prod) =>
                 prod.titre.toLowerCase().includes(query)
             );
-        }
-    }
-
+        },
+    },
 });

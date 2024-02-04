@@ -2,13 +2,15 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomePage.vue";
 import AddUser from "@/views/RegisterPage.vue";
 import PageConnexion from "@/views/LoginPage.vue";
-import Catalogue from "@/views/CataloguePage.vue"
-import BackProducts from "@/views/BackProducts.vue"
-import BackProductsAdd from "@/views/BackProductsAdd.vue"
-import BackCategories from "@/views/BackCategories.vue"
-import BackUsers from "@/views/BackUsers.vue"
-import BackOrders from "@/views/BackOrders.vue"
+import Catalogue from "@/views/CataloguePage.vue";
+import BackProducts from "@/views/BackProducts.vue";
+import BackProductsAdd from "@/views/BackProductsAdd.vue";
+import BackCategories from "@/views/BackCategories.vue";
+import BackUsers from "@/views/BackUsers.vue";
+import BackOrders from "@/views/BackOrders.vue";
+import CatalogueFiltre from "@/views/CataloguePageFiltred.vue";
 import DescriptionProduct from "@/views/DescriptionProduct.vue"
+
 
 const routes = [
     {
@@ -57,10 +59,17 @@ const routes = [
         component: BackOrders,
     },
     {
+
         path: "/product-page",
         name: "description-product",
         component: DescriptionProduct,
-    }
+    },
+    {
+        path: "/category/:categoryId",
+        name: "CatalogueFiltre",
+        component: CatalogueFiltre,
+      },
+
 ];
 
 const router = createRouter({

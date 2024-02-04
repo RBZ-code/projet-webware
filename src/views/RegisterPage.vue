@@ -1,8 +1,9 @@
 <template>
+    <h1>Inscription</h1>
     <!-- ... -->
     <div :class="{ 'form-container': true, 'wizz-effect': showErrorEffect }">
         <!-- ... -->
-
+        
         <label class="form-label" for="raisonSociale">Raison sociale</label>
         <input
             class="form-input"
@@ -131,7 +132,7 @@
 
         <MyButton
             label="Inscription"
-            backgroundColor ="blue"
+            modifier="action"
             @click="addUser"
             class="btn"
         />
@@ -230,6 +231,7 @@ export default {
     components: {
         MyButton,
     },
+   
 };
 </script>
 
@@ -244,10 +246,14 @@ export default {
     max-width: 400px;
     margin: auto;
     padding: 20px;
-    background-color: #252525;
-    color: #ffffff;
+    background-color: var(--clr-light-grey);
+    color: var(--clr-dark);
     border-radius: 8px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    margin-bottom: 1rem;
+    text-align: center;
 }
 
 .form-label {
@@ -259,10 +265,11 @@ export default {
     width: 100%;
     padding: 8px;
     margin-bottom: 12px;
-    border: 2px solid #c4c4c4;
+    border: none;
     border-radius: 4px;
     background-color: #ffffff;
     color: #252525;
+
 }
 
 .form-input:focus {
