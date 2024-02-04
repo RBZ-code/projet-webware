@@ -102,7 +102,7 @@ export default {
         handleResize() {
             this.isLargeScreen = window.innerWidth > 600;
 
-            // Fermer le menu burger lorsqu'on passe à un écran large
+           
             if (this.isLargeScreen) {
                 this.burgerMode = false;
             }
