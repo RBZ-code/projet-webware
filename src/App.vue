@@ -28,11 +28,22 @@
             </div>
         </div>
     </nav>
+    <div v-if="$store.state.currentUser === null && logoutModalIsVisible" v-cloak class="modal">
+        <div class="modal-content">
+            <h2>Déconnexion réussie !</h2>
+            <p>Merci de votre visite sur notre site.</p>
+        </div>
+    </div>
     <router-view />
 </template>
 
 <script>
 export default {
+    data() {
+        return {
+            logoutModalIsVisible: false,
+        };
+    },
     created() {
         this.$store.dispatch("loadUsers");
         this.$store.dispatch("loadCategories");
@@ -41,8 +52,12 @@ export default {
         LogOut() {
             this.$store.commit("setUserConnected", null);
             localStorage.removeItem("connectedUserId");
-            alert("Vous avez été déconnecté !");
+            this.logoutModalIsVisible = true;
             this.$router.push("/");
+
+            setTimeout(() => {
+                this.logoutModalIsVisible = false;
+            }, 3000);
         },
         isAdminUser() {
             const currentUser = this.$store.state.currentUser;
@@ -145,5 +160,43 @@ nav a:hover {
 
 .dropdown:hover .dropbtn {
     color: var(--clr-blue);
+}
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    position: relative;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    max-width: 500px !important; 
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.modal-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+}
+
+.modal-content p {
+    font-size: 1rem;
 }
 </style>
