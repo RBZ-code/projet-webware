@@ -276,11 +276,11 @@ export default createStore({
             state.users = user;
         },
 
-        changeUserRole(state, index) {
+        changeUserRole(state, { index, newRole }) {
             if (index >= 0 && index < state.users.length) {
-                state.users[index].role = "admin";
-
-                // Sauvegarde les modifications dans le localStorage
+                state.users[index].role = newRole;
+        
+               
                 localStorage.setItem(
                     `user_${state.users[index].id}`,
                     JSON.stringify(state.users[index])

@@ -49,10 +49,11 @@ export default {
     },
     methods: {
         changeRole(index) {
-            if (confirm("Changer le rôle de l'utilisateur?")) {
-                this.$store.commit("changeUserRole", index);
-            }
-        },
+        if (confirm("Changer le rôle de l'utilisateur?")) {
+            const newRole = this.$store.state.users[index].role === "admin" ? "user" : "admin";
+            this.$store.commit("changeUserRole", { index, newRole });
+        }
+    },
     },
 };
 </script>
