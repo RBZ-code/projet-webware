@@ -12,6 +12,10 @@ export default createStore({
         contact: [],
         users: [],
         lastUser: getLastUser(),
+        selectedProduct: null,
+        
+ 
+
 
         categories: localStorage.getItem("copiedCategories")
             ? JSON.parse(localStorage.getItem("copiedCategories"))
@@ -21,6 +25,7 @@ export default createStore({
                   { id: 4, name: "Tapis" },
                   { id: 1, name: "Objets de décorations" },
               ],
+
 
         produits: localStorage.getItem("copiedProduits")
             ? JSON.parse(localStorage.getItem("copiedProduits"))
@@ -322,6 +327,12 @@ export default createStore({
             );
         },
 
+        setUsers(state, user) {
+            state.users = user;
+        },
+
+
+
         setProducts(state, products) {
             state.produits = products;
             localStorage.setItem(
@@ -374,6 +385,9 @@ export default createStore({
 
         changeOrderStatus(state, orderId) {
             state.commandes[orderId - 1].toBeDelivered = false;
+        },
+        setSelectedProduct(state, product) {
+            state.selectedProduct = product;
         },
     },
     actions: {
