@@ -4,17 +4,14 @@
         <router-link v-if="$store.state.currentUser === null" to="/add"
             >Inscription</router-link
         >
-        <router-link to="/catalogue">Catalogue</router-link>
         <router-link to="/connexion" v-if="$store.state.currentUser === null"
             >Connexion</router-link
         >
         <router-link to="/back-products" v-if="isAdminUser()"
             >Back-office</router-link
         >
-        <a href="#" @click="LogOut" v-if="$store.state.currentUser !== null"
-            >Log Out</a
-        >
-        <a href="#" v-if="currentUser" @click="redirectToPanier">Panier</a>
+
+        <router-link to="/catalogue">Catalogue</router-link>
         <div class="dropdown">
             <a class="dropbtn">Catégories</a>
             <div class="dropdown-content">
@@ -22,25 +19,28 @@
                     v-for="category in $store.state.categories"
                     :key="category.id"
                     :to="'/category/' + category.id"
+                    class="category-link burger-menu-link"
                 >
                     {{ category.name }}
                 </router-link>
             </div>
         </div>
+        <a href="#" v-if="currentUser" @click="redirectToPanier">Panier</a>
+        <a href="#" @click="LogOut" v-if="$store.state.currentUser !== null"
+            >Log Out</a
+        >
     </nav>
-    <nav class="main-nav burger-menu" v-else>
+    <nav class="main-nav burger-menu" v-else ref="burgerMenu">
         <div class="burger-icon" @click="toggleBurgerMode">
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
+            <div :class="{ bar: true, 'rotate-bar1': burgerMode }"></div>
+            <div :class="{ bar: true, 'hide-bar2': burgerMode }"></div>
+            <div :class="{ bar: true, 'rotate-bar3': burgerMode }"></div>
         </div>
         <div v-if="burgerMode" class="burger-content">
-            <!-- Contenu du menu burger -->
             <router-link to="/">Home</router-link>
             <router-link v-if="$store.state.currentUser === null" to="/add"
                 >Inscription</router-link
             >
-            <router-link to="/catalogue">Catalogue</router-link>
             <router-link
                 to="/connexion"
                 v-if="$store.state.currentUser === null"
@@ -49,22 +49,24 @@
             <router-link to="/back-products" v-if="isAdminUser()"
                 >Back-office</router-link
             >
-            <a href="#" @click="LogOut" v-if="$store.state.currentUser !== null"
-                >Log Out</a
-            >
-            <a href="#" v-if="currentUser" @click="redirectToPanier">Panier</a>
+            <router-link to="/catalogue">Catalogue</router-link>
             <div class="dropdown">
                 <a class="dropbtn">Catégories</a>
-                <div class="dropdown-content">
+                <div class="dropdown-content-burger">
                     <router-link
                         v-for="category in $store.state.categories"
                         :key="category.id"
                         :to="'/category/' + category.id"
+                        class="category-link burger-menu-link"
                     >
                         {{ category.name }}
                     </router-link>
                 </div>
             </div>
+            <a href="#" v-if="currentUser" @click="redirectToPanier">Panier</a>
+            <a href="#" @click="LogOut" v-if="$store.state.currentUser !== null"
+                >Log Out</a
+            >
         </div>
     </nav>
     <div
@@ -93,16 +95,24 @@ export default {
         this.$store.dispatch("loadUsers");
         this.$store.dispatch("loadCategories");
         window.addEventListener("resize", this.handleResize);
+        document.addEventListener("click", this.handleGlobalClick);
     },
 
     methods: {
+        handleGlobalClick(event) {
+            const burgerMenu = this.$refs.burgerMenu;
+
+            if (burgerMenu && !burgerMenu.contains(event.target)) {
+                this.burgerMode = false;
+            }
+        },
         toggleBurgerMode() {
             this.burgerMode = !this.burgerMode;
         },
+
         handleResize() {
             this.isLargeScreen = window.innerWidth > 600;
 
-           
             if (this.isLargeScreen) {
                 this.burgerMode = false;
             }
@@ -115,7 +125,7 @@ export default {
 
             setTimeout(() => {
                 this.logoutModalIsVisible = false;
-            }, 3000);
+            }, 2000);
         },
         isAdminUser() {
             const currentUser = this.$store.state.currentUser;
@@ -157,6 +167,7 @@ export default {
     --clr-white: #fff;
 }
 
+/* Main Navigation */
 .main-nav {
     height: 100px;
     gap: 2rem;
@@ -199,6 +210,74 @@ nav a:hover {
     cursor: pointer;
 }
 
+.dropbtn:active {
+    font-weight: bold;
+    color: #ffffff;
+    background-color: var(--clr-blue) !important;
+    padding: 5px 15px;
+}
+
+.category-link:hover {
+    font-weight: bold;
+    color: var(--clr-blue) !important;
+    background-color: transparent !important;
+    padding: 5px 15px;
+}
+
+.category-link:active {
+    font-weight: bold;
+    color: #ffffff;
+    padding: 5px 15px;
+}
+.burger-menu-link {
+    border-radius: 0 !important;
+}
+
+.burger-menu-link:hover {
+    font-weight: bold;
+    color: #ffffff !important;
+    background-color: var(--clr-blue) !important;
+    padding: 5px 15px;
+}
+
+/* Burger Menu */
+.burger-menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+
+.burger-icon {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 20px;
+}
+
+.bar {
+    background-color: black;
+    height: 3px;
+    width: 25px;
+    transition: 0.4s;
+}
+
+.burger-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 100vh;
+    width: 50vw;
+    background-color: rgba(196, 196, 196, 0.4);
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 1;
+}
+
+/* Dropdown Content */
 .dropdown-content {
     display: none;
     position: absolute;
@@ -207,8 +286,26 @@ nav a:hover {
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
 }
-
 .dropdown-content a {
+    color: #000;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    margin: 0;
+}
+
+.dropdown-content-burger {
+    display: none;
+    position: absolute;
+    right: 100px;
+    bottom: 0rem;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content-burger a {
     color: #000;
     padding: 12px 16px;
     text-decoration: none;
@@ -224,10 +321,11 @@ nav a:hover {
     display: block;
 }
 
-.dropdown:hover .dropbtn {
-    color: var(--clr-blue);
+.dropdown:hover .dropdown-content-burger {
+    display: block;
 }
 
+/* Modal */
 .modal {
     position: fixed;
     top: 50%;
@@ -266,31 +364,22 @@ nav a:hover {
     font-size: 1rem;
 }
 
-.burger-menu {
-    text-align: center;
-    z-index: 1;
+.rotate-bar1 {
+    transform: rotate(-45deg) translate(-6px, 6px);
 }
 
-.burger-icon {
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 20px;
-
+.hide-bar2 {
+    opacity: 0;
 }
 
-.bar {
-  background-color: #000;
-  height: 3px;
-  width: 25px;
-  transition: 0.4s;
-
+.rotate-bar3 {
+    transform: rotate(45deg) translate(-6px, -6px);
 }
 
-.burger-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.burger-icon .bar {
+    background-color: black;
+    height: 3px;
+    width: 25px;
+    transition: 0.4s;
 }
 </style>
