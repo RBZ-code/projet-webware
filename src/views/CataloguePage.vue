@@ -1,12 +1,12 @@
 <template>
   <div>
     <form class="product-form">
-      <label for="search">Recherche :</label>
+      <label for="search">Recherche : </label>
       <input type="search" id="search" name="search" placeholder="Recherche..." autocomplete="on" v-model="query">
     </form>
 
     <div class="products-container">
-      <div v-for="(prod, index) in filteredProducts" :key="index" class="product-card">
+      <div v-for="(prod) in filteredProducts" :key="prod.id" class="product-card">
         <img :src="prod.image" :alt="prod.titre" class="img-produit" />
         <div class="product-details">
           <h4>{{ prod.titre }}</h4>
@@ -15,10 +15,8 @@
           <p>MOQ: {{ prod.moq }}</p>
         </div>
         <div class="product-actions">
-          <button @click="addToCart(prod.id)">Ajouter au panier 🛒</button>
-         
-            <button class="details-btn">Voir Détails</button>
-
+          <button v-if="currentUser" @click="addProduit(prod)">Ajouter au panier 🛒</button>
+          <button class="details-btn" @click="redirectToDescriptionPage(prod)">Voir Détails</button>
         </div>
       </div>
     </div>
@@ -38,24 +36,34 @@ export default {
     },
     filteredProducts() {
       if (!this.query) return this.products;
-      let query = this.query.toLowerCase();
+      const query = this.query.toLowerCase();
       return this.products.filter((prod) =>
         prod.titre.toLowerCase().includes(query)
       );
     },
+    currentUser() {
+      return this.$store.state.currentUser !== null;
+    },
   },
   methods: {
-   
+    redirectToDescriptionPage(product) {
+      this.$store.commit("setSelectedProduct", product);
+      this.$router.push({ name: "description-product" });
+    },
+    addProduit(produit) {
+      produit.quantity = 1;
+      this.$store.commit("addProductShop", produit);
+    },
   },
- 
 };
 </script>
 
-<style scoped>
 
-.product-form{
-    width: 80%;
-    margin: 1rem auto;
+
+<style scoped>
+.product-form {
+  width: 80%;
+  margin: 1rem auto;
 }
 
 .products-container {
@@ -87,6 +95,7 @@ export default {
   border-radius: 8px;
   margin-bottom: 10px;
 }
+
 .product-details {
   flex-grow: 1;
 }

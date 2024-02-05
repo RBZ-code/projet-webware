@@ -5,11 +5,18 @@
             <h1>Gestion des produits</h1>
             <MyButton label="Ajouter un produit" modifier="action" @GeneralEventBtn="goToAddProduct()" />
         </header>
-        <form class="filter-bar" @submit.prevent="">
-            <label for="back-product-search">Rechercher un produit :
-                <input id="back-product-search" name="search" type="search" placeholder="Nom du produit"
-                    v-model="searchQuery" />
-            </label>
+
+        <form class="filter-bar">
+            <label for="back-product-search">Rechercher un produit :</label>
+            <input
+                id="back-product-search"
+                name="search"
+                type="search"
+                placeholder="Nom du produit"
+                v-model="searchQuery"
+
+
+
         </form>
         <div class="listing-template">
             <div class="listing-box" v-for="(prod, index) in filteredProducts" :key="index">
@@ -55,7 +62,15 @@
                     </option>
                 </select>
 
-                <MyButton label="Modifier" modifier="action" @GeneralEventBtn="updateProduct()" />
+
+                <input type="hidden" v-model="editItem.id" />
+
+                <MyButton
+                    label="Modifier"
+                    modifier="action"
+                    @GeneralEventBtn="updateProduct"
+                />
+
             </form>
         </div>
     </div>
@@ -101,8 +116,8 @@ export default {
             );
             if (check) {
                 this.$store.dispatch("deleteProduct", productId);
-                this.$store.commit("saveProducts");
             }
+            this.$store.commit("saveProducts"); 
         },
         goToAddProduct() {
             this.$router.push("/back-products-add");
@@ -113,23 +128,28 @@ export default {
         },
         openModal(productId) {
             this.modalIsOpened = true;
-            this.editItem = { ...this.$store.state.produits[productId] };
+            this.editItem = {
+              
+                ...Object.assign({}, this.$store.state.produits[productId]),
+            };
             this.editIndex = productId;
         },
         updateProduct() {
             if (
                 this.editItem.titre &&
-                this.editItem.description &&
                 this.editItem.prix &&
                 this.editItem.moq &&
                 this.editItem.categorieId
             ) {
-                this.$store.commit("updateProduct", this.editItem);
+              
+                this.$store.commit("updateProduct", { ...this.editItem });
 
+          
                 this.$store.commit("saveProducts");
 
+        
                 this.editItem = {};
-                this.closeModal();
+                this.modalIsOpened = false;
             }
         },
     },

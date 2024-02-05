@@ -42,7 +42,7 @@ export default {
                 );
 
                 if (connectedUser) {
-                    this.$store.commit("setUserConnected", connectedUser.id);
+                    this.$store.commit("setUserConnected", connectedUser);
                     localStorage.setItem("connectedUserId", connectedUser.id);
                     this.$router.push("/");
                 }
@@ -83,7 +83,7 @@ export default {
 .login-form {
 
     max-width: 400px;
-    margin: 0 auto;
+    margin: 150px auto;
     padding: 20px;
     background-color: var(--clr-light-grey);
     border-radius: 8px;
