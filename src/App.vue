@@ -1,34 +1,26 @@
 <template>
     <nav class="main-nav" v-if="isLargeScreen">
-        <router-link to="/">Home</router-link>
-        <router-link v-if="$store.state.currentUser === null" to="/add"
-            >Inscription</router-link
-        >
-        <router-link to="/connexion" v-if="$store.state.currentUser === null"
-            >Connexion</router-link
-        >
-        <router-link to="/back-products" v-if="isAdminUser()"
-            >Back-office</router-link
-        >
-
-        <router-link to="/catalogue">Catalogue</router-link>
-        <div class="dropdown">
-            <a class="dropbtn">Catégories</a>
-            <div class="dropdown-content">
-                <router-link
-                    v-for="category in $store.state.categories"
-                    :key="category.id"
-                    :to="'/category/' + category.id"
-                    class="category-link burger-menu-link"
-                >
-                    {{ category.name }}
-                </router-link>
+        <div class="main-nav_products">
+            <a class="logo-webwares" href="/">WebWares</a>
+            <router-link to="/">Home</router-link>
+            <router-link to="/back-products" v-if="isAdminUser()">Back-office</router-link>
+            <router-link to="/catalogue">Catalogue</router-link>
+            <div class="dropdown">
+                <a class="dropbtn">Catégories</a>
+                <div class="dropdown-content">
+                    <router-link v-for="category in $store.state.categories" :key="category.id" :to="'/category/' + category.id"
+                        class="category-link burger-menu-link">
+                        {{ category.name }}
+                    </router-link>
+                </div>
             </div>
         </div>
-        <a href="#" v-if="currentUser" @click="redirectToPanier">Panier</a>
-        <a href="#" @click="LogOut" v-if="$store.state.currentUser !== null"
-            >Log Out</a
-        >
+        <div class="main-nav_member">
+            <router-link v-if="$store.state.currentUser === null" to="/add">Inscription</router-link>
+            <router-link to="/connexion" v-if="$store.state.currentUser === null">Connexion</router-link>
+            <a href="#" v-if="currentUser" @click="redirectToPanier">Panier</a>
+            <a href="#" @click="LogOut" v-if="$store.state.currentUser !== null">Log Out</a>
+        </div>
     </nav>
     <nav class="main-nav burger-menu" v-else ref="burgerMenu">
         <div class="burger-icon" @click="toggleBurgerMode">
@@ -38,42 +30,24 @@
         </div>
         <div v-if="burgerMode" class="burger-content">
             <router-link to="/">Home</router-link>
-            <router-link v-if="$store.state.currentUser === null" to="/add"
-                >Inscription</router-link
-            >
-            <router-link
-                to="/connexion"
-                v-if="$store.state.currentUser === null"
-                >Connexion</router-link
-            >
-            <router-link to="/back-products" v-if="isAdminUser()"
-                >Back-office</router-link
-            >
+            <router-link v-if="$store.state.currentUser === null" to="/add">Inscription</router-link>
+            <router-link to="/connexion" v-if="$store.state.currentUser === null">Connexion</router-link>
+            <router-link to="/back-products" v-if="isAdminUser()">Back-office</router-link>
             <router-link to="/catalogue">Catalogue</router-link>
             <div class="dropdown">
                 <a class="dropbtn">Catégories</a>
                 <div class="dropdown-content-burger">
-                    <router-link
-                        v-for="category in $store.state.categories"
-                        :key="category.id"
-                        :to="'/category/' + category.id"
-                        class="category-link burger-menu-link"
-                    >
+                    <router-link v-for="category in $store.state.categories" :key="category.id"
+                        :to="'/category/' + category.id" class="category-link burger-menu-link">
                         {{ category.name }}
                     </router-link>
                 </div>
             </div>
             <a href="#" v-if="currentUser" @click="redirectToPanier">Panier</a>
-            <a href="#" @click="LogOut" v-if="$store.state.currentUser !== null"
-                >Log Out</a
-            >
+            <a href="#" @click="LogOut" v-if="$store.state.currentUser !== null">Log Out</a>
         </div>
     </nav>
-    <div
-        v-if="$store.state.currentUser === null && logoutModalIsVisible"
-        v-cloak
-        class="modal"
-    >
+    <div v-if="$store.state.currentUser === null && logoutModalIsVisible" v-cloak class="modal">
         <div class="modal-content">
             <h2>Déconnexion réussie !</h2>
             <p>Merci de votre visite sur notre site.</p>
@@ -117,7 +91,7 @@ export default {
         },
 
         handleResize() {
-            this.isLargeScreen = window.innerWidth > 600;
+            this.isLargeScreen = window.innerWidth > 1000;
 
             if (this.isLargeScreen) {
                 this.burgerMode = false;
@@ -176,12 +150,34 @@ export default {
     --font-text: system-ui, Arial, sans-serif;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
     font-family: "Bebas Neue", sans-serif;
     letter-spacing: .1rem;
 }
 
 /* Main Navigation */
+
+.logo-webwares {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 2rem;
+    display: inline-block;
+    position: relative;
+}
+
+.logo-webwares:before {
+    content: url('@/assets/WebWares.svg');
+    position: absolute;
+    top: 50%; left: -30px;
+    transform: translateY(-50%);
+    filter: invert(69%) sepia(72%) saturate(812%) hue-rotate(160deg) brightness(91%) contrast(87%);
+}
+
+.main-nav .logo-webwares {
+    margin-right: 25px;
+}
+
 .main-nav {
     height: 100px;
     gap: 2rem;
@@ -189,6 +185,15 @@ h1, h2, h3 {
     padding: 30px;
     text-align: center;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5rem
+}
+
+.main-nav_products {
+    display: flex;
+    align-items: center;
 }
 
 .main-nav a {
@@ -243,6 +248,7 @@ nav a:hover {
     color: #ffffff;
     padding: 5px 15px;
 }
+
 .burger-menu-link {
     border-radius: 0 !important;
 }
@@ -300,6 +306,7 @@ nav a:hover {
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
 }
+
 .dropdown-content a {
     color: #000;
     padding: 12px 16px;

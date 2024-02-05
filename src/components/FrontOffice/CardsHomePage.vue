@@ -75,8 +75,8 @@ h2 {
 }
 
 .card {
-  width: 350px;
-  min-height: 300px;
+  min-height: 400px;
+  min-width: 350px;
   border-radius: 25px;
   color: #3f3f3f;
   padding: 30px;
@@ -121,41 +121,4 @@ li {
   justify-content: center;
   align-items: center;
 }
-
-/* @media only screen and (min-width: 375px) and (max-width: 767px) {
-  .container-card {
-    flex-wrap: wrap;
-    gap: 50px;
-    margin-top: 2vh;
-  }
-
-  .card {
-    width: 60%;
-  }
-
-  img {
-    width: 60%;
-    height: 30%;
-  }
-}
-
-
-@media (min-width: 768px) and (max-width: 1199px) {
-  .card {
-    width: 30%;
-  }
-}
-
-@media(min-width: 1200px) {
-
-  .container-card {
-    display: flex;
-
-  }
-
-  .card {
-    width: 20%;
-    height: 50vh;
-  }
-} */
 </style>

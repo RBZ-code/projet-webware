@@ -145,7 +145,6 @@ input{
     color: #fff;
     text-align: center;
     font-size: .8rem;
-    text-transform: uppercase;
     border: none;
 }
 .submit-btn:hover{
