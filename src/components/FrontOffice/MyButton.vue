@@ -30,6 +30,7 @@ export default {
 </script>
 
 <style>
+
 .green-btn {
     padding: 5px 15px;
     background-color: green;
@@ -48,7 +49,7 @@ export default {
     color: white;
     position: absolute;
     text-align:center;
-    top:25vw;
+    top:35vw;
     left:50%;
     transform: translate(-50%,-50%);
     padding: 20px;
@@ -56,6 +57,19 @@ export default {
     border-radius: 15px;
     width: 300px;
     border: none;
+    cursor: pointer;
+}
+@media only screen and (min-width: 375px) and (max-width: 767px){
+    .black-btn{
+        top: 70vw;
+        width: 30%;
+        height: 6vh;
+        font-size: 14px;
+        margin: 10px auto;
+    }
+}
+.black-btn:hover{
+    opacity: 70%;
     cursor: pointer;
 }
 

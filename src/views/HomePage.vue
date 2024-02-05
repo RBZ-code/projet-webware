@@ -1,21 +1,25 @@
 <template>
   <div class="banniere">
     <img alt="Vue logo" src="../assets/banniere.jpg" />
+   <div class="text-container">
     <h1 v-text="message"></h1>
+    <p v-text="paragraph"></p>
+    <p class="paragraph2" v-text="paragraph2"></p>
     <MyButton
         @click="toRegisterPage"
-      label="En savoir plus"
+      label="Inscription"
       backgroundColor="black"
-    />
+    /></div> 
     </div>
-   
-    <!-- <div v-for="(prod, index) in products" :key="index">
-        <h2>{{ prod.titre }}</h2>
-        <img :src="prod.image" :alt="prod.titre" />
-    </div> -->
-
-    <ContactForm @addVisitor="handleAddVisitor" />
     
+    <CardsHomePage />
+
+    <br>
+    <ContactForm @addVisitor="handleAddVisitor" />
+    <br>
+    
+
+    <FooterVue />
 </template>    
 
 <script>
@@ -23,11 +27,17 @@
 import MyButton from "@/components/FrontOffice/MyButton.vue";
 import ContactForm from "@/components/FrontOffice/ContactForm.vue";
 import { mapState } from 'vuex';
+import FooterVue from "@/components/FrontOffice/FooterVue.vue";
+import CardsHomePage from "@/components/FrontOffice/CardsHomePage.vue";
+
 
 export default {
     data(){
         return {
             message: 'Bienvenue chez Webwares !',
+            paragraph: "Découvrez l'excellence du mobilier d'intérieur chez WebWares, dédié aux grossistes. Nous vous offrons un assortiment exclusif de pièces élégantes et fonctionnelles. Redéfinissez votre espace intérieur avec nos collections soigneusement sélectionnées.",
+
+            paragraph2 : "Cliquez ci-dessous pour vous inscrire et accéder au catalogue.",
             
             visitorData: {
                 fistName: "",
@@ -41,6 +51,8 @@ export default {
     components: {
         MyButton,
         ContactForm,
+        FooterVue,
+        CardsHomePage
     },
 
     methods: {
@@ -68,21 +80,41 @@ export default {
 img{
     position: relative;
     width: 100%;
-    height: 700px;
+    height: auto;
     background-size: contain;
     opacity: 90%;
 }
-h1{
+h1, p {
     position: absolute;
-    text-align: center;
-    top: 10vw;
+    top: 13vw;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: #fff;
-    padding: 20px;
+    color: #000;
     font-size: 40px;
-};
+}
 
+p {
+    top: 20vw;
+    left: 50%;
+    font-size: 20px;
+    line-height: 2;
+    margin-top: 2vh;
+}
+.paragraph2{
+    top: 28vw;
+}
 
+@media only screen and (min-width: 375px) and (max-width: 767px){
+   .paragraph2, p{
+    font-size: 12px;
+    width: 80%;
+    top: 46vw;
+    line-height: 2;
+   }
+   h1{
+    font-size: 16px;
+    top: 32vw;
+   }
+}
 
 </style>

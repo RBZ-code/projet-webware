@@ -5,6 +5,7 @@ import PageConnexion from "@/views/LoginPage.vue";
 import BackProducts from "@/views/BackProducts.vue"
 import Catalogue from "@/views/CataloguePage.vue"
 
+
 const routes = [
     {
         path: "/add",
@@ -31,6 +32,7 @@ const routes = [
         name: "back-products",
         component: BackProducts,
     },
+    
 ];
 
 const router = createRouter({

@@ -1,4 +1,5 @@
 <template>
+  <h2>Nous joindre</h2>
     <div>
       <form @submit.prevent="submitForm">
         <input type="text" placeholder="Prénom" v-model="localVisitor.firstName" required>
@@ -6,15 +7,14 @@
         <input type="email" placeholder="Email" v-model="localVisitor.email" required>
         <textarea placeholder="Veuillez écrire votre message ici" v-model="localVisitor.message" required></textarea>
         <br>
-        <br>
-        <br>
+        
         <button type="submit">Envoyer</button>
       </form>
     </div>
   </template>
   
   <script>
-  
+
 export default {
     props: {
       visitor: Object,
@@ -65,11 +65,18 @@ export default {
         height: 5vh;
         text-align: start;
         padding: 10px;
+        
     }
     textarea{
         height: 200px;
         padding: 10px;
     }
-    
+    h2{
+      margin: 10vh;
+    }
+    button{
+      height: 5vh;
+      margin-bottom: 10vh;
+    }
   </style>
   
