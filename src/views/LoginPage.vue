@@ -29,30 +29,31 @@ export default {
     },
     components: { MyButton },
     methods: {
-        login() {
-            const user = {
-                siret: this.siret,
-                password: this.password,
-            };
+         login() {
+        const user = {
+            siret: this.siret,
+            password: this.password,
+        };
 
-            if (this.isThisValid(user)) {
-                const connectedUser = this.$store.state.users.find(
-                    (item) =>
-                        item.siret == user.siret &&
-                        item.password == user.password
-                );
+        if (this.isThisValid(user)) {
+            const connectedUser = this.$store.state.users.find(
+                (item) =>
+                    item.siret == user.siret &&
+                    item.password == user.password
+            );
 
-                if (connectedUser) {
-                    this.$store.commit("setUserConnected", connectedUser);
-                    localStorage.setItem("connectedUserId", connectedUser.id);
-                    this.$router.push("/");
-                }
-            } else {
-                alert(
-                    "Échec de la connexion. Veuillez vérifier vos informations."
-                );
+            if (connectedUser) {
+                // Inclure l'ID de l'utilisateur dans l'objet currentUser
+                connectedUser.id = connectedUser.id || -1; // Ajustez selon votre logique
+                
+                this.$store.commit("setUserConnected", connectedUser);
+                localStorage.setItem("connectedUserId", connectedUser.id);
+                this.$router.push("/");
             }
-        },
+        } else {
+            alert("Échec de la connexion. Veuillez vérifier vos informations.");
+        }
+    },
         isThisValid(user) {
             return (
                 this.$store.state.users.some(

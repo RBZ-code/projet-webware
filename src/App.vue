@@ -118,15 +118,21 @@ export default {
             }
         },
         LogOut() {
-            this.$store.commit("setUserConnected", null);
-            localStorage.removeItem("connectedUserId");
-            this.logoutModalIsVisible = true;
-            this.$router.push("/");
+    if (this.$store.state.currentUser) {
+        // Assurez-vous que l'utilisateur est défini avant d'essayer d'accéder à l'ID
+        const userId = this.$store.state.currentUser.id;
+        console.log("Current User ID before logout:", userId);
+    }
 
-            setTimeout(() => {
-                this.logoutModalIsVisible = false;
-            }, 2000);
-        },
+    this.$store.commit("setUserConnected", null);
+    localStorage.removeItem("connectedUserId");
+    this.logoutModalIsVisible = true;
+    this.$router.push("/");
+
+    setTimeout(() => {
+        this.logoutModalIsVisible = false;
+    }, 2000);
+},
         isAdminUser() {
             const currentUser = this.$store.state.currentUser;
             return currentUser && currentUser.role === "admin";
@@ -210,7 +216,6 @@ nav a:hover {
     cursor: pointer;
 }
 
-
 .category-link:hover {
     font-weight: bold;
     color: var(--clr-blue) !important;
@@ -243,7 +248,6 @@ nav a:hover {
     flex-direction: row-reverse;
     align-items: center;
     padding: 20px;
-    
 }
 
 .burger-icon {
@@ -256,7 +260,6 @@ nav a:hover {
     width: 30px;
     z-index: 10;
     position: fixed;
-
 }
 
 .bar {

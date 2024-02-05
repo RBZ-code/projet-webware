@@ -28,7 +28,7 @@
                 </div>
                 <div class="product-actions">
                     <button
-                        @click="addProduit(prod)"
+                        @click="ajouterAuPanier(prod)"
                         v-if="$store.state.currentUser !== null"
                     >
                         Ajouter au panier 🛒
@@ -81,10 +81,10 @@ export default {
         },
     },
     methods: {
-        addProduit(produit) {
-      produit.quantity = 1;
-      this.$store.commit("addProductShop", produit);
-    },
+        ajouterAuPanier(produit) {
+        this.$store.commit("ajouterAuPanier", produit);
+        alert("Produit ajouté au panier !");
+      },
         redirectToDescriptionPage(product) {
             this.$store.commit("setSelectedProduct", product);
             this.$router.push({ name: "description-product" });

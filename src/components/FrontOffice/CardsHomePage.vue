@@ -4,7 +4,7 @@
       <div class="container-card">
         <div class="card" v-for="(card, index) in cards"
           :key="index" 
-          :class="{'aos-init':true, 'aos-animate': index !== 0}"
+          :class="{'aos-init':true, 'aos-animate': index !== -50}"
           data-aos="fade-right"
           :data-aos-delay="index * 600">
           <h3>{{ card.title }}</h3>
