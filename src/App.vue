@@ -210,24 +210,16 @@ nav a:hover {
     cursor: pointer;
 }
 
-.dropbtn:active {
-    font-weight: bold;
-    color: #ffffff;
-    background-color: var(--clr-blue) !important;
-    padding: 5px 15px;
-}
 
 .category-link:hover {
     font-weight: bold;
     color: var(--clr-blue) !important;
     background-color: transparent !important;
-    /* padding: 5px 15px; */
 }
 
 .category-link:active {
     font-weight: bold;
     color: #ffffff;
-    padding: 5px 15px;
 }
 .burger-menu-link {
     border-radius: 0 !important;
@@ -237,15 +229,21 @@ nav a:hover {
     font-weight: bold;
     color: #ffffff !important;
     background-color: var(--clr-blue) !important;
-    /* padding: 5px 15px; */
+    padding: 12px 16px !important;
+}
+
+.burger-menu-link:active {
+    padding: 12px 16px !important;
 }
 
 /* Burger Menu */
 .burger-menu {
     display: flex;
     justify-content: space-between;
+    flex-direction: row-reverse;
     align-items: center;
     padding: 20px;
+    
 }
 
 .burger-icon {
@@ -253,7 +251,12 @@ nav a:hover {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    align-items: center;
     height: 20px;
+    width: 30px;
+    z-index: 10;
+    position: fixed;
+
 }
 
 .bar {
@@ -307,7 +310,7 @@ nav a:hover {
 
 .dropdown-content-burger a {
     color: #000;
-    padding: 12px 16px;
+    padding: 12px 16px !important;
     text-decoration: none;
     display: block;
     margin: 0;
@@ -315,6 +318,11 @@ nav a:hover {
 
 .dropdown-content a:hover {
     background-color: var(--clr-light-grey);
+    padding: 12px 16px !important;
+}
+
+.dropdown-content a:active {
+    padding: 12px 16px !important;
 }
 
 .dropdown:hover .dropdown-content {
