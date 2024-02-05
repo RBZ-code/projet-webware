@@ -10,7 +10,6 @@
     </header>
     <CardsHomePage />
     <ContactForm @addVisitor="handleAddVisitor" />
-    <FooterVue />
 </template>    
 
 <script>
@@ -18,10 +17,7 @@ import MyButton from "@/components/FrontOffice/MyButton.vue";
 import ContactForm from "@/components/FrontOffice/ContactForm.vue";
 
 import { mapState } from 'vuex';
-import FooterVue from "@/components/FrontOffice/FooterVue.vue";
 import CardsHomePage from "@/components/FrontOffice/CardsHomePage.vue";
-
-
 
 export default {
     data() {
@@ -41,7 +37,6 @@ export default {
     components: {
         MyButton,
         ContactForm,
-        FooterVue,
         CardsHomePage
     },
 
@@ -91,7 +86,7 @@ export default {
     background-image: linear-gradient(to top, #ffffff70, hsla(193, 67%, 56%, 0.5)), url("../assets/banniere.jpg");
     background-size: cover;
     background-position: bottom;
-    min-height: 500px;
+    min-height: 80vh;
     height: fit-content;
     display: flex;
     justify-content: center;

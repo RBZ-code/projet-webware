@@ -80,10 +80,16 @@
         </div>
     </div>
     <router-view />
+    <FooterVue />
 </template>
 
 <script>
+import FooterVue from "@/components/FrontOffice/FooterVue.vue";
+
 export default {
+    components: {
+        FooterVue
+    },
     data() {
         return {
             logoutModalIsVisible: false,

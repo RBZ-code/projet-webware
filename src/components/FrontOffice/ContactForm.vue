@@ -89,7 +89,7 @@ h2 {
 
 form {
     margin-top: 30px;
-    margin-bottom: 30px;
+    margin-bottom: 50px;
     display: flex;
     flex-direction: column;
     justify-content: center;
