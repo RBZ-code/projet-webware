@@ -105,6 +105,11 @@ h4 {
     text-align: center;
 }
 
+img{
+    width: 100%;
+}
+
+
 .banniere {
     position: relative;
     width: 100%;
@@ -112,6 +117,8 @@ h4 {
     background-size: contain;
     opacity: 90%;
 }
+
+
 h1, p {
     position: absolute;
     top: 13vw;
@@ -132,30 +139,5 @@ p {
     top: 28vw;
 }
 
-@media only screen and (min-width: 375px) and (max-width: 767px){
-   .paragraph2, p{
-    font-size: 12px;
-    width: 80%;
-    top: 46vw;
-    line-height: 2;
-   }
-   h1{
-    font-size: 16px;
-    top: 32vw;
-   }
 
-
-.welcome-message {
-    font-size: 40px;
-    margin-bottom: 10px;
-    text-shadow: 0 0 5px #000000;
-    color: #f1f1f1;
-}
-
-
-.bienvenue{
-    font-size: 3rem;
-    margin-bottom: 50px;
-    text-decoration-line: underline;
-}
 </style>

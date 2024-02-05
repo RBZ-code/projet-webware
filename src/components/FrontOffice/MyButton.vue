@@ -139,15 +139,6 @@ export default {
     cursor: pointer;
 }
 
-@media only screen and (min-width: 375px) and (max-width: 767px){
-    .black-btn{
-        top: 70vw;
-        width: 30%;
-        height: 6vh;
-        font-size: 14px;
-        margin: 10px auto;
-    }
-}
 .black-btn:hover{
     opacity: 70%;
     cursor: pointer;

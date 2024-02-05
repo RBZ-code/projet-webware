@@ -1,5 +1,4 @@
 <template>
-  <h2>Nous joindre</h2>
     <div>
 
         <form @submit.prevent="submitForm">

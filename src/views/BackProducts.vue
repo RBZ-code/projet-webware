@@ -14,6 +14,7 @@
                 type="search"
                 placeholder="Nom du produit"
                 v-model="searchQuery"
+            >
 
 
 

@@ -221,7 +221,7 @@ nav a:hover {
     font-weight: bold;
     color: var(--clr-blue) !important;
     background-color: transparent !important;
-    padding: 5px 15px;
+    /* padding: 5px 15px; */
 }
 
 .category-link:active {
@@ -237,7 +237,7 @@ nav a:hover {
     font-weight: bold;
     color: #ffffff !important;
     background-color: var(--clr-blue) !important;
-    padding: 5px 15px;
+    /* padding: 5px 15px; */
 }
 
 /* Burger Menu */

@@ -54,7 +54,7 @@
             img: require('@/assets/card-homepage3.jpg'),
             title: "Livraison rapide",
             points:[
-                "Commandez aujourd'hui, recevez demain","Expédition express"
+                "Commandez aujourd'hui, recevez demain","Expédition express" , "Livraison rapide",
             ]
               
           },
@@ -89,7 +89,7 @@ h2 {
 
 .card {
   width: 20%;
-  height: 100%;
+  height: 400px;
   border: 2px solid black;
   border-radius: 50px;
   color: #3f3f3f;
@@ -99,9 +99,10 @@ h2 {
 }
 
 img{
-   width: 12vw; 
-   height: 12vw;
+   width: 120px; 
+   height: 120px;
 }
+
 ul{
     padding: 1vw;
     
