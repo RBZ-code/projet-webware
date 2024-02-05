@@ -1,5 +1,6 @@
 <template>
     <div>
+        <h1>{{ categorieName }}</h1>
         <form class="product-form">
             <label for="search">Recherche : </label>
             <input
@@ -27,13 +28,18 @@
                 </div>
                 <div class="product-actions">
                     <button
-                        @click="addToCart(prod.id)"
+                        @click="addProduit(prod)"
                         v-if="$store.state.currentUser !== null"
                     >
                         Ajouter au panier 🛒
                     </button>
 
-                    <button class="details-btn" @click="redirectToDescriptionPage(prod)">Voir Détails</button>
+                    <button
+                        class="details-btn"
+                        @click="redirectToDescriptionPage(prod)"
+                    >
+                        Voir Détails
+                    </button>
                 </div>
             </div>
         </div>
@@ -49,6 +55,11 @@ export default {
         };
     },
     computed: {
+        categorieName(){
+            return this.$store.state.categories.find(
+                (cat) => cat.id === this.categoryId
+            ).name;
+        },
         products() {
             return this.$store.state.produits;
         },
@@ -70,12 +81,13 @@ export default {
         },
     },
     methods: {
-        addToCart() {
-            // Logique pour ajouter au panier
-        },
+        addProduit(produit) {
+      produit.quantity = 1;
+      this.$store.commit("addProductShop", produit);
+    },
         redirectToDescriptionPage(product) {
             this.$store.commit("setSelectedProduct", product);
-            this.$router.push({ name: 'description-product' });
+            this.$router.push({ name: "description-product" });
         },
     },
     watch: {
@@ -92,6 +104,11 @@ export default {
 </script>
 
 <style scoped>
+
+h1{
+    text-align: center;
+}
+
 .product-form {
     width: 80%;
     margin: 1rem auto;

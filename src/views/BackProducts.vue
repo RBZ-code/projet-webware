@@ -3,12 +3,9 @@
         <BackNav />
         <header class="action-bar">
             <h1>Gestion des produits</h1>
-            <MyButton
-                label="Ajouter un produit"
-                modifier="action"
-                @GeneralEventBtn="goToAddProduct()"
-            />
+            <MyButton label="Ajouter un produit" modifier="action" @GeneralEventBtn="goToAddProduct()" />
         </header>
+
         <form class="filter-bar">
             <label for="back-product-search">Rechercher un produit :</label>
             <input
@@ -17,14 +14,11 @@
                 type="search"
                 placeholder="Nom du produit"
                 v-model="searchQuery"
-            />
+            >
+
         </form>
         <div class="listing-template">
-            <div
-                class="listing-box"
-                v-for="(prod, index) in filteredProducts"
-                :key="index"
-            >
+            <div class="listing-box" v-for="(prod, index) in filteredProducts" :key="index">
                 <figure>
                     <img :src="prod.image" :alt="prod.titre" />
                 </figure>
@@ -35,16 +29,8 @@
                         {{ prod.prix + "€" + " - MOQ " + prod.moq }}
                     </p>
                     <div class="box-actions">
-                        <MyButton
-                            label="Modifier"
-                            modifier="edit"
-                            @GeneralEventBtn="openModal(index)"
-                        />
-                        <MyButton
-                            label="Supprimer"
-                            modifier="edit"
-                            @GeneralEventBtn="deleteProduct(prod.id)"
-                        />
+                        <MyButton label="Modifier" modifier="edit" @GeneralEventBtn="openModal(index)" />
+                        <MyButton label="Supprimer" modifier="edit" @GeneralEventBtn="deleteProduct(prod.id)" />
                     </div>
                 </div>
             </div>
@@ -60,12 +46,7 @@
                 <input v-model="editItem.titre" type="text" id="editName" />
 
                 <label for="editDesc">Description produit :</label>
-                <textarea
-                    v-model="editItem.description"
-                    type="text"
-                    id="editDesc"
-                    rows="5"
-                ></textarea>
+                <textarea v-model="editItem.description" type="text" id="editDesc" rows="5"></textarea>
 
                 <label for="editPrice">Prix du produit :</label>
                 <input v-model="editItem.prix" type="number" id="editPrice" />
@@ -75,14 +56,11 @@
 
                 <label for="editCategory">Catégorie produit:</label>
                 <select v-model="editItem.categorieId" id="editCategory">
-                    <option
-                        v-for="category in categories"
-                        :key="category.id"
-                        :value="category.id"
-                    >
+                    <option v-for="category in categories" :key="category.id" :value="category.id">
                         {{ category.name }}
                     </option>
                 </select>
+
 
                 <input type="hidden" v-model="editItem.id" />
 
@@ -91,6 +69,7 @@
                     modifier="action"
                     @GeneralEventBtn="updateProduct"
                 />
+
             </form>
         </div>
     </div>
@@ -199,6 +178,7 @@ export default {
     border: none;
     border-bottom: 1px solid var(--clr-dark);
     outline: none;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .listing-template {

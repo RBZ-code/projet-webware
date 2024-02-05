@@ -408,7 +408,7 @@ export default createStore({
 
                 const masterUser = {
                     id: -1,
-                    name: "Master",
+                    raisonSociale: "Master",
                     siret: "12345678901234",
                     password: "passWord",
                     role: "admin",

@@ -1,8 +1,8 @@
 <template>
   <div>
-    <form class="product-form">
-      <label for="search">Recherche : </label>
-      <input type="search" id="search" name="search" placeholder="Recherche..." autocomplete="on" v-model="query">
+    <form class="filter-bar">
+      <label for="search">Filtrer les produits : </label>
+      <input type="search" id="search" name="search" placeholder="Nom du produit" autocomplete="on" v-model="query">
     </form>
 
     <div class="products-container">
@@ -16,7 +16,6 @@
         </div>
         <div class="product-actions">
           <button v-if="currentUser" @click="addProduit(prod)">Ajouter au panier 🛒</button>
-          <button v-if="currentUser" @click="redirectToPanier">Voir le Panier 🛍️</button>
           <button class="details-btn" @click="redirectToDescriptionPage(prod)">Voir Détails</button>
         </div>
       </div>
@@ -55,9 +54,6 @@ export default {
       produit.quantity = 1;
       this.$store.commit("addProductShop", produit);
     },
-    redirectToPanier() {
-      this.$router.push({ name: 'panier' });
-    },
   },
 };
 </script>
@@ -70,13 +66,20 @@ export default {
   margin: 1rem auto;
 }
 
+.filter-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
 .products-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
   justify-content: center;
   width: 80%;
-  margin: auto;
+  margin: 50px auto;
 }
 
 .product-card {
