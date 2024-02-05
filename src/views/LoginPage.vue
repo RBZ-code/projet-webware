@@ -1,18 +1,19 @@
 <template>
-    <form class="login-form" @submit.prevent>
-        <label for="siret">SIRET:</label>
-        <input type="text" v-model="siret" class="input-field" />
-
-        <label for="password">Mot de passe:</label>
-        <input type="password" v-model="password" class="input-field" />
-
-
-        <MyButton
-            label="Connexion"
-            backgroundColor="green"
-            @GeneralEventBtn="login"
-        />
-    </form>
+    <main class="login-background">
+        <form class="login-form" @submit.prevent>
+            <h1>Connexion</h1>
+            <label for="siret">SIRET:</label>
+            <input type="text" v-model="siret" class="input-field" />
+            <label for="password">Mot de passe:</label>
+            <input type="password" v-model="password" class="input-field" />
+            <MyButton
+                label="Connexion"
+                modifier="action"
+                @GeneralEventBtn="login"
+                class="btn"
+            />
+        </form>
+    </main>
 </template>
 
 <script>
@@ -75,19 +76,30 @@ export default {
 };
 </script>
 
-
-
-
 <style scoped>
 
-.login-form {
+.login-background {
+    height: 90vh;
+    background-image: url("https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
-    max-width: 400px;
+h1 {
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.login-form {
+    width: clamp(300px, 50%, 600px);
     margin: 150px auto;
     padding: 20px;
     background-color: var(--clr-light-grey);
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    filter: drop-shadow(0 0 2rem var(--clr-dark));
 }
 
 .login-form label {
@@ -101,7 +113,7 @@ export default {
     padding: 8px;
     margin-bottom: 16px;
     background-color: #ffffff;
-    border: 2px solid #c4c4c4;
+    border: none;
     border-radius: 4px;
 }
 
@@ -110,7 +122,8 @@ export default {
     border-color: #44b9da;
 }
 
-.login-form button {
-    margin-top: 16px;
+.btn {
+    text-align: center;
+    margin: 1rem 0;
 }
 </style>
