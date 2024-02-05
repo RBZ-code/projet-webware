@@ -13,6 +13,7 @@ import DescriptionProduct from "@/views/DescriptionProduct.vue";
 import Panier from "@/views/PanierPage.vue";
 
 
+
 const routes = [
     {
         path: "/add",
@@ -39,6 +40,7 @@ const routes = [
         name: "back-products",
         component: BackProducts,
     },
+
     {
         path: "/back-products-add",
         name: "back-products-add",

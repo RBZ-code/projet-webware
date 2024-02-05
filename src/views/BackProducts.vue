@@ -15,6 +15,7 @@
                 placeholder="Nom du produit"
                 v-model="searchQuery"
             >
+
         </form>
         <div class="listing-template">
             <div class="listing-box" v-for="(prod, index) in filteredProducts" :key="index">
