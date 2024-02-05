@@ -76,16 +76,11 @@ export default {
 </script>
 
 <style scoped>
-*, ::after, ::before{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
 .footer{
-    padding-top: 5vh;
-    background:#313131;
-    text-align:center;
+    padding-top: 50px;
+    background: var(--clr-dark);
+    text-align: center;
     min-height: 40vh;
     padding: 40px;
 }

@@ -146,12 +146,14 @@ export default {
 
 <style>
 #app {
-    font-family: system-ui, Arial, sans-serif;
+    font-family: var(--font-text);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: var(--clr-dark);
     min-height: 100vh;
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 
 * {
     margin: 0;
@@ -165,6 +167,12 @@ export default {
     --clr-light-grey: #e7e7e7;
     --clr-dark: #252525;
     --clr-white: #fff;
+    --font-text: system-ui, Arial, sans-serif;
+}
+
+h1, h2, h3 {
+    font-family: "Bebas Neue", sans-serif;
+    letter-spacing: .1rem;
 }
 
 /* Main Navigation */
