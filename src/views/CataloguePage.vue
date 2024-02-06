@@ -16,7 +16,13 @@
         </div>
         <div class="product-actions">
           <button v-if="currentUser" @click="addProduit(prod)">Ajouter au panier 🛒</button>
-          <button class="details-btn" @click="redirectToDescriptionPage(prod)">Voir Détails</button>
+          <div class="">
+            <router-link
+            class="listing-link"
+            :to="'/product-page/' + prod.id">
+              <button class="details-btn">Voir Détails</button>
+            </router-link>
+          </div>
         </div>
       </div>
     </div>
