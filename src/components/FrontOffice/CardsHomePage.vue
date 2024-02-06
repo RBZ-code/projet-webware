@@ -1,162 +1,125 @@
 <template>
-      <h2>Nos engagements</h2>
-      
-      <div class="container-card">
-        <div class="card" v-for="(card, index) in cards"
-          :key="index" 
-          :class="{'aos-init':true, 'aos-animate': index !== -50}"
-          data-aos="fade-right"
-          :data-aos-delay="index * 600">
-          <h3>{{ card.title }}</h3>
-          <img :src="card.img" alt="Card image">
-          <ul>
-            <li v-for="(point, i) in card.points" :key="i">{{ point }}</li>
-          </ul>
-        </div>
-      </div>
-      <div class="parallax">
-        <h1 class="text-parallax" v-text="text"></h1>
-      </div>
-      <br>
-  </template>
-  
-  <script>
-    import AOS from 'aos';
-    import 'aos/dist/aos.css';
 
-  export default {
-    
-    mounted(){
-        AOS.init();
-    },
-    data() {
-      return {
-        cards: [
-          {
-            img: require('@/assets/card-homepage.svg'),
-            title: "Respect environnemental",
-           points:[
-            "Durabilité des produits","Emballage écologique","Certifications environnementales",
+  <h2>Nos engagements</h2>
+  <div class="container-card">
+    <div class="card" v-for="(card, index) in cards" :key="index" data-aos="fade-right" :data-aos-delay="index * 600">
+      <h3>{{ card.title }}</h3>
+      <img :src="card.img" alt="Card image">
+      <ul>
+        <li v-for="(point, i) in card.points" :key="i">{{ point }}</li>
+      </ul>
+    </div>
+  </div>
+  <div class="parallax">
+    <h1 class="text-parallax" v-text="text"></h1>
+  </div>
+</template>
+  
+<script>
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
+export default {
+
+  mounted() {
+    AOS.init();
+  },
+  data() {
+    return {
+      cards: [
+        {
+          img: require('@/assets/environment_icon.svg'),
+          title: "Respect environnemental",
+          points: [
+            "Durabilité des produits", "Emballage écologique", "Certifications environnementales",
             "Énergie renouvelable",
-
-           ],
-          },
-          {
-            img: require('@/assets/card-homepage2.svg'),
-            title: "Satisfaction clients",
-            points:[
-                "Expérience client exceptionnelle","Satisfaction garantie","Écoute attentive des clients",
-                "Politique de retour facile"
-            ]
-              
-          },
-          {
-            img: require('@/assets/card-homepage3.jpg'),
-            title: "Livraison rapide",
-            points:[
-                "Commandez aujourd'hui, recevez demain","Expédition express" , "Livraison rapide",
-            ]
-              
-          },
-        ],
-        text: 'Inscrivez-vous dès maintenant !',
-      };
-    },
-  };
-  </script>
+          ],
+        },
+        {
+          img: require('@/assets/customer_loyalty_icon.svg'),
+          title: "Satisfaction clients",
+          points: [
+            "Expérience client exceptionnelle", "Satisfaction garantie", "Écoute attentive des clients",
+            "Politique de retour facile"
+          ]
+        },
+        {
+          img: require('@/assets/shipping_icon.svg'),
+          title: "Livraison rapide",
+          points: [
+            "Paiement sécurisé", "Expédition express", "Livraison en 3 jours ouvrés",
+          ]
+        },
+      ],
+      text: '',
+    };
+  },
+};
+</script>
   
-  <style scoped>
-*, ::before, ::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+<style scoped>
+
 h2 {
-  margin-top: 10vh;
+  margin-top: 50px;
+  text-align: center;
+  font-size: 1.8rem;
 }
 
 .container-card {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
-  width: 95vw;
-  height: auto;
-  min-height: 80vh;
-  margin: 0 auto;
- 
-
+  flex-wrap: wrap;
+  gap: 1rem;
+  width: 90%;
+  margin: 50px auto;
 }
 
 .card {
-  width: 20%;
-  height: 400px;
-  border: 2px solid black;
-  border-radius: 50px;
+  min-height: 400px;
+  min-width: 350px;
+  border-radius: 25px;
   color: #3f3f3f;
-  padding: 20px;
-  border: 0.5vmin solid #05060f;
-  box-shadow: 0.6rem 0.6rem #05060f;
+  padding: 30px;
+  background-color: var(--clr-light-grey);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
-img{
-   width: 120px; 
-   height: 120px;
+.card h3 {
+  font-size: 1.5rem;
 }
 
-ul{
-    padding: 1vw;
-    
+.card img {
+  margin: 1rem 0;
+  width: 100px;
+  height: 100px;
 }
+
+ul {
+  padding: 1rem;
+}
+
 li {
-    text-align: start;
-    line-height: 2;
-}
-.parallax{
-    margin-top: 20vh;
-    background-image: url('@/assets/parallax.jpg');
-    width: 100%;
-    height: 35vh;
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: relative;
-}
-.text-parallax{
-    position: absolute;
-    top: 40%;
-    left: 50%;
+  line-height: 2;
+  list-style: url('@/assets/check_icon.svg');
+  list-style-position: inside;
+  text-align: left;
 }
 
-@media only screen and (min-width: 375px) and (max-width: 767px) {
-  .container-card{
-   flex-wrap: wrap;
-   gap: 50px;
-   margin-top: 2vh;
-  }
-  .card{
-    width: 60%;
-  }
-  img{
-    width: 60%;
-    height: 30%;
-  }
-}
-
-
-@media (min-width: 768px) and (max-width: 1199px) {
-  .card {
-    width: 30%; 
-  }
-}
-@media(min-width: 1200px){
-  
-  .container-card{
-    display: flex;
-   
-  }.card{
-    width: 20%;
-    height: 50vh;
-  }
+.parallax {
+  background-image: url('@/assets/parallax.jpg');
+  width: 100%;
+  height: 300px;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
