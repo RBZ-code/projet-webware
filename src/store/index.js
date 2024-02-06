@@ -37,6 +37,8 @@ export default createStore({
                       prix: 49.99,
                       moq: 5,
                       categorieId: 1,
+                      stock: 50,
+                      disponibilite: true,
                   },
                   {
                       id: 2,
@@ -47,6 +49,8 @@ export default createStore({
                       prix: 59.99,
                       moq: 10,
                       categorieId: 1,
+                      stock: 50,
+                      disponibilite: true,
                   },
                   {
                       id: 3,
@@ -57,6 +61,8 @@ export default createStore({
                       prix: 69.99,
                       moq: 15,
                       categorieId: 1,
+                      stock: 50,
+                      disponibilite: true,
                   },
                   {
                       id: 4,
@@ -67,6 +73,8 @@ export default createStore({
                       prix: 79.99,
                       moq: 20,
                       categorieId: 1,
+                      stock: 50,
+                      disponibilite: true,
                   },
                   {
                       id: 5,
@@ -77,6 +85,8 @@ export default createStore({
                       prix: 89.99,
                       moq: 25,
                       categorieId: 1,
+                      stock: 50,
+                      disponibilite: true,
                   },
                   {
                       id: 6,
@@ -87,6 +97,8 @@ export default createStore({
                       prix: 129.99,
                       moq: 5,
                       categorieId: 2,
+                      stock: 50,
+                      disponibilite: true,
                   },
                   {
                       id: 7,
@@ -97,6 +109,8 @@ export default createStore({
                       prix: 139.99,
                       moq: 10,
                       categorieId: 2,
+                      stock: 50,
+                      disponibilite: true,
                   },
                   {
                       id: 8,
@@ -107,6 +121,8 @@ export default createStore({
                       prix: 149.99,
                       moq: 15,
                       categorieId: 2,
+                      stock: 50,
+                      disponibilite: true,
                   },
                   {
                       id: 9,
@@ -117,6 +133,8 @@ export default createStore({
                       prix: 159.99,
                       moq: 20,
                       categorieId: 2,
+                      stock: 50,
+                      disponibilite: true,
                   },
                   {
                       id: 10,
@@ -127,6 +145,8 @@ export default createStore({
                       prix: 169.99,
                       moq: 25,
                       categorieId: 2,
+                      stock: 50,
+                      disponibilite: true,
                   },
                   {
                       id: 11,
@@ -137,6 +157,8 @@ export default createStore({
                       prix: 299.99,
                       moq: 5,
                       categorieId: 3,
+                      stock: 50,
+                      disponibilite: true,
                   },
                   {
                       id: 12,
@@ -147,6 +169,8 @@ export default createStore({
                       prix: 289.99,
                       moq: 10,
                       categorieId: 3,
+                      stock: 50,
+                      disponibilite: true,
                   },
                   {
                       id: 13,
@@ -157,6 +181,8 @@ export default createStore({
                       prix: 279.99,
                       moq: 15,
                       categorieId: 3,
+                      stock: 50,
+                      disponibilite: true,
                   },
                   {
                       id: 14,
@@ -167,6 +193,8 @@ export default createStore({
                       prix: 269.99,
                       moq: 20,
                       categorieId: 3,
+                      stock: 50,
+                      disponibilite: true,
                   },
                   {
                       id: 15,
@@ -177,6 +205,8 @@ export default createStore({
                       prix: 259.99,
                       moq: 25,
                       categorieId: 3,
+                      stock: 50,
+                      disponibilite: true,
                   },
                   {
                       id: 16,
@@ -187,6 +217,8 @@ export default createStore({
                       prix: 89.99,
                       moq: 5,
                       categorieId: 4,
+                      stock: 50,
+                      disponibilite: true,
                   },
                   {
                       id: 17,
@@ -197,6 +229,8 @@ export default createStore({
                       prix: 79.99,
                       moq: 10,
                       categorieId: 4,
+                      stock: 50,
+                      disponibilite: true,
                   },
                   {
                       id: 18,
@@ -207,6 +241,8 @@ export default createStore({
                       prix: 69.99,
                       moq: 15,
                       categorieId: 4,
+                      stock: 50,
+                      disponibilite: true,
                   },
                   {
                       id: 19,
@@ -217,6 +253,8 @@ export default createStore({
                       prix: 59.99,
                       moq: 20,
                       categorieId: 4,
+                      stock: 50,
+                      disponibilite: true,
                   },
                   {
                       id: 20,
@@ -227,6 +265,8 @@ export default createStore({
                       prix: 99.99,
                       moq: 25,
                       categorieId: 4,
+                      stock: 50,
+                      disponibilite: true,
                   },
               ],
 
