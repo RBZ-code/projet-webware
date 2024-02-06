@@ -1,35 +1,50 @@
 <template>
-    <div class="banniere">
-        <div class="overlay">
-            <h1>{{ message }}</h1>
-            <h2>
-                Inscrivez-vous maintenant pour profiter de nos offres exclusives
-                !
-            </h2>
-            <MyButton
-                @click="toRegisterPage"
-                label="Insciption "
-                backgroundColor="hp"
-                class="MyButton"
-            />
-        </div>
+
+  <div class="banniere">
+    <img alt="Vue logo" src="../assets/banniere.jpg" />
+   <div class="text-container">
+                   <h3 class="bienvenue">{{ curentUserMessage }}</h3>
+    <h1 v-text="message"></h1>
+    <p v-text="paragraph"></p>
+    <p class="paragraph2" v-text="paragraph2"></p>
+    <MyButton
+        @click="toRegisterPage"
+      label="Inscription"
+      backgroundColor="black"
+    /></div> 
     </div>
-    <div class="bordero"></div>
-    <div class="form-container">
-        <h4>Contactez-nous, nous répondrons au mieux à vos attentes.</h4>
-        <ContactForm @addVisitor="handleAddVisitor" />
-    </div>
-</template>
+    
+    <CardsHomePage />
+
+    <br>
+    <ContactForm @addVisitor="handleAddVisitor" />
+    <br>
+    
+
+    <FooterVue />
+</template>    
 
 <script>
 import MyButton from "@/components/FrontOffice/MyButton.vue";
 import ContactForm from "@/components/FrontOffice/ContactForm.vue";
-import { mapState } from "vuex";
+
+import { mapState } from 'vuex';
+import FooterVue from "@/components/FrontOffice/FooterVue.vue";
+import CardsHomePage from "@/components/FrontOffice/CardsHomePage.vue";
+
+
 
 export default {
     data() {
         return {
-            message: "Bienvenue chez Webwares !",
+
+            message: 'Bienvenue chez Webwares !',
+            curentUserMessage:"",
+            paragraph: "Découvrez l'excellence du mobilier d'intérieur chez WebWares, dédié aux grossistes. Nous vous offrons un assortiment exclusif de pièces élégantes et fonctionnelles. Redéfinissez votre espace intérieur avec nos collections soigneusement sélectionnées.",
+
+            paragraph2 : "Cliquez ci-dessous pour vous inscrire et accéder au catalogue.",
+            
+
             visitorData: {
                 firstName: "",
                 lastName: "",
@@ -42,6 +57,8 @@ export default {
     components: {
         MyButton,
         ContactForm,
+        FooterVue,
+        CardsHomePage
     },
 
     methods: {
@@ -51,66 +68,76 @@ export default {
         toRegisterPage() {
             this.$router.push("/add");
         },
+        MessageCurrentUser(){
+            this.curentUserMessage = `Bonjour ${this.$store.state.currentUser.raisonSociale}`
+        }
+
     },
 
     computed: {
         ...mapState(["visitorData"]),
+         
     },
+     created() {
+        if (this.$store.state.currentUser !== null) {
+            this.MessageCurrentUser();
+        }
+    },
+    watch: {
+        '$store.state.currentUser': {
+            immediate: true, // Appeler la fonction lors de la création du composant
+            handler() {
+                if (this.$store.state.currentUser !== null) {
+                    this.MessageCurrentUser();
+                } else {
+                    this.curentUserMessage = "";
+                }
+            }
+        }
+    }
 };
 </script>
 
 <style scoped>
-
-
-h4{
-    color:#252525;
+h4 {
+    color: #252525;
     margin: 30px auto;
     text-align: center;
 }
+
+img{
+    width: 100%;
+}
+
+
 .banniere {
     position: relative;
-    height: 700px;
-    background-image: url("../assets/banniere.jpg");
-    background-size: cover;
-    background-position: center;
-    color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.overlay {
-    background-color: rgba(37, 37, 37, 0.8);
     width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    height: auto;
+    background-size: contain;
+    opacity: 90%;
 }
 
-h1 {
+
+h1, p {
+    position: absolute;
+    top: 13vw;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #000;
     font-size: 40px;
-    margin-bottom: 50px;
 }
 
-h2 {
-    font-style: italic;
-    margin-bottom: 20px;
+p {
+    top: 20vw;
+    left: 50%;
+    font-size: 20px;
+    line-height: 2;
+    margin-top: 2vh;
+}
+.paragraph2{
+    top: 28vw;
 }
 
-.form-container {
-    width: 80%;
-    max-width: 600px;
-    margin: 200px auto;
-    background-color: #f1f1f1;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-}
 
-.MyButton{
-    margin-top: 50px;
-}
 </style>

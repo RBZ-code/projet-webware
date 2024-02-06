@@ -1,5 +1,6 @@
 <template>
     <div>
+
         <form @submit.prevent="submitForm">
             <input
                 type="text"
@@ -35,6 +36,7 @@
 
 <script>
 import MyButton from "@/components/FrontOffice/MyButton.vue";
+
 
 export default {
     components:{
@@ -73,6 +75,7 @@ export default {
             localStorage.setItem("visitor", JSON.stringify(currentData));
         },
     },
+
 };
 </script>
 
