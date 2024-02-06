@@ -143,7 +143,7 @@ export default {
     border: none;
     cursor: pointer;
     position: absolute;
-    top: 10px;
+    top: 20px;
     right: 10px;
 }
 
@@ -176,6 +176,7 @@ button {
     padding: 20px;
     border-bottom: 1px solid #c4c4c4;
     width: 80%;
+    max-width: 1000px;
     margin: 20px 0;
 }
 
@@ -225,6 +226,7 @@ button {
     text-align: start;
     text-decoration-line: underline;
     width: 80%;
+    max-width: 1000px;
     margin-left: 10%;
 }
 
