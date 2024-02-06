@@ -3,23 +3,39 @@
         <div class="main-nav_products">
             <a class="logo-webwares" href="/">WebWares</a>
             <router-link to="/">Home</router-link>
-            <router-link to="/back-products" v-if="isAdminUser()">Back-office</router-link>
+            <router-link to="/back-products" v-if="isAdminUser()"
+                >Back-office</router-link
+            >
             <router-link to="/catalogue">Catalogue</router-link>
             <div class="dropdown">
                 <a class="dropbtn">Catégories</a>
                 <div class="dropdown-content">
-                    <router-link v-for="category in $store.state.categories" :key="category.id" :to="'/category/' + category.id"
-                        class="category-link burger-menu-link">
+                    <router-link
+                        v-for="category in $store.state.categories"
+                        :key="category.id"
+                        :to="'/category/' + category.id"
+                        class="category-link burger-menu-link"
+                    >
                         {{ category.name }}
                     </router-link>
                 </div>
             </div>
         </div>
         <div class="main-nav_member">
-            <router-link v-if="$store.state.currentUser === null" to="/add">Inscription</router-link>
-            <router-link to="/connexion" v-if="$store.state.currentUser === null">Connexion</router-link>
-            <a href="#" v-if="currentUser" @click="redirectToPanier">Panier</a>
-            <a href="#" @click="LogOut" v-if="$store.state.currentUser !== null">Log Out</a>
+            <router-link v-if="$store.state.currentUser === null" to="/add"
+                >Inscription</router-link
+            >
+            <router-link
+                to="/connexion"
+                v-if="$store.state.currentUser === null"
+                >Connexion</router-link
+            >
+            <a href="#" v-if="currentUser" @click="redirectToPanier">
+                <img src="@/assets/panier.png" alt="panier" class="panier"/>
+            </a>
+            <a href="#" @click="LogOut" v-if="$store.state.currentUser !== null"
+                ><img src="@/assets/LogOut.png" alt="logout" class="panier"/></a
+            >
         </div>
     </nav>
     <nav class="main-nav burger-menu" v-else ref="burgerMenu">
@@ -30,24 +46,42 @@
         </div>
         <div v-if="burgerMode" class="burger-content">
             <router-link to="/">Home</router-link>
-            <router-link v-if="$store.state.currentUser === null" to="/add">Inscription</router-link>
-            <router-link to="/connexion" v-if="$store.state.currentUser === null">Connexion</router-link>
-            <router-link to="/back-products" v-if="isAdminUser()">Back-office</router-link>
+            <router-link v-if="$store.state.currentUser === null" to="/add"
+                >Inscription</router-link
+            >
+            <router-link
+                to="/connexion"
+                v-if="$store.state.currentUser === null"
+                >Connexion</router-link
+            >
+            <router-link to="/back-products" v-if="isAdminUser()"
+                >Back-office</router-link
+            >
             <router-link to="/catalogue">Catalogue</router-link>
             <div class="dropdown">
                 <a class="dropbtn">Catégories</a>
                 <div class="dropdown-content-burger">
-                    <router-link v-for="category in $store.state.categories" :key="category.id"
-                        :to="'/category/' + category.id" class="category-link burger-menu-link">
+                    <router-link
+                        v-for="category in $store.state.categories"
+                        :key="category.id"
+                        :to="'/category/' + category.id"
+                        class="category-link burger-menu-link"
+                    >
                         {{ category.name }}
                     </router-link>
                 </div>
             </div>
             <a href="#" v-if="currentUser" @click="redirectToPanier">Panier</a>
-            <a href="#" @click="LogOut" v-if="$store.state.currentUser !== null">Log Out</a>
+            <a href="#" @click="LogOut" v-if="$store.state.currentUser !== null"
+                >Log Out</a
+            >
         </div>
     </nav>
-    <div v-if="$store.state.currentUser === null && logoutModalIsVisible" v-cloak class="modal">
+    <div
+        v-if="$store.state.currentUser === null && logoutModalIsVisible"
+        v-cloak
+        class="modal"
+    >
         <div class="modal-content">
             <h2>Déconnexion réussie !</h2>
             <p>Merci de votre visite sur notre site.</p>
@@ -62,7 +96,7 @@ import FooterVue from "@/components/FrontOffice/FooterVue.vue";
 
 export default {
     components: {
-        FooterVue
+        FooterVue,
     },
     data() {
         return {
@@ -98,20 +132,20 @@ export default {
             }
         },
         LogOut() {
-    if (this.$store.state.currentUser) {
-        const userId = this.$store.state.currentUser.id;
-        console.log("Current User ID before logout:", userId);
-    }
+            if (this.$store.state.currentUser) {
+                const userId = this.$store.state.currentUser.id;
+                console.log("Current User ID before logout:", userId);
+            }
 
-    this.$store.commit("setUserConnected", null);
-    localStorage.removeItem("connectedUserId");
-    this.logoutModalIsVisible = true;
-    this.$router.push("/");
+            this.$store.commit("setUserConnected", null);
+            localStorage.removeItem("connectedUserId");
+            this.logoutModalIsVisible = true;
+            this.$router.push("/");
 
-    setTimeout(() => {
-        this.logoutModalIsVisible = false;
-    }, 2000);
-},
+            setTimeout(() => {
+                this.logoutModalIsVisible = false;
+            }, 2000);
+        },
         isAdminUser() {
             const currentUser = this.$store.state.currentUser;
             return currentUser && currentUser.role === "admin";
@@ -138,7 +172,7 @@ export default {
     min-height: 100vh;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
 
 * {
     margin: 0;
@@ -159,10 +193,13 @@ h1,
 h2,
 h3 {
     font-family: "Bebas Neue", sans-serif;
-    letter-spacing: .1rem;
+    letter-spacing: 0.1rem;
 }
 
 /* Main Navigation */
+.panier {
+    width: 40px;
+}
 
 .logo-webwares {
     font-family: "Bebas Neue", sans-serif;
@@ -172,11 +209,13 @@ h3 {
 }
 
 .logo-webwares:before {
-    content: url('@/assets/WebWares.svg');
+    content: url("@/assets/WebWares.svg");
     position: absolute;
-    top: 50%; left: -30px;
+    top: 50%;
+    left: -30px;
     transform: translateY(-50%);
-    filter: invert(69%) sepia(72%) saturate(812%) hue-rotate(160deg) brightness(91%) contrast(87%);
+    filter: invert(69%) sepia(72%) saturate(812%) hue-rotate(160deg)
+        brightness(91%) contrast(87%);
 }
 
 .main-nav .logo-webwares {
@@ -193,7 +232,7 @@ h3 {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 5rem
+    gap: 5rem;
 }
 
 .main-nav_products {

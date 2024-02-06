@@ -253,7 +253,7 @@ export default createStore({
             },
         ],
     },
-    mutations: {
+    mutations: {     
         
         ajouterAuPanier(state, produit) {
             const utilisateur = state.currentUser;
@@ -549,6 +549,6 @@ export default createStore({
             return state.produits.filter((prod) =>
                 prod.titre.toLowerCase().includes(query)
             );
-        },
+        },     
     },
 });
