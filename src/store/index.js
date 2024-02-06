@@ -270,7 +270,7 @@ export default createStore({
                     utilisateur.panier.push(produit);
                 }
         
-                // Mettez à jour le localStorage ici
+        
                 localStorage.setItem(
                     `user_${utilisateur.id}`,
                     JSON.stringify(utilisateur)
@@ -292,9 +292,9 @@ export default createStore({
                 if (produit) {
                     produit.quantity += changement;
                     if (produit.quantity < 0) {
-                        produit.quantity = 0; // Assurez-vous que la quantité ne devient pas négative
+                        produit.quantity = 0; 
                     }
-                    // Mettez à jour le localStorage ici
+                   
                     localStorage.setItem(
                         `user_${utilisateur.id}`,
                         JSON.stringify(utilisateur)
@@ -332,7 +332,7 @@ export default createStore({
                 if (storedUser) {
                     state.currentUser = JSON.parse(storedUser);
                     
-                    // Assurez-vous que l'utilisateur a un tableau de panier
+              
                     if (!state.currentUser.panier) {
                         state.currentUser.panier = [];
                     }
@@ -495,7 +495,7 @@ export default createStore({
                     );
 
                     if (connectedUser) {
-                        // Inclure l'ID de l'utilisateur dans l'objet currentUser
+                        
                         connectedUser.id = parseInt(connectedUserId);
 
                         context.commit("setUserConnected", connectedUser);

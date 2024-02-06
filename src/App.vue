@@ -119,7 +119,6 @@ export default {
         },
         LogOut() {
     if (this.$store.state.currentUser) {
-        // Assurez-vous que l'utilisateur est défini avant d'essayer d'accéder à l'ID
         const userId = this.$store.state.currentUser.id;
         console.log("Current User ID before logout:", userId);
     }
