@@ -30,12 +30,13 @@
                 v-if="$store.state.currentUser === null"
                 >Connexion</router-link
             >
-            <a href="#" v-if="currentUser" @click="redirectToPanier">
-                <img src="@/assets/panier.png" alt="panier" class="panier"/>
+            <a href="#" v-if="currentUser" @click="redirectToPanier"
+                ><span>{{ taillePanier }}</span>
+                <img src="@/assets/panier.png" alt="panier" class="panier" />
             </a>
             <a href="#" @click="LogOut" v-if="$store.state.currentUser !== null"
-                ><img src="@/assets/LogOut.png" alt="logout" class="panier"/></a
-            >
+                ><img src="@/assets/LogOut.png" alt="logout" class="panier" />{{
+            }}</a>
         </div>
     </nav>
     <nav class="main-nav burger-menu" v-else ref="burgerMenu">
@@ -44,7 +45,7 @@
             <div :class="{ bar: true, 'hide-bar2': burgerMode }"></div>
             <div :class="{ bar: true, 'rotate-bar3': burgerMode }"></div>
         </div>
-        <div v-if="burgerMode" class="burger-content">
+        <div v-if="!burgerMode" class="burger-content">
             <router-link to="/">Home</router-link>
             <router-link v-if="$store.state.currentUser === null" to="/add"
                 >Inscription</router-link
@@ -110,9 +111,14 @@ export default {
         this.$store.dispatch("loadCategories");
         window.addEventListener("resize", this.handleResize);
         document.addEventListener("click", this.handleGlobalClick);
+        this.taillePanier = this.$store.state.currentUser.panier.length;
     },
 
     methods: {
+        cardSize() {
+            return this.$store.state.currentUser.panier.length;
+        },
+
         handleGlobalClick(event) {
             const burgerMenu = this.$refs.burgerMenu;
 
@@ -153,12 +159,16 @@ export default {
 
         redirectToPanier() {
             this.$router.push({ name: "panier" });
+            console.log(this.$store.state.currentUser.panier.length);
         },
     },
     computed: {
         currentUser() {
             return this.$store.state.currentUser !== null;
         },
+    },
+    updated() {
+        
     },
 };
 </script>

@@ -1,5 +1,6 @@
 <template>
-    <div class="cart-container">
+    
+    <div class="cart-container" v-if="this.$store.state.currentUser.panier.length!== 0">
         <div
             v-for="(prod, index) in cartWithInitialQuantity"
             :key="index"
@@ -63,6 +64,9 @@
                 class="btn"
             />
         </div>
+    </div>
+    <div v-else class="empty-cart">
+        <h1 >Votre panier est vide</h1>
     </div>
 </template>
 
@@ -138,6 +142,14 @@ export default {
 </script>
 
 <style scoped>
+
+.empty-cart{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+}
+
 .remove {
     background: none;
     border: none;

@@ -482,6 +482,7 @@ export default createStore({
                     siret: "12345678901234",
                     password: "12345678901234",
                     role: "admin",
+                    panier: [],
                 };
 
                 users.push(masterUser);
