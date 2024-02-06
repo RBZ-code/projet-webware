@@ -2,20 +2,20 @@
   <div class="summary-container">
     <h2>Résumé de commande</h2>
 
-    <!-- Section Total -->
+   
     <div class="total-section">
       <p>Total TTC : {{ totalTTC.toFixed(2) }} €</p>
       <p>Total HT : {{ totalHT.toFixed(2) }} €</p>
     </div>
 
-    <!-- Section Informations de livraison -->
+    
     <div class="delivery-info-section">
       <h3>Informations de livraison</h3>
       <p>Nom : {{ currentUser.raisonSociale }}</p>
       <p>Adresse : {{ adressInfo }}</p>
     </div>
 
-    <!-- Bouton "Confirmer la commande" -->
+    
     <button @click="confirmerCommande" class="confirm-button">
       Confirmer la commande
     </button>
@@ -46,9 +46,9 @@ export default {
   },
   methods: {
     confirmerCommande() {
-      // Mettez en œuvre l'action de confirmation de commande dans votre store
+      
       console.log(this.currentUser);
-      //   this.$store.dispatch("confirmerCommandeAction");
+      
     },
     calculateSubtotal(prod) {
       const subtotal = prod.prix * prod.quantity;
