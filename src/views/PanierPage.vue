@@ -1,6 +1,6 @@
 <template>
     
-    <div class="cart-container" v-if="this.$store.state.currentUser.panier.length!== 0">
+    <div class="cart-container" v-if="panierUser" >
         <div
             v-for="(prod, index) in cartWithInitialQuantity"
             :key="index"
@@ -65,9 +65,10 @@
             />
         </div>
     </div>
-    <div v-else class="empty-cart">
-        <h1 >Votre panier est vide</h1>
+    <div class="empty-cart" v-else>
+        <p>Panier vide</p>
     </div>
+    
 </template>
 
 <script>
@@ -84,6 +85,16 @@ export default {
                 return { ...prod, quantity: nouvelleQuantite };
             });
         },
+        panierUser() {
+            if(
+                this.$store.state.currentUser &&
+                this.$store.state.currentUser.panier
+            ){
+                return this.$store.state.currentUser.panier.length > 0;
+            }else {
+                return false;
+            }
+    },
         cart() {
             if (
                 this.$store.state.currentUser &&
