@@ -44,8 +44,8 @@ export default {
             );
 
             if (connectedUser) {
-                // Inclure l'ID de l'utilisateur dans l'objet currentUser
-                connectedUser.id = connectedUser.id || -1; // Ajustez selon votre logique
+              
+                connectedUser.id = connectedUser.id || -1; 
                 
                 this.$store.commit("setUserConnected", connectedUser);
                 localStorage.setItem("connectedUserId", connectedUser.id);

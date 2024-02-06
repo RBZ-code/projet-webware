@@ -64,7 +64,7 @@ export default {
     },
     watch: {
         '$store.state.currentUser': {
-            immediate: true, // Appeler la fonction lors de la création du composant
+            immediate: true, 
             handler() {
                 if (this.$store.state.currentUser !== null) {
                     this.MessageCurrentUser();

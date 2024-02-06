@@ -54,8 +54,8 @@
             </button>
         </div>
         <div class="total-section">
-            <h2>Total HT : {{ calculateTotalWithoutTax().toFixed(2) }} €</h2>
-            <h2>Total TTC : {{ calculateTotal().toFixed(2) }} €</h2>
+            <strong><p>Total HT : {{ calculateTotalWithoutTax().toFixed(2) }} €</p></strong>
+            <strong><p>Total TTC : {{ calculateTotal().toFixed(2) }} €</p></strong>
             <MyButton
                 label="Passer à la caisse"
                 modifier="action"
@@ -223,6 +223,7 @@ button {
 
 .total-section {
     margin-top: 20px;
+    margin-bottom: 20px;
     text-align: start;
     text-decoration-line: underline;
     width: 80%;
@@ -230,8 +231,8 @@ button {
     margin-left: 10%;
 }
 
-h2 {
-    color: #252525;
+.total-section p {
+    font-size: large;
     margin-top: 10px;
 }
 
