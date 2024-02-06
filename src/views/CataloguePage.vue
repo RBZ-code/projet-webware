@@ -16,8 +16,8 @@
             <div
                 v-for="prod in filteredProducts"
                 :key="prod.id"
-                class="product-card"
-            >
+                class="product-card">
+
                 <img :src="prod.image" :alt="prod.titre" class="img-produit" />
                 <div class="product-details">
                     <h4>{{ prod.titre }}</h4>
@@ -50,10 +50,12 @@ export default {
     },
     computed: {
         products() {
-            return this.$store.state.produits;
+            return this.$store.state.produits.filter((prod) => prod.disponibilite == true);
         },
         filteredProducts() {
-            if (!this.query) return this.products;
+            if (!this.query) {
+                return this.products;
+            }
             const query = this.query.toLowerCase();
             return this.products.filter((prod) =>
                 prod.titre.toLowerCase().includes(query)
