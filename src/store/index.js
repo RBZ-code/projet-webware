@@ -13,11 +13,8 @@ export default createStore({
         users: [],
         lastUser: getLastUser(),
         selectedProduct: null,
-        productsAdd:[],
+        productsAdd: [],
         products: [],
-        
- 
-
 
         categories: localStorage.getItem("copiedCategories")
             ? JSON.parse(localStorage.getItem("copiedCategories"))
@@ -27,7 +24,6 @@ export default createStore({
                   { id: 4, name: "Tapis" },
                   { id: 1, name: "Objets de décorations" },
               ],
-
 
         produits: localStorage.getItem("copiedProduits")
             ? JSON.parse(localStorage.getItem("copiedProduits"))
@@ -258,16 +254,98 @@ export default createStore({
         ],
     },
     mutations: {
+        
+        ajouterAuPanier(state, produit) {
+            const utilisateur = state.currentUser;
+        
+            if (utilisateur && utilisateur.panier) {
+                const produitExistant = utilisateur.panier.find(
+                    (p) => p.id === produit.id
+                );
+        
+                if (produitExistant) {
+                    produitExistant.quantity++;
+                } else {
+                    produit.quantity = produit.moq;
+                    utilisateur.panier.push(produit);
+                }
+        
+        
+                localStorage.setItem(
+                    `user_${utilisateur.id}`,
+                    JSON.stringify(utilisateur)
+                );
+        
+                state.currentUser = { ...utilisateur };
+            } else {
+                console.error("Utilisateur ou panier non défini.");
+                console.log(state.currentUser);
+            }
+        },
+        
+        updateQuantity(state, { productId, changement }) {
+            const utilisateur = state.currentUser;
+            if (utilisateur && utilisateur.panier) {
+                const produit = utilisateur.panier.find(
+                    (p) => p.id === productId
+                );
+                if (produit) {
+                    produit.quantity += changement;
+                    if (produit.quantity < 0) {
+                        produit.quantity = 0; 
+                    }
+                   
+                    localStorage.setItem(
+                        `user_${utilisateur.id}`,
+                        JSON.stringify(utilisateur)
+                    );
+                }
+            }
+        },
+
+        supprimerDuPanier(state, produitId) {
+            const utilisateur = state.currentUser;
+
+            if (utilisateur && utilisateur.panier) {
+                const index = utilisateur.panier.findIndex(
+                    (p) => p.id === produitId
+                );
+
+                if (index !== -1) {
+                    utilisateur.panier.splice(index, 1);
+                    localStorage.setItem(
+                        `user_${utilisateur.id}`,
+                        JSON.stringify(utilisateur)
+                    );
+                    state.currentUser = { ...utilisateur };
+                }
+            }
+        },
         // Utilisateurs
 
         setUserConnected(state, user) {
             state.currentUser = user;
+        
+            if (user && user.id !== null && user.id !== undefined) {
+                const storedUser = localStorage.getItem(`user_${user.id}`);
+                
+                if (storedUser) {
+                    state.currentUser = JSON.parse(storedUser);
+                    
+              
+                    if (!state.currentUser.panier) {
+                        state.currentUser.panier = [];
+                    }
+                }
+            }
         },
+        
 
         addUser(state, user) {
             state.lastUser += 1;
             user.id = state.lastUser;
             user.role = "user";
+            user.panier = [];
             localStorage.setItem(`user_${user.id}`, JSON.stringify(user));
             localStorage.setItem("lastUserId", state.lastUser);
         },
@@ -279,8 +357,7 @@ export default createStore({
         changeUserRole(state, { index, newRole }) {
             if (index >= 0 && index < state.users.length) {
                 state.users[index].role = newRole;
-        
-               
+
                 localStorage.setItem(
                     `user_${state.users[index].id}`,
                     JSON.stringify(state.users[index])
@@ -301,12 +378,7 @@ export default createStore({
                 (prod) => prod.id !== productId
             );
         },
-        addProductShop(state, productId) {
-            state.productsAdd.push(productId);
-        },
-        deleteProductShop(state, prod) {
-            state.productsAdd.splice(this.state.productsAdd.indexOf(prod), 1);
-        },
+
         updateProduct(state, updatedProduct) {
             const index = state.produits.findIndex(
                 (prod) => prod.id === updatedProduct.id
@@ -327,9 +399,6 @@ export default createStore({
                 JSON.stringify(state.produits)
             );
         },
-
-
-
 
         setProducts(state, products) {
             state.produits = products;
@@ -389,6 +458,7 @@ export default createStore({
         },
     },
     actions: {
+        
         updateProduct(context, productId) {
             context.commit("updateProduct", productId);
         },
@@ -410,7 +480,7 @@ export default createStore({
                     id: -1,
                     raisonSociale: "Master",
                     siret: "12345678901234",
-                    password: "passWord",
+                    password: "12345678901234",
                     role: "admin",
                 };
 
@@ -423,7 +493,13 @@ export default createStore({
                     const connectedUser = users.find(
                         (user) => user.id === parseInt(connectedUserId)
                     );
-                    context.commit("setUserConnected", connectedUser);
+
+                    if (connectedUser) {
+                        
+                        connectedUser.id = parseInt(connectedUserId);
+
+                        context.commit("setUserConnected", connectedUser);
+                    }
                 }
             } catch (error) {
                 console.error(
@@ -474,6 +550,5 @@ export default createStore({
                 prod.titre.toLowerCase().includes(query)
             );
         },
-    }
-
-    });
+    },
+});

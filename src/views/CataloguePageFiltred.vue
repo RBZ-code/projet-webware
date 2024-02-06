@@ -1,12 +1,14 @@
 <template>
     <div>
-        <form class="product-form">
-            <label for="search">Recherche : </label>
+        <h1>{{ categorieName }}</h1>
+   
+        <form class="filter-bar">
+            <label for="search">Filtrer les catégories : </label>
             <input
                 type="search"
                 id="search"
                 name="search"
-                placeholder="Recherche..."
+                placeholder="nom de la catégorie"
                 autocomplete="on"
                 v-model="query"
             />
@@ -27,13 +29,18 @@
                 </div>
                 <div class="product-actions">
                     <button
-                        @click="addToCart(prod.id)"
+                        @click="ajouterAuPanier(prod)"
                         v-if="$store.state.currentUser !== null"
                     >
                         Ajouter au panier 🛒
                     </button>
 
-                    <button class="details-btn" @click="redirectToDescriptionPage(prod)">Voir Détails</button>
+                    <button
+                        class="details-btn"
+                        @click="redirectToDescriptionPage(prod)"
+                    >
+                        Voir Détails
+                    </button>
                 </div>
             </div>
         </div>
@@ -49,6 +56,11 @@ export default {
         };
     },
     computed: {
+        categorieName(){
+            return this.$store.state.categories.find(
+                (cat) => cat.id === this.categoryId
+            ).name;
+        },
         products() {
             return this.$store.state.produits;
         },
@@ -70,12 +82,13 @@ export default {
         },
     },
     methods: {
-        addToCart() {
-            // Logique pour ajouter au panier
-        },
+        ajouterAuPanier(produit) {
+        this.$store.commit("ajouterAuPanier", produit);
+        alert("Produit ajouté au panier !");
+      },
         redirectToDescriptionPage(product) {
             this.$store.commit("setSelectedProduct", product);
-            this.$router.push({ name: 'description-product' });
+            this.$router.push({ name: "description-product" });
         },
     },
     watch: {
@@ -92,6 +105,19 @@ export default {
 </script>
 
 <style scoped>
+
+h1{
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.filter-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
 .product-form {
     width: 80%;
     margin: 1rem auto;
@@ -103,7 +129,7 @@ export default {
     gap: 20px;
     justify-content: center;
     width: 80%;
-    margin: auto;
+    margin: 50px auto;
 }
 
 .product-card {

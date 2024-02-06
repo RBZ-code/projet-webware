@@ -26,8 +26,7 @@ export default {
                 "blue-btn": this.backgroundColor === "blue",
                 "black-btn": this.backgroundColor === "black",
                 "connexion-btn": this.backgroundColor === "green",
-                "action-btn-HP": this.backgroundColor === "hp",
-                "action-btn-HP-form": this.backgroundColor === "hp-form",
+                "home-btn": this.modifier === "home",
             };
         },
     },
@@ -60,38 +59,28 @@ export default {
     cursor: pointer;
     transition: 200ms ease-in-out;
 }
-.action-btn-HP {
-    padding: 15px 25px;
-    border-radius: 5px;
-    background-color: var(--clr-blue);
-    color: #f1f1f1;
-    border: none;
-    cursor: pointer;
-    transition: 200ms ease-in-out;
-    font-size: 30px;
-}
 
-.action-btn-HP-form {
-    padding: 15px 25px;
-    border-radius: 5px;
-    background-color: var(--clr-blue);
-    color: #f1f1f1;
-    border: none;
-    cursor: pointer;
-    transition: 200ms ease-in-out;
-    font-size: 30px;
-}
-.action-btn-HP-form:hover {
+.action-btn:hover {
     color: #fff;
     background-color: var(--clr-dark);
 }
 
-.action-btn-HP:hover {
-    color: #252525;
-    background-color: #fff;
+.home-btn {
+    margin-top: 2rem;
+    padding: 25px 30px;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-family: var(--font-text);
+    border-radius: 5px;
+    background-color: var(--clr-blue);
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: 200ms ease-in-out;
 }
 
-.action-btn:hover {
+.home-btn:hover {
     color: #fff;
     background-color: var(--clr-dark);
 }
@@ -121,37 +110,10 @@ export default {
     border: none;
     cursor: pointer;
 }
-.black-btn {
-    background-color: #000;
-    color: white;
 
-    position: absolute;
-    text-align:center;
-    top:35vw;
-    left:50%;
-    transform: translate(-50%,-50%);
-
-    padding: 20px;
-    font-size: 20px;
-    border-radius: 15px;
-    width: 300px;
-    border: none;
-    cursor: pointer;
-}
-
-@media only screen and (min-width: 375px) and (max-width: 767px){
-    .black-btn{
-        top: 70vw;
-        width: 30%;
-        height: 6vh;
-        font-size: 14px;
-        margin: 10px auto;
-    }
-}
 .black-btn:hover{
     opacity: 70%;
     cursor: pointer;
 }
-
 
 </style>

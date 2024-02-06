@@ -14,8 +14,7 @@
                 type="search"
                 placeholder="Nom du produit"
                 v-model="searchQuery"
-
-
+            >
 
         </form>
         <div class="listing-template">
@@ -183,6 +182,7 @@ export default {
 }
 
 .listing-template {
+    min-height: 80vh;
     width: 90%;
     margin: 25px auto;
 }

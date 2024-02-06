@@ -1,18 +1,17 @@
 <template>
-    <div class="footer">
+    <div class="main-footer">
         <div class=row>
             <a v-for="(icon, index) in socialIcons" :key="index" :href="icon.link">
-                <i :class="icon.iconClass"></i>
+                <i :class="icon.iconClass" style="color: #fff"></i>
             </a>
         </div>
-        <div class="row">
+        <nav class="row">
             <ul>
                 <li v-for="(link,index) in footerLinks" :key="index">
                 <a :href="link.href">{{ link.text }}</a>
                 </li>  
             </ul>
-        </div>
-        <br>
+        </nav>
         <div class="row">
             <h3>Abonnez-vous à notre newsletter </h3>
             <div class="input-container">
@@ -35,7 +34,7 @@ export default {
             ], 
             footerLinks: [
                 {text: 'Nous contacter', href: '#'},
-                {text: 'Catalogue', href: '#'},
+                {text: 'Catalogue', href: '/catalogue'},
                 {text: 'CGU', href: '#'},
                 {text: 'Mentions Légales', href: '#'},
                 {text: 'Politique de confidentialité', href: '#'},
@@ -76,81 +75,76 @@ export default {
 </script>
 
 <style scoped>
-*, ::after, ::before{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
-.footer{
-    padding-top: 5vh;
-    background:#313131;
-    text-align:center;
-    min-height: 40vh;
+.main-footer{
+    background: var(--clr-dark);
+    padding: 50px;
+    text-align: center;
     padding: 40px;
 }
 
-.footer .row{
-    width:100%;
-    padding:0.6% 0%;
-    color:white;
-    font-size: 1.2em;
+.main-footer h3 {
+    color: var(--clr-white);
 }
 
-.footer .row a{
+.main-footer .row{
+    font-size: 1.2em;
+    margin: 50px 0;
+}
+
+.main-footer .row:first-of-type {
+    margin-top: 0;
+}
+
+.main-footer .row:last-of-type {
+    margin-bottom: 0;
+}
+
+.main-footer .row a{
     text-decoration:none;
-    color:gray;
-    transition:0.3s;
+    color: var(--clr-white);
+    transition: 200ms ease-in-out;
     margin: 0 15px;
 }
 
-.footer .row a:hover{
-    color:rgb(28, 171, 226);
+.main-footer .row a:hover{
+    color: var(--clr-blue);
 }
 
-.footer .row ul{
-    width:100%;
+.main-footer .row ul li{
+    display: inline-block;
 }
 
-.footer .row ul li{
-    display:inline-block;
-    margin:0px 30px;
-}
-
-.footer .row a i{
-    font-size:2em;
-    margin:0% 1%;
-}
-h3 {
-    margin-right: 0; 
+.main-footer .row a i{
+    font-size: 2rem;
 }
 .input-container{
-    border-radius: 8px;
     position: relative;
-    margin: 2vw;
+    margin: 1rem auto;
+
+    width: 250px;
 }
 input{
-    width: 25vw;
-    height: 5vh;
-    border-radius: 4px;
+    width: 100%;
+    height: 50px;
+    border-radius: 5px;
     border: none;
 }
 .input-container input{
-    padding: 0.625rem 70px 0.625rem 0.75rem;
+    padding: 5px;
 }
 .submit-btn {
     position: absolute;
-    width: 5vw;
-    left: 52vw;
-    top: 0.2vw;
-    bottom: 0.2vw;
-    border-radius: 4px;
-    background-color: rgb(28, 171, 226);
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 80%;
+    width: 80px;
+    border-radius: 5px;
+    background-color: var(--clr-blue);
     color: #fff;
     text-align: center;
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
+    font-size: .8rem;
     border: none;
 }
 .submit-btn:hover{
@@ -158,50 +152,11 @@ input{
     cursor: pointer;
     transition:0.3s;
 }
-@media (max-width:720px){
-.footer{
-    text-align:left;
-    padding:5%;
-}
-.footer .row ul li{
-    display:block;
-    margin:10px 0px;
-    text-align:left;
-}
-input{
-    border: 1px solid black;
-    width: 70%;
-}
-.submit-btn{
-    width: 15%;
-    height: 80%;
-    left: 45vw;
-    top: 0.5vw ;
-    bottom: 0.5vw;
-}
-.footer .row h3{
-    color: white;
-    font-size: 1rem; 
-    margin-right: 10px;
+
+@media screen and (max-width: 500px) {
+    .main-footer .row ul li{
+    display: block;
 }
 }
-@media only screen and (min-width: 375px) and (max-width: 767px){
-    .submit-btn{
-        width: 16vw ;
-        left: 42vw;
-        top: 1vw ;
-    }
-}
-@media (min-width: 768px) and (max-width: 1199px){
-    .submit-btn{
-        width: 8vw ;
-        left: 51vw;
-        top: 0.5vw ;
-        bottom: 0.5vw;
-    }
-    input{
-        border: 1px solid black;
-        width: 30vw;
-    }
-}
+
 </style>
