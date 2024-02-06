@@ -1,4 +1,10 @@
 <template>
+    <div class="order-progress">
+        <div class="order-progress_step order-progress--active"></div>
+        <div class="order-progress_bar"></div>
+        <div class="order-progress_step"></div>
+    </div>
+    <h1>Votre panier</h1>
     <div class="cart-container">
         <div
             v-for="(prod, index) in cartWithInitialQuantity"
@@ -138,6 +144,35 @@ export default {
 </script>
 
 <style scoped>
+
+.order-progress {
+    margin: 25px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 350px;
+}
+
+.order-progress_step {
+    height: 25px;
+    aspect-ratio: 1;
+    border-radius: 9999px;
+    background-color: var(--clr-dark);
+}
+
+.order-progress_bar {
+    height: 10px;
+    min-width: 75%;
+    background-color: var(--clr-dark);
+}
+
+.order-progress--active {
+    background-color: var(--clr-blue);
+}
+
+h1 {
+    text-align: center;
+}
 .remove {
     background: none;
     border: none;
