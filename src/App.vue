@@ -40,6 +40,7 @@
         </div>
     </nav>
     <nav class="main-nav burger-menu" v-else ref="burgerMenu">
+        <a class="logo-webwares" href="/">WebWares</a>
         <div class="burger-icon" @click="toggleBurgerMode">
             <div :class="{ bar: true, 'rotate-bar1': burgerMode }"></div>
             <div :class="{ bar: true, 'hide-bar2': burgerMode }"></div>
@@ -212,7 +213,7 @@ h3 {
 }
 
 .logo-webwares {
-    font-family: "Bebas Neue", sans-serif;
+    font-family: 'Impact', "Bebas Neue", sans-serif;
     font-size: 2rem;
     display: inline-block;
     position: relative;
@@ -310,24 +311,30 @@ nav a:hover {
 }
 
 /* Burger Menu */
-.burger-menu {
+
+/* .burger-menu {
     display: flex;
     justify-content: space-between;
     flex-direction: row-reverse;
     align-items: center;
     padding: 20px;
-}
+} */
 
 .burger-icon {
     cursor: pointer;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    height: 20px;
-    width: 30px;
+    gap: 2px;
+    height: 50px;
+    width: 50px;
     z-index: 10;
     position: fixed;
+    right: 15px;
+    background-color: var(--clr-light-grey);
+    border-radius: 9999px;
+    padding: 5px
 }
 
 .bar {
@@ -344,14 +351,20 @@ nav a:hover {
     justify-content: space-evenly;
     height: 100vh;
     width: 50vw;
-    background-color: rgba(196, 196, 196, 0.4);
+    background-color: var(--clr-dark);
     position: fixed;
     top: 0;
     right: 0;
     z-index: 1;
 }
 
+.burger-content a {
+    color: var(--clr-white);
+
+}
+
 /* Dropdown Content */
+
 .dropdown-content {
     display: none;
     position: absolute;
@@ -405,7 +418,27 @@ nav a:hover {
     display: block;
 }
 
+.rotate-bar1 {
+    transform: rotate(-45deg) translate(-3px, 4px);
+}
+
+.hide-bar2 {
+    opacity: 0;
+}
+
+.rotate-bar3 {
+    transform: rotate(45deg) translate(-3px, -4px);
+}
+
+.burger-icon .bar {
+    background-color: black;
+    height: 3px;
+    width: 25px;
+    transition: 0.4s;
+}
+
 /* Modal */
+
 .modal {
     position: fixed;
     top: 50%;
@@ -442,24 +475,5 @@ nav a:hover {
 
 .modal-content p {
     font-size: 1rem;
-}
-
-.rotate-bar1 {
-    transform: rotate(-45deg) translate(-6px, 6px);
-}
-
-.hide-bar2 {
-    opacity: 0;
-}
-
-.rotate-bar3 {
-    transform: rotate(45deg) translate(-6px, -6px);
-}
-
-.burger-icon .bar {
-    background-color: black;
-    height: 3px;
-    width: 25px;
-    transition: 0.4s;
 }
 </style>
