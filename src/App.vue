@@ -46,7 +46,7 @@
             <div :class="{ bar: true, 'hide-bar2': burgerMode }"></div>
             <div :class="{ bar: true, 'rotate-bar3': burgerMode }"></div>
         </div>
-        <div v-if="!burgerMode" class="burger-content">
+        <div v-if="burgerMode" class="burger-content">
             <router-link to="/">Home</router-link>
             <router-link v-if="$store.state.currentUser === null" to="/add"
                 >Inscription</router-link
