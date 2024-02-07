@@ -5,6 +5,7 @@
       <input type="search" id="search" name="search" placeholder="Nom du produit" autocomplete="on" v-model="query">
     </form>
 
+
     <div class="products-container">
       <div v-for="(prod) in filteredProducts" :key="prod.id" class="product-card">
         <img :src="prod.image" :alt="prod.titre" class="img-produit" />
@@ -38,15 +39,24 @@ export default {
     products() {
       return this.$store.state.produits;
     },
-    filteredProducts() {
-      if (!this.query) return this.products;
-      const query = this.query.toLowerCase();
-      return this.products.filter((prod) =>
-        prod.titre.toLowerCase().includes(query)
-      );
-    },
-    currentUser() {
-      return this.$store.state.currentUser !== null;
+
+    computed: {
+        products() {
+            return this.$store.state.produits.filter((prod) => prod.disponibilite == true);
+        },
+        filteredProducts() {
+            if (!this.query) {
+                return this.products;
+            }
+            const query = this.query.toLowerCase();
+            return this.products.filter((prod) =>
+                prod.titre.toLowerCase().includes(query)
+            );
+        },
+        currentUser() {
+            return this.$store.state.currentUser !== null;
+        },
+
     },
   },
   methods: {

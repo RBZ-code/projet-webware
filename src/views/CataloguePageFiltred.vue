@@ -62,7 +62,7 @@ export default {
             ).name;
         },
         products() {
-            return this.$store.state.produits;
+            return this.$store.state.produits.filter((prod) => prod.disponibilite == true);
         },
         filteredProducts() {
             if (!this.query) return this.categoryProducts;
