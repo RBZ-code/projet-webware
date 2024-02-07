@@ -1,11 +1,31 @@
 <template>
-    <div >
-        <div  class="cards"
-        >
-            <!-- <h1>{{products[descritpionId].titre}}</h1> -->
-            <button @click="show()">hahaa</button>
+    <div class="body" v-if="selectedProduct">
+        <div class="cards" 
+        :class="{ 'tablette-layout': isTablette, 'desktop-layout': !isTablette }">
+            <div class="image-container">
+                <img
+                    :src="selectedProduct.image"
+                    :alt="selectedProduct.titre"
+                    :width="150"
+                    :height="150"
+                />
+            </div>
+            <div class="description-price">
+                <h2>{{ selectedProduct.titre }}</h2>
+                <p class="product-price"><strong>{{ selectedProduct.prix }} US$</strong></p>
+                <p class="tva-price">Prix de la TVA</p>
+                <p class="moq">moq : {{ selectedProduct.moq }}</p>
+                <div class="product-quantity">
+                    <div class="basket-container">
+                        <button class="add-basket" @click="ajouterAuPanier(selectedProduct)">Ajouter au panier 🛒</button>
+                    </div>
+                </div>
+            </div>
+            <div class="description-text">
+                <p class="text-title"><strong>Description du produit</strong></p>
+                <p class="write-text">{{ selectedProduct.description }}</p>
+            </div>
         </div>
-            
     </div>
 </template>
 
@@ -14,13 +34,13 @@ export default {
     data() {
         return {
             descriptionId: null,
+            isTablette: 508 < window.innerWidth < 768,
         }
     },
-    method: {
-        show(){
-            console.log(this.descriptionId)
-        }
+    mounted() {
+        window.addEventListener('resize', this.handleResize);
     },
+    
     computed: {
         products() {
             return this.$store.state.produits;
@@ -29,13 +49,28 @@ export default {
             return this.products.find(product => product.id === this.descriptionId);
         },
     },
+    methods: {
+        addProduit(produit) {
+            this.$store.commit("ajouterAuPanier", produit);
+        },
+        handleResize() {
+            this.isTablette = 508 < window.innerWidth && window.innerWidth < 768;
+        },
+        beforeDestroy: function () {
+            window.removeEventListener('resize', this.handleResize);
+        },
+        ajouterAuPanier(produit) {
+        this.$store.commit("ajouterAuPanier", produit);
+        alert("Produit ajouté au panier !");
+      },
+    },
     watch: {
         "$route.params.descriptionId"(newDescriptionId) {
             this.descriptionId = parseInt(newDescriptionId);
         },
     },
     created() {
-        this.descriptionId = parseInt(this.$route.params.descriptionId);
+        this.descriptionId = parseInt(this.$route.params.productId);
     },
 };
 </script>
@@ -52,7 +87,7 @@ export default {
     }
     .image-container img{
         object-fit: contain;
-        width: 70%;
+        width: 20%;
         height: auto;       
     }
     .description-price h2{
@@ -70,12 +105,7 @@ export default {
     .product-quantity{
         margin: 10px 10px;
     }
-    .description-price .product-quantity{
-        /* text-align: center; */
-        width: 100%;
-        height: 50px;
-        border: 1px solid rgba(0, 0, 0, 0.3) ;
-    }
+    
     .product-quantity .minus-button{
         width: 17%;
         height: 100%;
