@@ -1,5 +1,6 @@
 <template>
     <div class="body" v-if="selectedProduct">
+
         <h2>{{ selectedProduct.titre }}</h2>
         <div class="cards-container">
             <div class="cards" 
@@ -24,6 +25,7 @@
                         <div class="basket-container">
                             <button class="add-basket" @click="ajouterAuPanier(selectedProduct)">Ajouter au panier 🛒</button>
                         </div>
+
                     </div>
                 </div>
             </div>

@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1>{{ categorieName }}</h1>
-   
+
         <form class="filter-bar">
             <label for="search">Filtrer les catégories : </label>
             <input
@@ -25,22 +25,25 @@
                     <h4>{{ prod.titre }}</h4>
                     <p>{{ prod.description }}</p>
                     <p>{{ prod.prix }} €</p>
-                    <p>MOQ: {{ prod.moq }}</p>
+                    <p>MOQ : {{ prod.moq }}</p>
+                    <p>en stock : {{ prod.sctock }}</p>
                 </div>
                 <div class="product-actions">
                     <button
                         @click="ajouterAuPanier(prod)"
                         v-if="$store.state.currentUser !== null"
+                        :disabled="prod.stock < prod.moq"
                     >
                         Ajouter au panier 🛒
                     </button>
 
-                    <router-link class="listing-link" :to="'/product-page/' + prod.id">
-                    <button
-                        class="details-btn"
+
+                    <router-link
+                        class="listing-link"
+                        :to="'/product-page/' + prod.id"
                     >
-                        Voir Détails
-                    </button>
+                        <button class="details-btn">Voir Détails</button>
+                        
                     </router-link>
                 </div>
             </div>
@@ -57,13 +60,15 @@ export default {
         };
     },
     computed: {
-        categorieName(){
+        categorieName() {
             return this.$store.state.categories.find(
                 (cat) => cat.id === this.categoryId
             ).name;
         },
         products() {
-            return this.$store.state.produits;
+            return this.$store.state.produits.filter(
+                (prod) => prod.disponibilite == true
+            );
         },
         filteredProducts() {
             if (!this.query) return this.categoryProducts;
@@ -84,9 +89,9 @@ export default {
     },
     methods: {
         ajouterAuPanier(produit) {
-        this.$store.commit("ajouterAuPanier", produit);
-        alert("Produit ajouté au panier !");
-      },
+            this.$store.commit("ajouterAuPanier", produit);
+            alert("Produit ajouté au panier !");
+        },
         redirectToDescriptionPage(product) {
             this.$store.commit("setSelectedProduct", product);
             this.$router.push({ name: "description-product" });
@@ -106,8 +111,7 @@ export default {
 </script>
 
 <style scoped>
-
-h1{
+h1 {
     text-align: center;
     margin-bottom: 20px;
 }
