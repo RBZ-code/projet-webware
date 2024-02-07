@@ -75,13 +75,16 @@
             />
         </div>
     </div>
+    <CarrouselComponent />
 </template>
 
 <script>
 import MyButton from "@/components/FrontOffice/MyButton.vue";
+import CarrouselComponent from "@/components/FrontOffice/CarrouselComponent.vue";
 export default {
     components: {
         MyButton,
+        CarrouselComponent,
     },
     computed: {
         cartWithInitialQuantity() {
