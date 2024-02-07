@@ -15,16 +15,16 @@ export default createStore({
         selectedProduct: null,
         productsAdd: [],
         products: [],
-    
+
 
         categories: localStorage.getItem("copiedCategories")
             ? JSON.parse(localStorage.getItem("copiedCategories"))
             : [
-                  { id: 3, name: "Mobilier d'intérieur" },
-                  { id: 2, name: "Luminaires" },
-                  { id: 4, name: "Tapis" },
-                  { id: 1, name: "Objets de décorations" },
-              ],
+                { id: 3, name: "Mobilier d'intérieur" },
+                { id: 2, name: "Luminaires" },
+                { id: 4, name: "Tapis" },
+                { id: 1, name: "Objets de décorations" },
+            ],
 
         produits: localStorage.getItem("copiedProduits")
             ? JSON.parse(localStorage.getItem("copiedProduits"))
@@ -271,12 +271,13 @@ export default createStore({
                   },
               ],
 
+
         commandes: localStorage.getItem("order")
             ? JSON.parse(localStorage.getItem("order"))
             : [],
     },
     mutations: {
-        validerCommande(state) {
+        validerCommande(state,) {
             const currentUser = state.currentUser;
 
             if (
@@ -319,34 +320,52 @@ export default createStore({
                 console.log(state.commandes);
             }
         },
-
         ajouterAuPanier(state, produit) {
             const utilisateur = state.currentUser;
-
+          
             if (utilisateur && utilisateur.panier) {
-                const produitExistant = utilisateur.panier.find(
-                    (p) => p.id === produit.id
-                );
-
-                if (produitExistant) {
-                    produitExistant.quantity++;
+              const produitExistant = utilisateur.panier.find((p) => p.id === produit.id);
+          
+              if (produitExistant) {
+                const quantiteDisponible = produitExistant.moq;
+                const quantiteAjoutee = 1;
+          
+                // Vérifie si la quantité ajoutée ne dépasse pas la quantité disponible
+                produitExistant.quantity += quantiteAjoutee <= quantiteDisponible ? quantiteAjoutee : 0;
+                produitExistant.stock -= quantiteAjoutee <= quantiteDisponible ? quantiteAjoutee : 0;
+              } else {
+                const quantiteDisponible = produit.moq;
+          
+                if (quantiteDisponible > 0) {
+                  const quantiteAjoutee = quantiteDisponible <= produit.stock ? quantiteDisponible : produit.stock;
+          
+                  utilisateur.panier.push({
+                    id: produit.id,
+                    quantity: quantiteAjoutee,
+                    moq: produit.moq,
+                    stock: produit.stock,
+                    available: true,
+                  });
+          
+                  produit.stock -= quantiteAjoutee;
                 } else {
-                    produit.quantity = produit.moq;
-                    utilisateur.panier.push(produit);
+                  utilisateur.panier.push({
+                    id: produit.id,
+                    quantity: 0,
+                    moq: produit.moq,
+                    stock: produit.stock,
+                    available: false,
+                  });
                 }
-
-                localStorage.setItem(
-                    `user_${utilisateur.id}`,
-                    JSON.stringify(utilisateur)
-                );
-
-                state.currentUser = { ...utilisateur };
+              }
+          
+              localStorage.setItem(`user_${utilisateur.id}`, JSON.stringify(utilisateur));
+              state.currentUser = { ...utilisateur };
             } else {
-                console.error("Utilisateur ou panier non défini.");
-                console.log(state.currentUser);
+              console.error("Utilisateur ou panier non défini.");
+              console.log(state.currentUser);
             }
-        },
-
+          },          
         updateQuantity(state, { productId, changement }) {
             const utilisateur = state.currentUser;
             if (utilisateur && utilisateur.panier) {

@@ -12,6 +12,7 @@
             />
         </form>
 
+
         <div class="products-container" >
             <div
                 v-for="(prod, index) in filteredProducts"
@@ -45,6 +46,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 </template>
 
@@ -82,10 +84,12 @@ export default {
             this.$store.commit("setSelectedProduct", product);
             this.$router.push({ name: "description-product" });
         },
+
         ajouterAuPanier(produit) {
             this.$store.commit("ajouterAuPanier", produit);
             alert("Produit ajouté au panier !");
         },
+
     },
 };
 </script>
@@ -175,4 +179,6 @@ export default {
     background-color: #44b9da;
     color: #ffffff;
 }
+
 </style>
+
