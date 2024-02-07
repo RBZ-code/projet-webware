@@ -35,12 +35,13 @@
                         Ajouter au panier 🛒
                     </button>
 
+                    <router-link class="listing-link" :to="'/product-page/' + prod.id">
                     <button
                         class="details-btn"
-                        @click="redirectToDescriptionPage(prod)"
                     >
                         Voir Détails
                     </button>
+                    </router-link>
                 </div>
             </div>
         </div>
