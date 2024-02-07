@@ -1,5 +1,23 @@
 <template>
-    <div class="cart-container">
+
+    <header class="order-progress">
+        <div class="order-progress_step order-progress--active"></div>
+        <div class="order-progress_bar"></div>
+        <div class="order-progress_step"></div>
+    </header>
+    <h1>Votre panier (1/2)</h1>
+    <MyButton
+        label="Passer commande"
+        modifier="action"
+        @GeneralEventBtn="checkout()"
+        class="btn"
+    />
+    <main class="cart-container" v-if="panierUser">
+        <section class="total-section">
+            <p><strong>Total HT :</strong> {{ calculateTotalWithoutTax().toFixed(2) }} €</p>
+            <p><strong>Total TTC :</strong> {{ calculateTotal().toFixed(2) }} €</p>
+        </section>
+
         <div
             v-for="(prod, index) in cartWithInitialQuantity"
             :key="index"
@@ -14,6 +32,7 @@
                 />
             </div>
             <div class="product-details">
+                <p class="product-description"><strong>{{ prod.titre }}</strong></p>
                 <p class="product-description">{{ prod.description }}</p>
                 <div class="quantity">
                     <button
@@ -27,6 +46,7 @@
                     <button
                         @click="updateQuantity(prod.id, 1)"
                         class="quantity-btn"
+                        :disabled="prod.stock === prod.quantity"
                     >
                         +
                     </button>
@@ -53,17 +73,13 @@
                 <img src="@/assets/trash-icon.png" alt="Supprimer" />
             </button>
         </div>
-        <div class="total-section">
-            <h2>Total HT : {{ calculateTotalWithoutTax().toFixed(2) }} €</h2>
-            <h2>Total TTC : {{ calculateTotal().toFixed(2) }} €</h2>
-            <MyButton
-                label="Passer à la caisse"
-                modifier="action"
-                @GeneralEventBtn="checkout()"
-                class="btn"
-            />
-        </div>
+
+    </main>
+    <div class="empty-cart" v-else>
+        <p>Panier vide</p>
     </div>
+    
+    
 </template>
 
 <script>
@@ -92,6 +108,9 @@ export default {
         },
     },
     methods: {
+        panierUser(){
+            return this.$store.state.currentUser.panier.length > 0;
+        },
         supprimerDuPanier(produit) {
             this.$store.commit("supprimerDuPanier", produit.id);
             alert("Produit supprimé du panier !");
@@ -104,6 +123,7 @@ export default {
                 productId,
                 changement,
             });
+     
         },
         // ...
 
@@ -137,7 +157,51 @@ export default {
 };
 </script>
 
+<style>
+
+
+.order-progress {
+    margin: 25px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 350px;
+}
+
+.order-progress_step {
+    height: 25px;
+    aspect-ratio: 1;
+    border-radius: 9999px;
+    background-color: var(--clr-dark);
+}
+
+.order-progress_bar {
+    height: 10px;
+    min-width: 75%;
+    background-color: var(--clr-dark);
+}
+
+.order-progress--active {
+    background-color: var(--clr-blue);
+}
+
+</style>
+
 <style scoped>
+
+h1 {
+    text-align: center;
+}
+
+.empty-cart{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+}
+
+
+
 .remove {
     background: none;
     border: none;
@@ -157,14 +221,12 @@ export default {
     color: #777;
 }
 
-button {
-    border-radius: 4px;
-}
-
 .cart-container {
     display: flex;
     flex-direction: column;
     align-items: center;
+    min-height: 70vh;
+    margin-bottom: 25px;
 }
 
 .card {
@@ -173,6 +235,7 @@ button {
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
+    row-gap: 1rem;
     padding: 20px;
     border-bottom: 1px solid #c4c4c4;
     width: 80%;
@@ -180,11 +243,17 @@ button {
     margin: 20px 0;
 }
 
-.product-image img {
-    width: 150px;
+.product-image {
+    min-width: 150px;
     height: 150px;
-    object-fit: cover;
     margin-right: 20px;
+    border-radius: 15px;
+    overflow: hidden;
+}
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .product-details {
@@ -207,6 +276,7 @@ button {
 }
 
 .quantity-btn {
+    border-radius: 5px;
     padding: 4px;
     height: 30px;
     width: 30px;
@@ -222,24 +292,23 @@ button {
 }
 
 .total-section {
-    margin-top: 20px;
-    text-align: start;
-    text-decoration-line: underline;
+    background-color: var(--clr-light-grey);
+    border-radius: 15px;
+    padding: 25px;
+    text-align: center !important;
+    /* text-decoration-line: underline; */
     width: 80%;
     max-width: 1000px;
     margin-left: 10%;
+    margin: 25px auto;
 }
 
-h2 {
-    color: #252525;
-    margin-top: 10px;
+.total-section p {
+    font-size: large;
 }
 
 .btn {
-    margin-top: 20px;
-}
-
-button:hover {
-    background-color: #8bd6e7;
+    margin: 25px auto;
+    text-align: center;
 }
 </style>

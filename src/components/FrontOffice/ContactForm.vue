@@ -1,6 +1,6 @@
 <template>
     <div>
-
+        <h2>Pas encore convaincu ? On répond à vos questions !</h2>
         <form @submit.prevent="submitForm">
             <input
                 type="text"
@@ -28,7 +28,7 @@
             <MyButton
                 @click="submit"
                 label="Envoyer"
-                backgroundColor="hp-form" 
+                modifier="action" 
             />
         </form>
     </div>
@@ -80,9 +80,16 @@ export default {
 </script>
 
 <style scoped>
+
+h2 {
+  margin-top: 50px;
+  text-align: center;
+  font-size: 1.8rem;
+}
+
 form {
     margin-top: 30px;
-    margin-bottom: 30px;
+    margin-bottom: 50px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -108,6 +115,7 @@ textarea {
     padding: 10px;
     border: 1px solid #c4c4c4;
     border-radius: 5px;
+    font-family: var(--font-text);
 }
 
 </style>

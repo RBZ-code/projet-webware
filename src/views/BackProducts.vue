@@ -26,7 +26,10 @@
                     <h2>{{ prod.titre }}</h2>
                     <p>{{ prod.description }}</p>
                     <p class="box-numbers">
-                        {{ prod.prix + "€" + " - MOQ " + prod.moq }}
+                        {{ prod.prix + "€" + " / MOQ : " + prod.moq + " / Stock : " + prod.stock }}
+                    </p>
+                    <p class="box-avail">
+                        <span v-if="prod.disponibilite == true">Disponible ✔</span><span v-else>Non-disponible ❌</span>
                     </p>
                     <div class="box-actions">
                         <MyButton label="Modifier" modifier="edit" @GeneralEventBtn="openModal(index)" />
@@ -54,10 +57,23 @@
                 <label for="editQuantity">MOQ :</label>
                 <input v-model="editItem.moq" type="number" id="editQuantity" />
 
+                <label for="editStock">Stock :</label>
+                <input v-model="editItem.stock" type="number" id="editStock" />
+
                 <label for="editCategory">Catégorie produit:</label>
                 <select v-model="editItem.categorieId" id="editCategory">
                     <option v-for="category in categories" :key="category.id" :value="category.id">
                         {{ category.name }}
+                    </option>
+                </select>
+
+                <label for="editAvailibity">Disponibilité du produit :</label>
+                <select v-model="editItem.disponibilite" id="editAvailibity">
+                    <option :value="true">
+                        Disponible
+                    </option>
+                    <option :value="false">
+                        Non-disponible
                     </option>
                 </select>
 
@@ -182,12 +198,14 @@ export default {
 }
 
 .listing-template {
+    min-height: 80vh;
     width: 90%;
     margin: 25px auto;
 }
 
 .listing-box {
     display: flex;
+    align-items: center;
     gap: 1rem;
     color: #000;
     background-color: var(--clr-light-grey);
@@ -197,8 +215,8 @@ export default {
 }
 
 .listing-box figure {
-    width: 100px;
-    height: 100px;
+    min-width: 50px; max-width: 200px;
+    aspect-ratio: 1;
     border-radius: 15px;
     overflow: hidden;
 }
@@ -221,6 +239,10 @@ export default {
     font-style: italic;
 }
 
+.box-avail span {
+    font-style: italic;
+}
+
 .box-actions {
     display: flex;
 }
@@ -239,6 +261,11 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.modal h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
 }
 
 .modal-content {
