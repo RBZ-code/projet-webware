@@ -15,228 +15,266 @@ export default createStore({
         selectedProduct: null,
         productsAdd: [],
         products: [],
-    
+
 
         categories: localStorage.getItem("copiedCategories")
             ? JSON.parse(localStorage.getItem("copiedCategories"))
             : [
-                  { id: 3, name: "Mobilier d'intérieur" },
-                  { id: 2, name: "Luminaires" },
-                  { id: 4, name: "Tapis" },
-                  { id: 1, name: "Objets de décorations" },
-              ],
+                { id: 3, name: "Mobilier d'intérieur" },
+                { id: 2, name: "Luminaires" },
+                { id: 4, name: "Tapis" },
+                { id: 1, name: "Objets de décorations" },
+            ],
 
         produits: localStorage.getItem("copiedProduits")
             ? JSON.parse(localStorage.getItem("copiedProduits"))
             : [
-                  {
-                      id: 1,
-                      image: require("../assets/deco-1.jpg"),
-                      titre: "Vase éthnique en argile",
-                      description:
-                          "Vase éthnique en argile avec motifs gravés à la main.",
-                      prix: 49.99,
-                      moq: 5,
-                      categorieId: 1,
-                  },
-                  {
-                      id: 2,
-                      image: require("../assets/deco-2.jpg"),
-                      titre: "Vase éthnique en argile 2",
-                      description:
-                          "Vase éthnique en argile avec motifs gravés à la main.",
-                      prix: 59.99,
-                      moq: 10,
-                      categorieId: 1,
-                  },
-                  {
-                      id: 3,
-                      image: require("../assets/deco-3.jpg"),
-                      titre: "Vase éthnique en argile 3",
-                      description:
-                          "Vase éthnique en argile avec motifs gravés à la main.",
-                      prix: 69.99,
-                      moq: 15,
-                      categorieId: 1,
-                  },
-                  {
-                      id: 4,
-                      image: require("../assets/deco-4.jpg"),
-                      titre: "Vase éthnique en argile 4",
-                      description:
-                          "Vase éthnique en argile avec motifs gravés à la main.",
-                      prix: 79.99,
-                      moq: 20,
-                      categorieId: 1,
-                  },
-                  {
-                      id: 5,
-                      image: require("../assets/deco-5.jpg"),
-                      titre: "Vase éthnique en argile 5",
-                      description:
-                          "Vase éthnique en argile avec motifs gravés à la main.",
-                      prix: 89.99,
-                      moq: 25,
-                      categorieId: 1,
-                  },
-                  {
-                      id: 6,
-                      image: require("../assets/luminaire-1.jpg"),
-                      titre: "Lampe moderne",
-                      description:
-                          "Lampe avec un design moderne et éclairage ajustable.",
-                      prix: 129.99,
-                      moq: 5,
-                      categorieId: 2,
-                  },
-                  {
-                      id: 7,
-                      image: require("../assets/luminaire-2.jpg"),
-                      titre: "Lampe moderne",
-                      description:
-                          "Lampe avec un design moderne et éclairage ajustable.",
-                      prix: 139.99,
-                      moq: 10,
-                      categorieId: 2,
-                  },
-                  {
-                      id: 8,
-                      image: require("../assets/luminaire-3.jpg"),
-                      titre: "Lampe moderne",
-                      description:
-                          "Lampe avec un design moderne et éclairage ajustable.",
-                      prix: 149.99,
-                      moq: 15,
-                      categorieId: 2,
-                  },
-                  {
-                      id: 9,
-                      image: require("../assets/luminaire-4.jpg"),
-                      titre: "Lampe moderne",
-                      description:
-                          "Lampe avec un design moderne et éclairage ajustable.",
-                      prix: 159.99,
-                      moq: 20,
-                      categorieId: 2,
-                  },
-                  {
-                      id: 10,
-                      image: require("../assets/luminaire-5.jpg"),
-                      titre: "Lampe moderne",
-                      description:
-                          "Lampe avec un design moderne et éclairage ajustable.",
-                      prix: 169.99,
-                      moq: 25,
-                      categorieId: 2,
-                  },
-                  {
-                      id: 11,
-                      image: require("../assets/mobilier-1.jpg"),
-                      titre: "Table à manger en bois",
-                      description:
-                          "Table à manger en bois massif avec finition élégante.",
-                      prix: 299.99,
-                      moq: 5,
-                      categorieId: 3,
-                  },
-                  {
-                      id: 12,
-                      image: require("../assets/mobilier-2.jpg"),
-                      titre: "Table à manger en bois",
-                      description:
-                          "Table à manger en bois massif avec finition élégante.",
-                      prix: 289.99,
-                      moq: 10,
-                      categorieId: 3,
-                  },
-                  {
-                      id: 13,
-                      image: require("../assets/mobilier-3.jpg"),
-                      titre: "Table à manger en bois",
-                      description:
-                          "Table à manger en bois massif avec finition élégante.",
-                      prix: 279.99,
-                      moq: 15,
-                      categorieId: 3,
-                  },
-                  {
-                      id: 14,
-                      image: require("../assets/mobilier-4.jpg"),
-                      titre: "Table à manger en bois",
-                      description:
-                          "Table à manger en bois massif avec finition élégante.",
-                      prix: 269.99,
-                      moq: 20,
-                      categorieId: 3,
-                  },
-                  {
-                      id: 15,
-                      image: require("../assets/mobilier-5.jpg"),
-                      titre: "Table à manger en bois",
-                      description:
-                          "Table à manger en bois massif avec finition élégante.",
-                      prix: 259.99,
-                      moq: 25,
-                      categorieId: 3,
-                  },
-                  {
-                      id: 16,
-                      image: require("../assets/tapis-1.jpg"),
-                      titre: "Tapis en laine",
-                      description:
-                          "Tapis doux en laine avec motif géométrique.",
-                      prix: 89.99,
-                      moq: 5,
-                      categorieId: 4,
-                  },
-                  {
-                      id: 17,
-                      image: require("../assets/tapis-2.jpg"),
-                      titre: "Tapis en laine",
-                      description:
-                          "Tapis doux en laine avec motif géométrique.",
-                      prix: 79.99,
-                      moq: 10,
-                      categorieId: 4,
-                  },
-                  {
-                      id: 18,
-                      image: require("../assets/tapis-3.jpg"),
-                      titre: "Tapis en laine",
-                      description:
-                          "Tapis doux en laine avec motif géométrique.",
-                      prix: 69.99,
-                      moq: 15,
-                      categorieId: 4,
-                  },
-                  {
-                      id: 19,
-                      image: require("../assets/tapis-4.jpg"),
-                      titre: "Tapis en laine",
-                      description:
-                          "Tapis doux en laine avec motif géométrique.",
-                      prix: 59.99,
-                      moq: 20,
-                      categorieId: 4,
-                  },
-                  {
-                      id: 20,
-                      image: require("../assets/tapis-5.jpg"),
-                      titre: "Tapis en laine",
-                      description:
-                          "Tapis doux en laine avec motif géométrique.",
-                      prix: 99.99,
-                      moq: 25,
-                      categorieId: 4,
-                  },
-              ],
+                {
+                    id: 1,
+                    image: require("../assets/deco-1.jpg"),
+                    titre: "Vase éthnique en argile",
+                    description:
+                        "Vase éthnique en argile avec motifs gravés à la main.",
+                    prix: 49.99,
+                    moq: 5,
+                    categorieId: 1,
+                    stock: 100,
+                    available: true
+                },
+                {
+                    id: 2,
+                    image: require("../assets/deco-2.jpg"),
+                    titre: "Vase éthnique en argile 2",
+                    description:
+                        "Vase éthnique en argile avec motifs gravés à la main.",
+                    prix: 59.99,
+                    moq: 10,
+                    categorieId: 1,
+                    stock: 50,
+                    available: true
+                },
+                {
+                    id: 3,
+                    image: require("../assets/deco-3.jpg"),
+                    titre: "Vase éthnique en argile 3",
+                    description:
+                        "Vase éthnique en argile avec motifs gravés à la main.",
+                    prix: 69.99,
+                    moq: 15,
+                    categorieId: 1,
+                    stock: 100,
+                    available: true
+                },
+                {
+                    id: 4,
+                    image: require("../assets/deco-4.jpg"),
+                    titre: "Vase éthnique en argile 4",
+                    description:
+                        "Vase éthnique en argile avec motifs gravés à la main.",
+                    prix: 79.99,
+                    moq: 20,
+                    categorieId: 1,
+                    stock: 200,
+                    available: true
+                },
+                {
+                    id: 5,
+                    image: require("../assets/deco-5.jpg"),
+                    titre: "Vase éthnique en argile 5",
+                    description:
+                        "Vase éthnique en argile avec motifs gravés à la main.",
+                    prix: 89.99,
+                    moq: 25,
+                    categorieId: 1,
+                    stock: 100,
+                    available: true
+                },
+                {
+                    id: 6,
+                    image: require("../assets/luminaire-1.jpg"),
+                    titre: "Lampe moderne",
+                    description:
+                        "Lampe avec un design moderne et éclairage ajustable.",
+                    prix: 129.99,
+                    moq: 5,
+                    categorieId: 2,
+                    stock: 10,
+                    available: true
+                },
+                {
+                    id: 7,
+                    image: require("../assets/luminaire-2.jpg"),
+                    titre: "Lampe moderne",
+                    description:
+                        "Lampe avec un design moderne et éclairage ajustable.",
+                    prix: 139.99,
+                    moq: 10,
+                    categorieId: 2,
+                    stock: 100,
+                    available: true
+                },
+                {
+                    id: 8,
+                    image: require("../assets/luminaire-3.jpg"),
+                    titre: "Lampe moderne",
+                    description:
+                        "Lampe avec un design moderne et éclairage ajustable.",
+                    prix: 149.99,
+                    moq: 15,
+                    categorieId: 2,
+                    stock: 100,
+                    available: true
+                },
+                {
+                    id: 9,
+                    image: require("../assets/luminaire-4.jpg"),
+                    titre: "Lampe moderne",
+                    description:
+                        "Lampe avec un design moderne et éclairage ajustable.",
+                    prix: 159.99,
+                    moq: 20,
+                    categorieId: 2,
+                    stock: 100,
+                    available: true
+                },
+                {
+                    id: 10,
+                    image: require("../assets/luminaire-5.jpg"),
+                    titre: "Lampe moderne",
+                    description:
+                        "Lampe avec un design moderne et éclairage ajustable.",
+                    prix: 169.99,
+                    moq: 25,
+                    categorieId: 2,
+                    stock: 100,
+                    available: true
+                },
+                {
+                    id: 11,
+                    image: require("../assets/mobilier-1.jpg"),
+                    titre: "Table à manger en bois",
+                    description:
+                        "Table à manger en bois massif avec finition élégante.",
+                    prix: 299.99,
+                    moq: 5,
+                    categorieId: 3,
+                    stock: 100,
+                    available: true
+                },
+                {
+                    id: 12,
+                    image: require("../assets/mobilier-2.jpg"),
+                    titre: "Table à manger en bois",
+                    description:
+                        "Table à manger en bois massif avec finition élégante.",
+                    prix: 289.99,
+                    moq: 10,
+                    categorieId: 3,
+                    stock: 100,
+                    available: true
+                },
+                {
+                    id: 13,
+                    image: require("../assets/mobilier-3.jpg"),
+                    titre: "Table à manger en bois",
+                    description:
+                        "Table à manger en bois massif avec finition élégante.",
+                    prix: 279.99,
+                    moq: 15,
+                    categorieId: 3,
+                    stock: 100,
+                    available: true
+                },
+                {
+                    id: 14,
+                    image: require("../assets/mobilier-4.jpg"),
+                    titre: "Table à manger en bois",
+                    description:
+                        "Table à manger en bois massif avec finition élégante.",
+                    prix: 269.99,
+                    moq: 20,
+                    categorieId: 3,
+                    stock: 100,
+                    available: true
+                },
+                {
+                    id: 15,
+                    image: require("../assets/mobilier-5.jpg"),
+                    titre: "Table à manger en bois",
+                    description:
+                        "Table à manger en bois massif avec finition élégante.",
+                    prix: 259.99,
+                    moq: 25,
+                    categorieId: 3,
+                    stock: 100,
+                    available: true
+                },
+                {
+                    id: 16,
+                    image: require("../assets/tapis-1.jpg"),
+                    titre: "Tapis en laine",
+                    description:
+                        "Tapis doux en laine avec motif géométrique.",
+                    prix: 89.99,
+                    moq: 5,
+                    categorieId: 4,
+                    stock: 100,
+                    available: true
+                },
+                {
+                    id: 17,
+                    image: require("../assets/tapis-2.jpg"),
+                    titre: "Tapis en laine",
+                    description:
+                        "Tapis doux en laine avec motif géométrique.",
+                    prix: 79.99,
+                    moq: 10,
+                    categorieId: 4,
+                    stock: 100,
+                    available: true
+                },
+                {
+                    id: 18,
+                    image: require("../assets/tapis-3.jpg"),
+                    titre: "Tapis en laine",
+                    description:
+                        "Tapis doux en laine avec motif géométrique.",
+                    prix: 69.99,
+                    moq: 15,
+                    categorieId: 4,
+                },
+                {
+                    id: 19,
+                    image: require("../assets/tapis-4.jpg"),
+                    titre: "Tapis en laine",
+                    description:
+                        "Tapis doux en laine avec motif géométrique.",
+                    prix: 59.99,
+                    moq: 20,
+                    categorieId: 4,
+                    stock: 100,
+                    available: true
+                },
+                {
+                    id: 20,
+                    image: require("../assets/tapis-5.jpg"),
+                    titre: "Tapis en laine",
+                    description:
+                        "Tapis doux en laine avec motif géométrique.",
+                    prix: 99.99,
+                    moq: 25,
+                    categorieId: 4,
+                    stock: 100,
+                    available: true
+                },
+            ],
 
         commandes: localStorage.getItem("order")
             ? JSON.parse(localStorage.getItem("order"))
             : [],
     },
     mutations: {
-        validerCommande(state) {
+        validerCommande(state,) {
             const currentUser = state.currentUser;
 
             if (
@@ -279,34 +317,52 @@ export default createStore({
                 console.log(state.commandes);
             }
         },
-
         ajouterAuPanier(state, produit) {
             const utilisateur = state.currentUser;
-
+          
             if (utilisateur && utilisateur.panier) {
-                const produitExistant = utilisateur.panier.find(
-                    (p) => p.id === produit.id
-                );
-
-                if (produitExistant) {
-                    produitExistant.quantity++;
+              const produitExistant = utilisateur.panier.find((p) => p.id === produit.id);
+          
+              if (produitExistant) {
+                const quantiteDisponible = produitExistant.moq;
+                const quantiteAjoutee = 1;
+          
+                // Vérifie si la quantité ajoutée ne dépasse pas la quantité disponible
+                produitExistant.quantity += quantiteAjoutee <= quantiteDisponible ? quantiteAjoutee : 0;
+                produitExistant.stock -= quantiteAjoutee <= quantiteDisponible ? quantiteAjoutee : 0;
+              } else {
+                const quantiteDisponible = produit.moq;
+          
+                if (quantiteDisponible > 0) {
+                  const quantiteAjoutee = quantiteDisponible <= produit.stock ? quantiteDisponible : produit.stock;
+          
+                  utilisateur.panier.push({
+                    id: produit.id,
+                    quantity: quantiteAjoutee,
+                    moq: produit.moq,
+                    stock: produit.stock,
+                    available: true,
+                  });
+          
+                  produit.stock -= quantiteAjoutee;
                 } else {
-                    produit.quantity = produit.moq;
-                    utilisateur.panier.push(produit);
+                  utilisateur.panier.push({
+                    id: produit.id,
+                    quantity: 0,
+                    moq: produit.moq,
+                    stock: produit.stock,
+                    available: false,
+                  });
                 }
-
-                localStorage.setItem(
-                    `user_${utilisateur.id}`,
-                    JSON.stringify(utilisateur)
-                );
-
-                state.currentUser = { ...utilisateur };
+              }
+          
+              localStorage.setItem(`user_${utilisateur.id}`, JSON.stringify(utilisateur));
+              state.currentUser = { ...utilisateur };
             } else {
-                console.error("Utilisateur ou panier non défini.");
-                console.log(state.currentUser);
+              console.error("Utilisateur ou panier non défini.");
+              console.log(state.currentUser);
             }
-        },
-
+          },          
         updateQuantity(state, { productId, changement }) {
             const utilisateur = state.currentUser;
             if (utilisateur && utilisateur.panier) {

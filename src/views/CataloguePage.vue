@@ -13,9 +13,11 @@
           <p>{{ prod.description }}</p>
           <p>{{ prod.prix }} €</p>
           <p>MOQ: {{ prod.moq }}</p>
+          <p v-if="prod.available">Stock disponible : {{  prod.stock }}</p>
+          <img v-else src="src/assets/catalogue_sold-out.png" alt="Sold-out" class="sold-out-image">
         </div>
         <div class="product-actions">
-          <button v-if="currentUser" @click="ajouterAuPanier(prod)">Ajouter au panier 🛒</button>
+          <button v-if="currentUser && prod.available" @click="ajouterAuPanier(prod)">Ajouter au panier 🛒</button>
           <div class="">
             <router-link class="listing-link" :to="'/product-page/' + prod.id">
               <button class="details-btn">Voir Détails</button>
@@ -56,7 +58,7 @@ export default {
         },
       ajouterAuPanier(produit) {
       this.$store.commit("ajouterAuPanier", produit);
-      alert("Produit ajouté au panier !");
+      alert(produit.stock);
     },
   },
 };
@@ -147,5 +149,14 @@ export default {
 .details-btn:hover {
   background-color: #44b9da;
   color: #ffffff;
+}
+
+.sold-out-image{
+  width: 50px;
+  height: auto;
+  visibility: hidden;
+}
+.product-card[data-v-else] .sold-out-image{
+  visibility: visible;
 }
 </style>

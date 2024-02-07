@@ -30,7 +30,7 @@
                 <div class="product-actions">
                     <button
                         @click="ajouterAuPanier(prod)"
-                        v-if="$store.state.currentUser !== null"
+                        v-if="$store.state.currentUser !== null && prod.available"
                     >
                         Ajouter au panier 🛒
                     </button>
