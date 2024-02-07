@@ -1,8 +1,16 @@
 <template>
     <div class="summary-container">
         <h2>Résumé de commande</h2>
-        <div class="summary-section" v-for="(prod, index) in currentUserPanier" :key="index">
-            <p>{{ prod.titre}}</p>
+        <div
+            class="summary-section"
+            v-for="(prod, index) in currentUserPanier"
+            :key="index"
+        >
+            <p>
+                {{ prod.titre }} - Prix TTC:
+                {{ calculateSubtotal(prod).toFixed(2) }} € - Prix HT:
+                {{ calculateSubtotalWithoutTax(prod).toFixed(2) }} €
+            </p>
         </div>
 
         <div class="total-section">
@@ -20,13 +28,31 @@
             Confirmer la commande
         </button>
     </div>
+    <div v-if="showThankYouModal" class="modal">
+        <div class="modal-content">
+            <h2>Déconnexion réussie !</h2>
+            <p>Merci de votre visite sur notre site.</p>
+        </div>
+    </div>
 </template>
 
 <script>
 export default {
+    data() {
+        return {
+            showThankYouModal: false,
+        };
+    },
     computed: {
         currentUserPanier() {
-            return this.$store.state.currentUser.panier;
+            if (
+                this.$store.state.currentUser &&
+                this.$store.state.currentUser.panier
+            ) {
+                return this.$store.state.currentUser.panier;
+            } else {
+                return [];
+            }
         },
         adressInfo() {
             return `${this.currentUser.adresse} ${this.currentUser.ville} ${this.currentUser.codePostal}`;
@@ -46,7 +72,17 @@ export default {
     },
     methods: {
         confirmerCommande() {
-            console.log(this.currentUser);
+            this.$store.commit("validerCommande");
+            this.showThankYouModal = true;
+            console.log(this.showThankYouModal);
+            console.log(this.$store.state.produits);
+            setTimeout(() => {
+                this.showThankYouModal = false;
+                console.log(this.showThankYouModal);
+            }, 2000);
+            // this.$router.push("/");
+            console.log(this.showThankYouModal);
+
         },
         calculateSubtotal(prod) {
             const subtotal = prod.prix * prod.quantity;
@@ -96,5 +132,23 @@ export default {
 
 .confirm-button:hover {
     background-color: #252525;
+}
+
+.summary-section p {
+    margin: 10px 0;
+}
+
+.summary-section p span {
+    font-weight: bold;
+}
+
+.summary-section p strong {
+    color: #252525;
+}
+
+h3 {
+    color: #252525;
+    font-size: 20px;
+    margin-bottom: 10px;
 }
 </style>
