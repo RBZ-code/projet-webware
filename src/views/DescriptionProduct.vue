@@ -21,9 +21,12 @@
                     <p class="product-price"><strong>{{ selectedProduct.prix }} US$</strong></p>
                     <p class="tva-price">Prix de la TVA</p>
                     <p class="moq">moq : {{ selectedProduct.moq }}</p>
+                    <p class="moq">en stock : {{ selectedProduct.stock }}</p>
                     <div class="product-quantity">
                         <div class="basket-container">
-                            <button class="add-basket" @click="ajouterAuPanier(selectedProduct)">Ajouter au panier 🛒</button>
+                            <button class="add-basket" @click="ajouterAuPanier(selectedProduct)"
+                            :disabled="selectedProduct.stock < selectedProduct.moq"
+                            >Ajouter au panier 🛒</button>
                         </div>
 
                     </div>
