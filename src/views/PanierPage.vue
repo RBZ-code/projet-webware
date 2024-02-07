@@ -5,16 +5,16 @@
         <div class="order-progress_step"></div>
     </header>
     <h1>Votre panier (1/2)</h1>
+    <MyButton
+        label="Passer commande"
+        modifier="action"
+        @GeneralEventBtn="checkout()"
+        class="btn"
+    />
     <main class="cart-container" v-if="panierUser">
         <section class="total-section">
-            <MyButton
-                label="Passer commande"
-                modifier="action"
-                @GeneralEventBtn="checkout()"
-                class="btn"
-            />
-            <strong><p>Total HT : {{ calculateTotalWithoutTax().toFixed(2) }} €</p></strong>
-            <strong><p>Total TTC : {{ calculateTotal().toFixed(2) }} €</p></strong>
+            <p><strong>Total HT :</strong> {{ calculateTotalWithoutTax().toFixed(2) }} €</p>
+            <p><strong>Total TTC :</strong> {{ calculateTotal().toFixed(2) }} €</p>
         </section>
         <div
             v-for="(prod, index) in cartWithInitialQuantity"
@@ -30,6 +30,7 @@
                 />
             </div>
             <div class="product-details">
+                <p class="product-description"><strong>{{ prod.titre }}</strong></p>
                 <p class="product-description">{{ prod.description }}</p>
                 <div class="quantity">
                     <button
@@ -224,7 +225,7 @@ h1 {
     flex-direction: column;
     align-items: center;
     min-height: 70vh;
-    margin-bottom: 50px;
+    margin-bottom: 25px;
 }
 
 .card {
@@ -306,6 +307,7 @@ h1 {
 }
 
 .btn {
-    margin-bottom: 20px;
+    margin: 25px auto;
+    text-align: center;
 }
 </style>

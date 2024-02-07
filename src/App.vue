@@ -216,8 +216,14 @@ h3 {
 }
 
 /* Main Navigation */
+
 .panier {
     width: 40px;
+    transition: 200ms ease-in-out;
+}
+
+.panier:hover {
+    filter: invert(83%) sepia(49%) saturate(3440%) hue-rotate(160deg) brightness(92%) contrast(84%);
 }
 
 .logo-webwares {
