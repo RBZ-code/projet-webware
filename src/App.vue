@@ -30,12 +30,13 @@
                 v-if="$store.state.currentUser === null"
                 >Connexion</router-link
             >
-            <a href="#" v-if="currentUser" @click="redirectToPanier">
-                <img src="@/assets/panier.png" alt="panier" class="panier"/>
+            <a href="#" v-if="currentUser" @click="redirectToPanier"
+                ><span>{{ taillePanier }}</span>
+                <img src="@/assets/panier.png" alt="panier" class="panier" />
             </a>
             <a href="#" @click="LogOut" v-if="$store.state.currentUser !== null"
-                ><img src="@/assets/LogOut.png" alt="logout" class="panier"/></a
-            >
+                ><img src="@/assets/LogOut.png" alt="logout" class="panier"
+            /></a>
         </div>
     </nav>
     <nav class="main-nav burger-menu" v-else ref="burgerMenu">
@@ -104,6 +105,7 @@ export default {
             logoutModalIsVisible: false,
             isLargeScreen: window.innerWidth > 600,
             burgerMode: false,
+            taillePanier: 0,
         };
     },
     created() {
@@ -111,9 +113,22 @@ export default {
         this.$store.dispatch("loadCategories");
         window.addEventListener("resize", this.handleResize);
         document.addEventListener("click", this.handleGlobalClick);
+
+        if (this.$store.state.currentUser) {
+        this.taillePanier = this.$store.state.currentUser.panier.length;
+    }
     },
 
+    watch: {
+        "$store.state.currentUser.panier.length"(newValue) {
+            this.taillePanier = newValue;
+        },
+    },
     methods: {
+        cardSize() {
+            return this.$store.state.currentUser.panier.length;
+        },
+
         handleGlobalClick(event) {
             const burgerMenu = this.$refs.burgerMenu;
 
@@ -146,6 +161,8 @@ export default {
             setTimeout(() => {
                 this.logoutModalIsVisible = false;
             }, 2000);
+
+            this.taillePanier = 0;
         },
         isAdminUser() {
             const currentUser = this.$store.state.currentUser;
@@ -154,6 +171,7 @@ export default {
 
         redirectToPanier() {
             this.$router.push({ name: "panier" });
+            console.log(this.$store.state.currentUser.panier.length);
         },
     },
     computed: {
@@ -203,7 +221,7 @@ h3 {
 }
 
 .logo-webwares {
-    font-family: 'Impact', "Bebas Neue", sans-serif;
+    font-family: "Impact", "Bebas Neue", sans-serif;
     font-size: 2rem;
     display: inline-block;
     position: relative;
@@ -324,7 +342,7 @@ nav a:hover {
     right: 15px;
     background-color: var(--clr-light-grey);
     border-radius: 9999px;
-    padding: 5px
+    padding: 5px;
 }
 
 .bar {
@@ -350,7 +368,6 @@ nav a:hover {
 
 .burger-content a {
     color: var(--clr-white);
-
 }
 
 /* Dropdown Content */
