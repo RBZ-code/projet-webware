@@ -35,6 +35,7 @@
                     <button
                         @click="updateQuantity(prod.id, 1)"
                         class="quantity-btn"
+                        :disabled="prod.stock === prod.quantity"
                     >
                         +
                     </button>

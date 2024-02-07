@@ -464,10 +464,7 @@ export default createStore({
 
         setProducts(state, products) {
             state.produits = products;
-            localStorage.setItem(
-                "copiedProduits",
-                JSON.stringify(state.produits)
-            );
+            
         },
 
         // Catégories
@@ -602,6 +599,22 @@ export default createStore({
                 );
             }
         },
+        async loadProduits(context) {
+        try {
+            let produitsStockes = localStorage.getItem("copiedProduits");
+
+            if (produitsStockes) {
+                let produits = JSON.parse(produitsStockes);
+
+                context.commit("setProducts", produits);
+            }
+                  
+      
+        } catch (error) {
+            console.error("Erreur lors du chargement des produits :", error);
+        }
+    },
+        
     },
 
     getters: {

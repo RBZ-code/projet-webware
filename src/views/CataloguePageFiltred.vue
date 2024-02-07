@@ -25,12 +25,14 @@
                     <h4>{{ prod.titre }}</h4>
                     <p>{{ prod.description }}</p>
                     <p>{{ prod.prix }} €</p>
-                    <p>MOQ: {{ prod.moq }}</p>
+                    <p>MOQ : {{ prod.moq }}</p>
+                    <p>en stock : {{ prod.sctock }}</p>
                 </div>
                 <div class="product-actions">
                     <button
                         @click="ajouterAuPanier(prod)"
                         v-if="$store.state.currentUser !== null"
+                        :disabled="prod.stock < prod.moq"
                     >
                         Ajouter au panier 🛒
                     </button>
