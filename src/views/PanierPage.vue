@@ -1,4 +1,5 @@
 <template>
+
     <header class="order-progress">
         <div class="order-progress_step order-progress--active"></div>
         <div class="order-progress_bar"></div>
@@ -16,6 +17,7 @@
             <p><strong>Total HT :</strong> {{ calculateTotalWithoutTax().toFixed(2) }} €</p>
             <p><strong>Total TTC :</strong> {{ calculateTotal().toFixed(2) }} €</p>
         </section>
+
         <div
             v-for="(prod, index) in cartWithInitialQuantity"
             :key="index"
@@ -44,6 +46,7 @@
                     <button
                         @click="updateQuantity(prod.id, 1)"
                         class="quantity-btn"
+                        :disabled="prod.stock === prod.quantity"
                     >
                         +
                     </button>
@@ -70,10 +73,12 @@
                 <img src="@/assets/trash-icon.png" alt="Supprimer" />
             </button>
         </div>
+
     </main>
     <div class="empty-cart" v-else>
         <p>Panier vide</p>
     </div>
+    
     
 </template>
 
@@ -91,16 +96,6 @@ export default {
                 return { ...prod, quantity: nouvelleQuantite };
             });
         },
-        panierUser() {
-            if(
-                this.$store.state.currentUser &&
-                this.$store.state.currentUser.panier
-            ){
-                return this.$store.state.currentUser.panier.length > 0;
-            }else {
-                return false;
-            }
-    },
         cart() {
             if (
                 this.$store.state.currentUser &&
@@ -160,6 +155,7 @@ export default {
 
 <style>
 
+
 .order-progress {
     margin: 25px auto;
     display: flex;
@@ -199,6 +195,7 @@ h1 {
     align-items: center;
     height: 70vh;
 }
+
 
 
 .remove {
