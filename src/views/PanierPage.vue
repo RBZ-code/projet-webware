@@ -108,6 +108,9 @@ export default {
         },
     },
     methods: {
+        panierUser(){
+            return this.$store.state.currentUser.panier.length > 0;
+        },
         supprimerDuPanier(produit) {
             this.$store.commit("supprimerDuPanier", produit.id);
             alert("Produit supprimé du panier !");
@@ -120,6 +123,7 @@ export default {
                 productId,
                 changement,
             });
+     
         },
         // ...
 
@@ -291,12 +295,12 @@ h1 {
     background-color: var(--clr-light-grey);
     border-radius: 15px;
     padding: 25px;
-    margin: 25px auto;
-    text-align: center;
+    text-align: center !important;
     /* text-decoration-line: underline; */
     width: 80%;
     max-width: 1000px;
     margin-left: 10%;
+    margin: 25px auto;
 }
 
 .total-section p {
