@@ -1,8 +1,8 @@
 <template>
     <nav class="back-nav">
-        <router-link to="/back-products">Produits</router-link> -
-        <router-link to="/back-categories">Catégories</router-link> -
-        <router-link to="/back-users">Utilisateurs</router-link> -
+        <router-link to="/back-products">Produits</router-link>
+        <router-link to="/back-categories">Catégories</router-link>
+        <router-link to="/back-users">Utilisateurs</router-link>
         <router-link to="/back-orders">Commandes</router-link>
     </nav>
 </template>
@@ -20,10 +20,6 @@
     padding: 15px;
     color: #fff;
     text-align: center;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    row-gap: .5rem;
 }
 
 .back-nav a {

@@ -3,33 +3,38 @@
     <div class="product-creation-container">
         <form>
             <h2>Ajout d'un produit au catalogue</h2>
-
-            <label for="image">Image du produit :</label>
-            <div @dragover.prevent @drop="handleDrop" class="drop-zone">
-                Faites glisser et déposez une image ici, ou cliquez pour
-                sélectionner une image.
-            </div>
-            <label for="name">Nom du produit :
-                <input v-model="newItem.titre" type="text" id="name" name="name" />
+            <label for="name"
+                >Nom du produit :
+                <input
+                    v-model="newItem.titre"
+                    type="text"
+                    id="name"
+                    name="name"
+                />
             </label>
 
-            <label for="editDesc">Description produit :
-                <textarea v-model="newItem.description" type="text" id="editDesc" rows="5"></textarea>
+            <label for="price"
+                >Prix du produit :
+                <input
+                    v-model="newItem.prix"
+                    type="number"
+                    id="price"
+                    name="price"
+                />
             </label>
 
-            <label for="price">Prix du produit :
-                <input v-model="newItem.prix" type="number" id="price" name="price" />
+
+            <label for="quantity"
+                >MOQ :
+                <input
+                    v-model="newItem.moq"
+                    type="number"
+                    id="quantity"
+                    name="quantity"
+                />
             </label>
 
-            <label for="quantity">MOQ :
-                <input v-model="newItem.moq" type="number" id="quantity" name="quantity" />
-            </label>
-
-            <label for="stock">Nombre en stock :
-                <input v-model="newItem.stock" type="number" id="stock" name="stock" />
-            </label>
-
-            <label for="category">Catégorie du produit :
+          <label for="category">Catégorie du produit :
                 <select v-model="newItem.categorieId" id="category" name="category">
                     <option v-for="category in categories" :key="category.id" :value="category.id">
                         {{ category.name }}
@@ -37,18 +42,17 @@
                 </select>
             </label>
 
-            <label for="availability">Disponibilité du produit :
-                <select v-model="newItem.disponibilite" id="availability">
-                    <option :value="true">
-                        Disponible
-                    </option>
-                    <option :value="false">
-                        Non-disponible
-                    </option>
-                </select>
-            </label>
+            <label for="image">Image du produit :</label>
+            <div @dragover.prevent @drop="handleDrop" class="drop-zone">
+                Faites glisser et déposez une image ici, ou cliquez pour
+                sélectionner une image.
+            </div>
 
-            <MyButton label="Ajouter le produit" modifier="action" @GeneralEventBtn="addProduct" />
+            <MyButton
+                label="Ajouter le produit"
+                modifier="action"
+                @GeneralEventBtn="addProduct"
+            />
         </form>
     </div>
 </template>
@@ -65,14 +69,12 @@ export default {
     data() {
         return {
             newItem: {
-
+              
                 id: null,
                 titre: "",
                 prix: null,
                 moq: null,
                 categorieId: null,
-                stock: null,
-                disponibilite: true,
             },
         };
     },
@@ -84,20 +86,20 @@ export default {
     methods: {
 
         handleDrop(event) {
-            event.preventDefault();
+        event.preventDefault();
 
-            const files = event.dataTransfer.files;
+        const files = event.dataTransfer.files;
 
-            if (files.length > 0) {
-                const reader = new FileReader();
+        if (files.length > 0) {
+            const reader = new FileReader();
 
-                reader.onload = (e) => {
-                    this.newItem.image = e.target.result;
-                };
+            reader.onload = (e) => {
+                this.newItem.image = e.target.result;
+            };
 
-                reader.readAsDataURL(files[0]);
-            }
-        },
+            reader.readAsDataURL(files[0]);
+        }
+    },
         addProduct() {
             if (
                 this.newItem.titre &&
@@ -105,16 +107,16 @@ export default {
                 this.newItem.moq &&
                 this.newItem.categorieId
             ) {
-
+               
                 this.newItem.id = this.$store.state.lastProductID;
 
-
+               
                 this.$store.commit("addProduct", { ...this.newItem });
 
-
+               
                 this.$store.commit("saveProducts");
 
-
+             
                 this.newItem = {
                     id: null,
                     titre: "",
@@ -158,10 +160,9 @@ export default {
 }
 
 .product-creation-container input,
-.product-creation-container select,
-.product-creation-container textarea {
+.product-creation-container select {
     display: block;
-    width: 280px;
+    width: 250px;
     font-size: 1rem;
     margin-top: 5px;
     padding: 10px 0;
@@ -173,6 +174,7 @@ export default {
 .product-creation-container button {
     margin-top: 2rem;
 }
+
 
 .drop-zone {
     border: 2px dashed #ccc;
