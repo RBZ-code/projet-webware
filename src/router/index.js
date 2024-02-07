@@ -8,6 +8,7 @@ import BackProductsAdd from "@/views/BackProductsAdd.vue";
 import BackCategories from "@/views/BackCategories.vue";
 import BackUsers from "@/views/BackUsers.vue";
 import BackOrders from "@/views/BackOrders.vue";
+import BackProspects from "@/views/BackProspects.vue";
 import CatalogueFiltre from "@/views/CataloguePageFiltred.vue";
 import DescriptionProduct from "@/views/DescriptionProduct.vue";
 import Panier from "@/views/PanierPage.vue";
@@ -61,6 +62,11 @@ const routes = [
         path: "/back-orders",
         name: "back-orders",
         component: BackOrders,
+    },
+    {
+        path: "/back-prospects",
+        name: "back-prospects",
+        component: BackProspects,
     },
     {
 

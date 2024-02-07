@@ -1,14 +1,22 @@
 <template>
 
-
-    <div class="order-progress">
+    <header class="order-progress">
         <div class="order-progress_step order-progress--active"></div>
         <div class="order-progress_bar"></div>
         <div class="order-progress_step"></div>
-    </div>
-    <h1>Votre panier</h1>
-    <div class="cart-container" v-if="panierUser">
-
+    </header>
+    <h1>Votre panier (1/2)</h1>
+    <MyButton
+        label="Passer commande"
+        modifier="action"
+        @GeneralEventBtn="checkout()"
+        class="btn"
+    />
+    <main class="cart-container" v-if="panierUser">
+        <section class="total-section">
+            <p><strong>Total HT :</strong> {{ calculateTotalWithoutTax().toFixed(2) }} €</p>
+            <p><strong>Total TTC :</strong> {{ calculateTotal().toFixed(2) }} €</p>
+        </section>
 
         <div
             v-for="(prod, index) in cartWithInitialQuantity"
@@ -24,6 +32,7 @@
                 />
             </div>
             <div class="product-details">
+                <p class="product-description"><strong>{{ prod.titre }}</strong></p>
                 <p class="product-description">{{ prod.description }}</p>
                 <div class="quantity">
                     <button
@@ -64,17 +73,13 @@
                 <img src="@/assets/trash-icon.png" alt="Supprimer" />
             </button>
         </div>
-        <div class="total-section">
-            <strong><p>Total HT : {{ calculateTotalWithoutTax().toFixed(2) }} €</p></strong>
-            <strong><p>Total TTC : {{ calculateTotal().toFixed(2) }} €</p></strong>
-            <MyButton
-                label="Passer à la caisse"
-                modifier="action"
-                @GeneralEventBtn="checkout()"
-                class="btn"
-            />
-        </div>
+
+    </main>
+    <div class="empty-cart" v-else>
+        <p>Panier vide</p>
     </div>
+    
+    
 </template>
 
 <script>
@@ -148,8 +153,7 @@ export default {
 };
 </script>
 
-<style scoped>
-
+<style>
 
 
 .order-progress {
@@ -176,6 +180,10 @@ export default {
 .order-progress--active {
     background-color: var(--clr-blue);
 }
+
+</style>
+
+<style scoped>
 
 h1 {
     text-align: center;
@@ -209,14 +217,12 @@ h1 {
     color: #777;
 }
 
-button {
-    border-radius: 4px;
-}
-
 .cart-container {
     display: flex;
     flex-direction: column;
     align-items: center;
+    min-height: 70vh;
+    margin-bottom: 25px;
 }
 
 .card {
@@ -225,6 +231,7 @@ button {
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
+    row-gap: 1rem;
     padding: 20px;
     border-bottom: 1px solid #c4c4c4;
     width: 80%;
@@ -232,11 +239,17 @@ button {
     margin: 20px 0;
 }
 
-.product-image img {
-    width: 150px;
+.product-image {
+    min-width: 150px;
     height: 150px;
-    object-fit: cover;
     margin-right: 20px;
+    border-radius: 15px;
+    overflow: hidden;
+}
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .product-details {
@@ -259,6 +272,7 @@ button {
 }
 
 .quantity-btn {
+    border-radius: 5px;
     padding: 4px;
     height: 30px;
     width: 30px;
@@ -274,10 +288,12 @@ button {
 }
 
 .total-section {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    text-align: start;
-    text-decoration-line: underline;
+    background-color: var(--clr-light-grey);
+    border-radius: 15px;
+    padding: 25px;
+    margin: 25px auto;
+    text-align: center;
+    /* text-decoration-line: underline; */
     width: 80%;
     max-width: 1000px;
     margin-left: 10%;
@@ -285,14 +301,10 @@ button {
 
 .total-section p {
     font-size: large;
-    margin-top: 10px;
 }
 
 .btn {
-    margin-top: 20px;
-}
-
-button:hover {
-    background-color: #8bd6e7;
+    margin: 25px auto;
+    text-align: center;
 }
 </style>

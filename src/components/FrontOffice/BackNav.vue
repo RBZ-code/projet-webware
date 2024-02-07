@@ -3,7 +3,8 @@
         <router-link to="/back-products">Produits</router-link> -
         <router-link to="/back-categories">Catégories</router-link> -
         <router-link to="/back-users">Utilisateurs</router-link> -
-        <router-link to="/back-orders">Commandes</router-link>
+        <router-link to="/back-orders">Commandes</router-link> -
+        <router-link to="/back-prospects">Prospects</router-link>
     </nav>
 </template>
 

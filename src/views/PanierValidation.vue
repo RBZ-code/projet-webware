@@ -1,32 +1,46 @@
 <template>
+    <header class="order-progress">
+        <div class="order-progress_step order-progress--active"></div>
+        <div class="order-progress_bar order-progress--active"></div>
+        <div class="order-progress_step"></div>
+    </header>
+    <h1>Récapitulatif commance (2/2)</h1>
+            
+    <MyButton label="Confirmer la commande" modifier="action" @GeneralEventBtn="confirmerCommande" class="btn" />
     <div class="summary-container">
         <h2>Résumé de commande</h2>
-        <div
-            class="summary-section"
-            v-for="(prod, index) in currentUserPanier"
-            :key="index"
-        >
-            <p>
-                {{ prod.titre }} - Prix TTC:
-                {{ calculateSubtotal(prod).toFixed(2) }} € - Prix HT:
-                {{ calculateSubtotalWithoutTax(prod).toFixed(2) }} €
-            </p>
-        </div>
 
+        <div class="listing-template">
+            <table class="listing-tab">
+                <thead>
+                    <tr>
+                        <th>Produit</th>
+                        <th>Quantité</th>
+                        <th>Total TTC</th>
+                        <th>Total HT</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(prod, index) in currentUserPanier" :key="index">
+                        <td>{{ prod.titre }}</td>
+                        <td>{{ prod.quantity }}</td>
+                        <td>{{ calculateSubtotal(prod).toFixed(2) }}€</td>
+                        <td>{{ calculateSubtotalWithoutTax(prod).toFixed(2) }}€</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    
         <div class="total-section">
-            <p>Total TTC : {{ totalTTC.toFixed(2) }} €</p>
-            <p>Total HT : {{ totalHT.toFixed(2) }} €</p>
+            <p>Total TTC : {{ totalTTC.toFixed(2) }} € -- Total HT : {{ totalHT.toFixed(2) }} €</p>
         </div>
 
         <div class="delivery-info-section">
-            <h3>Informations de livraison</h3>
+            <h2>Informations de livraison</h2>
             <p>Nom : {{ currentUser.raisonSociale }}</p>
             <p>Adresse : {{ adressInfo }}</p>
         </div>
 
-        <button @click="confirmerCommande" class="confirm-button">
-            Confirmer la commande
-        </button>
     </div>
     <div v-if="showThankYouModal" class="modal">
         <div class="modal-content">
@@ -37,7 +51,12 @@
 </template>
 
 <script>
+import MyButton from "@/components/FrontOffice/MyButton.vue";
+
 export default {
+    components: {
+        MyButton
+    },
     data() {
         return {
             showThankYouModal: false,
@@ -95,6 +114,10 @@ export default {
                 this.showThankYouModal = false;
                 console.log(this.showThankYouModal);
             }, 2000);
+            setTimeout(() => {
+                this.$router.push("/");
+            }, 2000);
+
             console.log(this.showThankYouModal);
         },
         calculateSubtotal(prod) {
@@ -115,6 +138,10 @@ export default {
 </script>
 
 <style scoped>
+h1 {
+    text-align: center;
+}
+
 .summary-container {
     background-color: #ffffff;
     padding: 50px;
@@ -123,6 +150,12 @@ export default {
     max-width: 1000px;
     width: 80%;
     margin: 50px auto;
+    text-align: center;
+}
+
+.summary-container .listing-template {
+    min-height: auto;
+    margin: 25px auto;
 }
 
 .total-section {
@@ -163,5 +196,10 @@ h3 {
     color: #252525;
     font-size: 20px;
     margin-bottom: 10px;
+}
+
+.btn {
+    margin: 25px auto;
+    text-align: center;
 }
 </style>
