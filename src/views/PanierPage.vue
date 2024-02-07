@@ -6,7 +6,7 @@
         <div class="order-progress_step"></div>
     </div>
     <h1>Votre panier</h1>
-    <div class="cart-container">
+    <div class="cart-container" v-if="panierUser">
 
         <div
             v-for="(prod, index) in cartWithInitialQuantity"
