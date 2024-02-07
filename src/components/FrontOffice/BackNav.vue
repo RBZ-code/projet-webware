@@ -21,7 +21,7 @@
     color: #fff;
     text-align: center;
     display: flex;
-    justify-content: start;
+    justify-content: center;
     flex-wrap: wrap;
     row-gap: .5rem;
 }
