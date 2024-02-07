@@ -1,42 +1,52 @@
 <template>
     <nav class="main-nav" v-if="isLargeScreen">
-        <router-link to="/">Home</router-link>
-        <router-link v-if="$store.state.currentUser === null" to="/add"
-            >Inscription</router-link
-        >
-        <router-link to="/connexion" v-if="$store.state.currentUser === null"
-            >Connexion</router-link
-        >
-        <router-link to="/back-products" v-if="isAdminUser()"
-            >Back-office</router-link
-        >
-
-        <router-link to="/catalogue">Catalogue</router-link>
-        <div class="dropdown">
-            <a class="dropbtn">Catégories</a>
-            <div class="dropdown-content">
-                <router-link
-                    v-for="category in $store.state.categories"
-                    :key="category.id"
-                    :to="'/category/' + category.id"
-                    class="category-link burger-menu-link"
-                >
-                    {{ category.name }}
-                </router-link>
+        <div class="main-nav_products">
+            <a class="logo-webwares" href="/">WebWares</a>
+            <router-link to="/">Home</router-link>
+            <router-link to="/back-products" v-if="isAdminUser()"
+                >Back-office</router-link
+            >
+            <router-link to="/catalogue">Catalogue</router-link>
+            <div class="dropdown">
+                <a class="dropbtn">Catégories</a>
+                <div class="dropdown-content">
+                    <router-link
+                        v-for="category in $store.state.categories"
+                        :key="category.id"
+                        :to="'/category/' + category.id"
+                        class="category-link burger-menu-link"
+                    >
+                        {{ category.name }}
+                    </router-link>
+                </div>
             </div>
         </div>
-        <a href="#" v-if="currentUser" @click="redirectToPanier">Panier</a>
-        <a href="#" @click="LogOut" v-if="$store.state.currentUser !== null"
-            >Log Out</a
-        >
+        <div class="main-nav_member">
+            <router-link v-if="$store.state.currentUser === null" to="/add"
+                >Inscription</router-link
+            >
+            <router-link
+                to="/connexion"
+                v-if="$store.state.currentUser === null"
+                >Connexion</router-link
+            >
+            <a href="#" v-if="currentUser" @click="redirectToPanier"
+                ><span>{{ taillePanier }}</span>
+                <img src="@/assets/panier.png" alt="panier" class="panier" />
+            </a>
+            <a href="#" @click="LogOut" v-if="$store.state.currentUser !== null"
+                ><img src="@/assets/LogOut.png" alt="logout" class="panier"
+            /></a>
+        </div>
     </nav>
     <nav class="main-nav burger-menu" v-else ref="burgerMenu">
+        <a class="logo-webwares" href="/">WebWares</a>
         <div class="burger-icon" @click="toggleBurgerMode">
             <div :class="{ bar: true, 'rotate-bar1': burgerMode }"></div>
             <div :class="{ bar: true, 'hide-bar2': burgerMode }"></div>
             <div :class="{ bar: true, 'rotate-bar3': burgerMode }"></div>
         </div>
-        <div v-if="burgerMode" class="burger-content">
+        <div v-if="!burgerMode" class="burger-content">
             <router-link to="/">Home</router-link>
             <router-link v-if="$store.state.currentUser === null" to="/add"
                 >Inscription</router-link
@@ -80,15 +90,22 @@
         </div>
     </div>
     <router-view />
+    <FooterVue />
 </template>
 
 <script>
+import FooterVue from "@/components/FrontOffice/FooterVue.vue";
+
 export default {
+    components: {
+        FooterVue,
+    },
     data() {
         return {
             logoutModalIsVisible: false,
             isLargeScreen: window.innerWidth > 600,
             burgerMode: false,
+            taillePanier: 0,
         };
     },
     created() {
@@ -96,9 +113,22 @@ export default {
         this.$store.dispatch("loadCategories");
         window.addEventListener("resize", this.handleResize);
         document.addEventListener("click", this.handleGlobalClick);
+
+        if (this.$store.state.currentUser) {
+        this.taillePanier = this.$store.state.currentUser.panier.length;
+    }
     },
 
+    watch: {
+        "$store.state.currentUser.panier.length"(newValue) {
+            this.taillePanier = newValue;
+        },
+    },
     methods: {
+        cardSize() {
+            return this.$store.state.currentUser.panier.length;
+        },
+
         handleGlobalClick(event) {
             const burgerMenu = this.$refs.burgerMenu;
 
@@ -111,13 +141,18 @@ export default {
         },
 
         handleResize() {
-            this.isLargeScreen = window.innerWidth > 600;
+            this.isLargeScreen = window.innerWidth > 1000;
 
             if (this.isLargeScreen) {
                 this.burgerMode = false;
             }
         },
         LogOut() {
+            if (this.$store.state.currentUser) {
+                const userId = this.$store.state.currentUser.id;
+                console.log("Current User ID before logout:", userId);
+            }
+
             this.$store.commit("setUserConnected", null);
             localStorage.removeItem("connectedUserId");
             this.logoutModalIsVisible = true;
@@ -126,6 +161,8 @@ export default {
             setTimeout(() => {
                 this.logoutModalIsVisible = false;
             }, 2000);
+
+            this.taillePanier = 0;
         },
         isAdminUser() {
             const currentUser = this.$store.state.currentUser;
@@ -134,6 +171,7 @@ export default {
 
         redirectToPanier() {
             this.$router.push({ name: "panier" });
+            console.log(this.$store.state.currentUser.panier.length);
         },
     },
     computed: {
@@ -146,12 +184,14 @@ export default {
 
 <style>
 #app {
-    font-family: system-ui, Arial, sans-serif;
+    font-family: var(--font-text);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: var(--clr-dark);
     min-height: 100vh;
 }
+
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
 
 * {
     margin: 0;
@@ -165,9 +205,42 @@ export default {
     --clr-light-grey: #e7e7e7;
     --clr-dark: #252525;
     --clr-white: #fff;
+    --font-text: system-ui, Arial, sans-serif;
+}
+
+h1,
+h2,
+h3 {
+    font-family: "Bebas Neue", sans-serif;
+    letter-spacing: 0.1rem;
 }
 
 /* Main Navigation */
+.panier {
+    width: 40px;
+}
+
+.logo-webwares {
+    font-family: "Impact", "Bebas Neue", sans-serif;
+    font-size: 2rem;
+    display: inline-block;
+    position: relative;
+}
+
+.logo-webwares:before {
+    content: url("@/assets/WebWares.svg");
+    position: absolute;
+    top: 50%;
+    left: -30px;
+    transform: translateY(-50%);
+    filter: invert(69%) sepia(72%) saturate(812%) hue-rotate(160deg)
+        brightness(91%) contrast(87%);
+}
+
+.main-nav .logo-webwares {
+    margin-right: 25px;
+}
+
 .main-nav {
     height: 100px;
     gap: 2rem;
@@ -175,6 +248,15 @@ export default {
     padding: 30px;
     text-align: center;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5rem;
+}
+
+.main-nav_products {
+    display: flex;
+    align-items: center;
 }
 
 .main-nav a {
@@ -210,7 +292,6 @@ nav a:hover {
     cursor: pointer;
 }
 
-
 .category-link:hover {
     font-weight: bold;
     color: var(--clr-blue) !important;
@@ -221,6 +302,7 @@ nav a:hover {
     font-weight: bold;
     color: #ffffff;
 }
+
 .burger-menu-link {
     border-radius: 0 !important;
 }
@@ -237,26 +319,30 @@ nav a:hover {
 }
 
 /* Burger Menu */
-.burger-menu {
+
+/* .burger-menu {
     display: flex;
     justify-content: space-between;
     flex-direction: row-reverse;
     align-items: center;
     padding: 20px;
-    
-}
+} */
 
 .burger-icon {
     cursor: pointer;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    height: 20px;
-    width: 30px;
+    gap: 2px;
+    height: 50px;
+    width: 50px;
     z-index: 10;
     position: fixed;
-
+    right: 15px;
+    background-color: var(--clr-light-grey);
+    border-radius: 9999px;
+    padding: 5px;
 }
 
 .bar {
@@ -273,14 +359,19 @@ nav a:hover {
     justify-content: space-evenly;
     height: 100vh;
     width: 50vw;
-    background-color: rgba(196, 196, 196, 0.4);
+    background-color: var(--clr-dark);
     position: fixed;
     top: 0;
     right: 0;
     z-index: 1;
 }
 
+.burger-content a {
+    color: var(--clr-white);
+}
+
 /* Dropdown Content */
+
 .dropdown-content {
     display: none;
     position: absolute;
@@ -289,6 +380,7 @@ nav a:hover {
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
 }
+
 .dropdown-content a {
     color: #000;
     padding: 12px 16px;
@@ -333,7 +425,27 @@ nav a:hover {
     display: block;
 }
 
+.rotate-bar1 {
+    transform: rotate(-45deg) translate(-3px, 4px);
+}
+
+.hide-bar2 {
+    opacity: 0;
+}
+
+.rotate-bar3 {
+    transform: rotate(45deg) translate(-3px, -4px);
+}
+
+.burger-icon .bar {
+    background-color: black;
+    height: 3px;
+    width: 25px;
+    transition: 0.4s;
+}
+
 /* Modal */
+
 .modal {
     position: fixed;
     top: 50%;
@@ -370,24 +482,5 @@ nav a:hover {
 
 .modal-content p {
     font-size: 1rem;
-}
-
-.rotate-bar1 {
-    transform: rotate(-45deg) translate(-6px, 6px);
-}
-
-.hide-bar2 {
-    opacity: 0;
-}
-
-.rotate-bar3 {
-    transform: rotate(45deg) translate(-6px, -6px);
-}
-
-.burger-icon .bar {
-    background-color: black;
-    height: 3px;
-    width: 25px;
-    transition: 0.4s;
 }
 </style>

@@ -11,6 +11,7 @@ import BackOrders from "@/views/BackOrders.vue";
 import CatalogueFiltre from "@/views/CataloguePageFiltred.vue";
 import DescriptionProduct from "@/views/DescriptionProduct.vue";
 import Panier from "@/views/PanierPage.vue";
+import checkOut from "@/views/PanierValidation.vue";
 
 
 
@@ -77,6 +78,11 @@ const routes = [
         name: 'panier',
         component: Panier,
     },
+    {
+        path: '/checkout',
+        name: 'checkout',
+        component: checkOut,
+    }
 
 ];
 

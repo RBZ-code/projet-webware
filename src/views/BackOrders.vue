@@ -25,9 +25,10 @@
                         <td>{{ "#" + order.id }}</td>
                         <td>{{ order.coutTotal + "€" }}</td>
                         <td>{{ order.userId }}</td>
+                        <td>{{ order.isCommandSent }}</td>
                         <td>
                             <MyButton label="Signaler l'expédition" modifier="edit"
-                                @GeneralEventBtn="changeOrderStatus(order.id)" v-if="order.toBeDelivered" />
+                                @GeneralEventBtn="changeOrderStatus(order.id)" v-if="!order.isCommandSent" />
                             <p class="delivered" v-else>Expédié</p>
                         </td>
                     </tr>

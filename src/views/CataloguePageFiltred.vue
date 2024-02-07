@@ -1,13 +1,14 @@
 <template>
     <div>
         <h1>{{ categorieName }}</h1>
-        <form class="product-form">
-            <label for="search">Recherche : </label>
+   
+        <form class="filter-bar">
+            <label for="search">Filtrer les catégories : </label>
             <input
                 type="search"
                 id="search"
                 name="search"
-                placeholder="Recherche..."
+                placeholder="nom de la catégorie"
                 autocomplete="on"
                 v-model="query"
             />
@@ -28,7 +29,7 @@
                 </div>
                 <div class="product-actions">
                     <button
-                        @click="addProduit(prod)"
+                        @click="ajouterAuPanier(prod)"
                         v-if="$store.state.currentUser !== null"
                     >
                         Ajouter au panier 🛒
@@ -81,10 +82,10 @@ export default {
         },
     },
     methods: {
-        addProduit(produit) {
-      produit.quantity = 1;
-      this.$store.commit("addProductShop", produit);
-    },
+        ajouterAuPanier(produit) {
+        this.$store.commit("ajouterAuPanier", produit);
+        alert("Produit ajouté au panier !");
+      },
         redirectToDescriptionPage(product) {
             this.$store.commit("setSelectedProduct", product);
             this.$router.push({ name: "description-product" });
@@ -107,6 +108,14 @@ export default {
 
 h1{
     text-align: center;
+    margin-bottom: 20px;
+}
+
+.filter-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
 }
 
 .product-form {
@@ -120,7 +129,7 @@ h1{
     gap: 20px;
     justify-content: center;
     width: 80%;
-    margin: auto;
+    margin: 50px auto;
 }
 
 .product-card {
