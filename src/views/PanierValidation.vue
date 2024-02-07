@@ -30,8 +30,8 @@
     </div>
     <div v-if="showThankYouModal" class="modal">
         <div class="modal-content">
-            <h2>Déconnexion réussie !</h2>
-            <p>Merci de votre visite sur notre site.</p>
+            <h2>Commande validée</h2>
+            <p>Merci de votre confiance sur notre site.</p>
         </div>
     </div>
 </template>
