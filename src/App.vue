@@ -2,12 +2,12 @@
     <nav class="main-nav" v-if="isLargeScreen">
         <div class="main-nav_products">
             <a class="logo-webwares" href="/">WebWares</a>
-            <router-link to="/">Home</router-link>
+            <router-link to="/" v-if="!isFunneled">Home</router-link>
             <router-link to="/back-products" v-if="isAdminUser()"
                 >Back-office</router-link
             >
-            <router-link to="/catalogue">Catalogue</router-link>
-            <div class="dropdown">
+            <router-link to="/catalogue" v-if="!isFunneled">Catalogue</router-link>
+            <div class="dropdown" v-if="!isFunneled">
                 <a class="dropbtn">Catégories</a>
                 <div class="dropdown-content">
                     <router-link
@@ -178,6 +178,9 @@ export default {
         currentUser() {
             return this.$store.state.currentUser !== null;
         },
+        isFunneled() {
+            return this.$route.name === 'checkout'
+        }
     },
 };
 </script>
