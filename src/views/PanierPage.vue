@@ -1,4 +1,5 @@
 <template>
+
     <div class="order-progress">
         <div class="order-progress_step order-progress--active"></div>
         <div class="order-progress_bar"></div>
@@ -6,6 +7,7 @@
     </div>
     <h1>Votre panier</h1>
     <div class="cart-container">
+
         <div
             v-for="(prod, index) in cartWithInitialQuantity"
             :key="index"
@@ -70,6 +72,10 @@
             />
         </div>
     </div>
+    <div class="empty-cart" v-else>
+        <p>Panier vide</p>
+    </div>
+    
 </template>
 
 <script>
@@ -86,6 +92,16 @@ export default {
                 return { ...prod, quantity: nouvelleQuantite };
             });
         },
+        panierUser() {
+            if(
+                this.$store.state.currentUser &&
+                this.$store.state.currentUser.panier
+            ){
+                return this.$store.state.currentUser.panier.length > 0;
+            }else {
+                return false;
+            }
+    },
         cart() {
             if (
                 this.$store.state.currentUser &&
@@ -145,6 +161,7 @@ export default {
 
 <style scoped>
 
+
 .order-progress {
     margin: 25px auto;
     display: flex;
@@ -173,6 +190,15 @@ export default {
 h1 {
     text-align: center;
 }
+
+.empty-cart{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+}
+
+
 .remove {
     background: none;
     border: none;

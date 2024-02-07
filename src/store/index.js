@@ -15,6 +15,7 @@ export default createStore({
         selectedProduct: null,
         productsAdd: [],
         products: [],
+    
 
         categories: localStorage.getItem("copiedCategories")
             ? JSON.parse(localStorage.getItem("copiedCategories"))
@@ -270,59 +271,82 @@ export default createStore({
                   },
               ],
 
-        commandes: [
-            {
-                id: 1,
-                produits: [
-                    { produitId: 1, quantite: 2 },
-                    { produitId: 3, quantite: 1 },
-                ],
-                coutTotal: 689.97,
-                userId: 1,
-                toBeDelivered: true,
-            },
-            {
-                id: 2,
-                produits: [
-                    { produitId: 2, quantite: 1 },
-                    { produitId: 4, quantite: 3 },
-                ],
-                coutTotal: 539.96,
-                userId: 2,
-                toBeDelivered: false,
-            },
-        ],
+        commandes: localStorage.getItem("order")
+            ? JSON.parse(localStorage.getItem("order"))
+            : [],
     },
     mutations: {
-        
+        validerCommande(state) {
+            const currentUser = state.currentUser;
+
+            if (
+                currentUser &&
+                currentUser.panier &&
+                currentUser.panier.length > 0
+            ) {
+                const coutTotalHT = currentUser.panier.reduce(
+                    (total, prod) => total + prod.prix * prod.quantity,
+                    0
+                );
+
+                const coutTotalTTC = coutTotalHT * 1.2;
+
+                const commande = {
+                    id: state.commandes.length + 1,
+                    produits: currentUser.panier.map((prod) => ({
+                        produitId: prod.id,
+                        quantite: prod.quantity,
+                    })),
+                    coutTotal: coutTotalTTC.toFixed(2),
+                    coutTotalHT: coutTotalHT.toFixed(2),
+                    userId: currentUser.id,
+                    raisonSociale: currentUser.raisonSociale,
+                    toBeDelivered: true,
+                    adresse: currentUser.adresse,
+                    isCommandSent: false,
+                };
+
+                state.commandes.push(commande);
+
+                localStorage.setItem("order", JSON.stringify(state.commandes));
+
+                currentUser.panier = [];
+                localStorage.setItem(
+                    `user_${currentUser.id}`,
+                    JSON.stringify(currentUser)
+                );
+                state.showThankYouModal = true;
+                console.log(state.commandes);
+            }
+        },
+
         ajouterAuPanier(state, produit) {
             const utilisateur = state.currentUser;
-        
+
             if (utilisateur && utilisateur.panier) {
                 const produitExistant = utilisateur.panier.find(
                     (p) => p.id === produit.id
                 );
-        
+
                 if (produitExistant) {
                     produitExistant.quantity++;
                 } else {
                     produit.quantity = produit.moq;
                     utilisateur.panier.push(produit);
                 }
-        
-        
+
                 localStorage.setItem(
                     `user_${utilisateur.id}`,
                     JSON.stringify(utilisateur)
                 );
-        
+
                 state.currentUser = { ...utilisateur };
             } else {
                 console.error("Utilisateur ou panier non défini.");
                 console.log(state.currentUser);
             }
         },
-        
+
         updateQuantity(state, { productId, changement }) {
             const utilisateur = state.currentUser;
             if (utilisateur && utilisateur.panier) {
@@ -332,9 +356,9 @@ export default createStore({
                 if (produit) {
                     produit.quantity += changement;
                     if (produit.quantity < 0) {
-                        produit.quantity = 0; 
+                        produit.quantity = 0;
                     }
-                   
+
                     localStorage.setItem(
                         `user_${utilisateur.id}`,
                         JSON.stringify(utilisateur)
@@ -365,21 +389,19 @@ export default createStore({
 
         setUserConnected(state, user) {
             state.currentUser = user;
-        
+
             if (user && user.id !== null && user.id !== undefined) {
                 const storedUser = localStorage.getItem(`user_${user.id}`);
-                
+
                 if (storedUser) {
                     state.currentUser = JSON.parse(storedUser);
-                    
-              
+
                     if (!state.currentUser.panier) {
                         state.currentUser.panier = [];
                     }
                 }
             }
         },
-        
 
         addUser(state, user) {
             state.lastUser += 1;
@@ -491,14 +513,14 @@ export default createStore({
         // Commandes
 
         changeOrderStatus(state, orderId) {
-            state.commandes[orderId - 1].toBeDelivered = false;
+            state.commandes[orderId - 1].isCommandSent = true;
+            localStorage.setItem("order", JSON.stringify(state.commandes));
         },
         setSelectedProduct(state, product) {
             state.selectedProduct = product;
         },
     },
     actions: {
-        
         updateProduct(context, productId) {
             context.commit("updateProduct", productId);
         },
@@ -522,6 +544,7 @@ export default createStore({
                     siret: "12345678901234",
                     password: "12345678901234",
                     role: "admin",
+                    panier: [],
                 };
 
                 users.push(masterUser);
@@ -535,7 +558,6 @@ export default createStore({
                     );
 
                     if (connectedUser) {
-                        
                         connectedUser.id = parseInt(connectedUserId);
 
                         context.commit("setUserConnected", connectedUser);

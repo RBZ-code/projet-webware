@@ -24,4 +24,3 @@ npm run lint
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 siret Master: "12345678901234",
-password: "passWord",
