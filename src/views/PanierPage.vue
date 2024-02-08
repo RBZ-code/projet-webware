@@ -81,7 +81,7 @@
         </div>
     </main>
     <div class="empty-cart" v-else>
-        <p>Panier vide</p>
+        <h3>Panier vide</h3>
     </div>
 </template>
 
@@ -109,19 +109,11 @@ export default {
                 return [];
             }
         },
-        
+        panierUser() {
+            return this.$store.state.currentUser.panier.length > 0;
+        },
     },
     methods: {
-        panierUser() {
-            if(
-                this.$store.state.currentUser &&
-                this.$store.state.currentUser.panier
-            ){
-                return this.$store.state.currentUser.panier.length > 0;
-            }else {
-                return false;
-            }
-    },
         supprimerDuPanier(produit) {
             this.$store.commit("supprimerDuPanier", produit.id);
             alert("Produit supprimé du panier !");
