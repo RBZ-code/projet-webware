@@ -40,6 +40,7 @@
                                     selectedProduct.stock < selectedProduct.moq
                                 "
                                 class="action-btn"
+                                v-if="currentUser"
                             >
                                 Ajouter au panier 🛒
                             </button>
