@@ -111,7 +111,6 @@ export default {
     created() {
         this.$store.dispatch("loadUsers");
         this.$store.dispatch("loadCategories");
-        this.$store.dispatch("loadProduits");
         window.addEventListener("resize", this.handleResize);
         document.addEventListener("click", this.handleGlobalClick);
 
