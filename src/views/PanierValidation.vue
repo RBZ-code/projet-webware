@@ -91,6 +91,21 @@ export default {
     },
     methods: {
         confirmerCommande() {
+            this.currentUser.panier.forEach((prod) => {
+                const produit = this.$store.state.produits.find(
+                    (p) => p.id === prod.id
+                );
+                if (produit) {
+                    produit.stock -= prod.quantity;
+
+                    if (produit.stock < 0) {
+                        produit.stock = 0;
+                    }
+
+                    this.$store.commit("updateProduct", produit);
+                }
+            });
+
             this.$store.commit("validerCommande");
             this.showThankYouModal = true;
             console.log(this.showThankYouModal);
@@ -102,8 +117,8 @@ export default {
             setTimeout(() => {
                 this.$router.push("/");
             }, 2000);
-            console.log(this.showThankYouModal);
 
+            console.log(this.showThankYouModal);
         },
         calculateSubtotal(prod) {
             const subtotal = prod.prix * prod.quantity;

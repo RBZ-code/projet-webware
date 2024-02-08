@@ -9,28 +9,41 @@
             <input type="search" id="search" name="search" placeholder="Nom du produit" autocomplete="on" v-model="query" />
         </form>
 
-        <div class="products-container">
-            <div v-for="prod in filteredProducts" :key="prod.id" class="product-card">
 
+        <div class="products-container" >
+            <div
+                v-for="(prod, index) in filteredProducts"
+                :key="index"
+                class="product-card"
+                :class= "[{disabledProduct : rupture}, 'product-card']"
+            >
                 <img :src="prod.image" :alt="prod.titre" class="img-produit" />
                 <div class="product-details">
                     <h4>{{ prod.titre }}</h4>
                     <p>{{ prod.description }}</p>
                     <p>{{ prod.prix }} €</p>
-                    <p>MOQ: {{ prod.moq }}</p>
+                    <p>MOQ : {{ prod.moq }}</p>
+                    <p>en stock : {{ prod.stock }}</p>
                 </div>
                 <div class="product-actions">
-                    <button v-if="currentUser" @click="ajouterAuPanier(prod)">
+                    <button
+                        v-if="currentUser"
+                        @click="ajouterAuPanier(prod)"
+                        
+                        :disabled="prod.stock < prod.moq"
+                    >
                         Ajouter au panier 🛒
                     </button>
-                    <router-link class="listing-link" :to="'/product-page/' + prod.id">
-                        <button class="details-btn">
-                            Voir Détails
-                        </button>
+                    <router-link
+                        class="listing-link"
+                        :to="'/product-page/' + prod.id"
+                    >
+                        <button class="details-btn">Voir Détails</button>
                     </router-link>
                 </div>
             </div>
         </div>
+
     </div>
 </template>
 
@@ -43,7 +56,9 @@ export default {
     },
     computed: {
         products() {
-            return this.$store.state.produits.filter((prod) => prod.disponibilite == true);
+            return this.$store.state.produits.filter(
+                (prod) => prod.disponibilite == true
+            );
         },
         filteredProducts() {
             if (!this.query) {
@@ -57,9 +72,11 @@ export default {
         currentUser() {
             return this.$store.state.currentUser !== null;
         },
+        disabledProduct(){
+            return this.prod.stock < this.prod.moq
+        }
     },
     methods: {
-
         redirectToDescriptionPage(product) {
             this.$store.commit("setSelectedProduct", product);
             this.$router.push({ name: "description-product" });
@@ -73,6 +90,10 @@ export default {
 </script>
 
 <style scoped>
+.rupture {
+    background-color: red !;
+}
+
 .product-form {
     width: 80%;
     margin: 1rem auto;
@@ -153,4 +174,6 @@ export default {
     background-color: #44b9da;
     color: #ffffff;
 }
+
 </style>
+

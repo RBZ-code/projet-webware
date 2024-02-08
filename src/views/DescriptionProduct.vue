@@ -1,31 +1,38 @@
 <template>
     <div class="body" v-if="selectedProduct">
-        <div class="cards" 
-        :class="{ 'tablette-layout': isTablette, 'desktop-layout': !isTablette }">
-            <div class="image-container">
-                <img
-                    :src="selectedProduct.image"
-                    :alt="selectedProduct.titre"
-                    :width="150"
-                    :height="150"
-                />
-            </div>
-            <div class="description-price">
-                <h2>{{ selectedProduct.titre }}</h2>
-                <p class="product-price"><strong>{{ selectedProduct.prix }} US$</strong></p>
-                <p class="tva-price">Prix de la TVA</p>
-                <p class="moq">moq : {{ selectedProduct.moq }}</p>
-                <div class="product-quantity">
-                    <div class="basket-container">
-                        <button class="add-basket" @click="ajouterAuPanier(selectedProduct)">Ajouter au panier 🛒</button>
+
+        <h2>{{ selectedProduct.titre }}</h2>
+        <div class="cards-container">
+            <div class="cards" 
+            :class="{ 'tablette-layout': isTablette, 'desktop-layout': !isTablette }">
+                <div class="image-container">
+                    <img
+                        :src="selectedProduct.image"
+                        :alt="selectedProduct.titre"
+                        :width="150"
+                        :height="150"
+                    />
+                </div>
+                <div class="description-price">
+                    <div class="description-text">
+                        <p class="text-title"><strong>Description du produit</strong></p>
+                        <p class="write-text">{{ selectedProduct.description }}</p>
+                    </div>
+                    <p class="product-price"><strong>{{ selectedProduct.prix }} US$</strong></p>
+                    <p class="tva-price">Prix de la TVA</p>
+                    <p class="moq">moq : {{ selectedProduct.moq }}</p>
+                    <p class="moq">en stock : {{ selectedProduct.stock }}</p>
+                    <div class="product-quantity">
+                        <div class="basket-container">
+                            <button class="add-basket" @click="ajouterAuPanier(selectedProduct)"
+                            :disabled="selectedProduct.stock < selectedProduct.moq"
+                            >Ajouter au panier 🛒</button>
+                        </div>
+
                     </div>
                 </div>
             </div>
-            <div class="description-text">
-                <p class="text-title"><strong>Description du produit</strong></p>
-                <p class="write-text">{{ selectedProduct.description }}</p>
-            </div>
-        </div>
+        </div >
     </div>
 </template>
 
@@ -76,69 +83,96 @@ export default {
 </script>
 
 <style scoped>
+  .cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    justify-content: center;
+    align-items: flex-start; /* Alignement en haut */
+    min-height: 100vh;
+    margin:20px 20% ;
+  }
 
-    .description-price{       
-        margin:0 20px;
-    }
-    .image-container{
-        width: 100%;
-        height: auto;
-        text-align: center;  
-    }
-    .image-container img{
-        object-fit: contain;
-        width: 20%;
-        height: auto;       
-    }
-    .description-price h2{
-        text-align: center;           
-    }
-    .description-price .product-price {
-        text-align: right;
-        margin-top: 10px;
-        font-size: 20px;
-    }
-    .description-price .tva-price{
-        text-align: right;
-        opacity: 0.7;
-    }
-    .product-quantity{
-        margin: 10px 10px;
-    }
-    
-    .product-quantity .minus-button{
-        width: 17%;
-        height: 100%;
-        margin-left: auto;
-        margin-right: 0;
-    }
-    .product-quantity .plus-button{
-        width: 18%;
-        height: 100%;
-        float: right;
-    }
-    .minus-button, .plus-button{
-        border: none;
-        background-color: rgb(115, 115, 246);
-    }
-    .description-text{
-        margin: 0px 20px;
-        padding-top: 80px;
-    }
-    .description-text .text-title{
-        font-size: 18px;
-    }
-    .add-basket{
-        width: 100%;
-        height: 50px;
-        background-color: rgba(115, 115, 246, 0.747);
-        border: none;
-        text-align: center;
-    }
-    .basket-container{
-        display: flex;
-        justify-content: center;
-        margin: 10px 0;
-    }
+  .cards {
+    background-color: var(--clr-light-grey);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    margin-left: 0;
+  }
 
+  .image-container {
+    width: 100%;
+    height: auto;
+    text-align: center;
+  }
+
+  .image-container img {
+    object-fit: contain;
+    width: 25%;
+    height: auto;
+    border-radius: 5px;
+  }
+
+  .description-price h2 {
+    text-align: center;
+    margin: 10px 0;
+  }
+
+  .description-price,
+  .description-text,
+  .product-quantity,
+  .basket-container,
+  .moq {
+    text-align: center;
+    margin: 10px 0;
+  }
+
+  .product-quantity {
+    margin: 10px 0;
+  }
+
+  .product-quantity .plus-button {
+    width: 18%;
+    height: 100%;
+    float: right;
+  }
+
+  .description-text {
+    margin: 0px 20px;
+    padding: 20px 0;
+    text-align: center; /* Ajout de cette ligne pour centrer le texte */
+  }
+
+  .description-text .text-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  .add-basket {
+    width: 40%;
+    height: 50px;
+    background-color: rgba(115, 115, 246, 0.747);
+    border: none;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .basket-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
+
+  h2 {
+    text-align: center;
+    margin: 30px 0;
+  }
 </style>
+
+
+
