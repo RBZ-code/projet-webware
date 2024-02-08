@@ -4,7 +4,10 @@
         <div class="products-container">
             <div
                 class="product-card"
-                :class="[{'rupture': selectedProduct.stock < selectedProduct.moq}, 'product-card']"
+                :class="[
+                    { rupture: selectedProduct.stock < selectedProduct.moq },
+                    'product-card',
+                ]"
             >
                 <div class="img-produit-container">
                     <img
@@ -14,16 +17,25 @@
                     />
                 </div>
                 <div class="product-details">
-                    <p><strong>Description : </strong>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odit possimus assumenda tempora quaerat id repellat quibusdam ipsam praesentium dolor, consectetur quisquam quos deleniti quod rem omnis voluptatum at. Rerum, odit.</p>
+                    <p>
+                        <strong>Description : </strong>Lorem ipsum dolor, sit
+                        amet consectetur adipisicing elit. Odit possimus
+                        assumenda tempora quaerat id repellat quibusdam ipsam
+                        praesentium dolor, consectetur quisquam quos deleniti
+                        quod rem omnis voluptatum at. Rerum, odit.
+                    </p>
                     <p>{{ selectedProduct.description }}</p>
                     <p><strong>Prix :</strong> {{ selectedProduct.prix }} €</p>
                     <p><strong>MOQ :</strong> {{ selectedProduct.moq }}</p>
-                    <p><strong>En stock :</strong> {{ selectedProduct.stock }}</p>
+                    <p>
+                        <strong>En stock :</strong> {{ selectedProduct.stock }}
+                    </p>
                 </div>
                 <div class="product-actions">
                     <button
                         @click="ajouterAuPanier(selectedProduct)"
                         :disabled="selectedProduct.stock < selectedProduct.moq"
+                        v-if="currentUser"
                     >
                         Ajouter au panier 🛒
                     </button>
@@ -54,7 +66,6 @@ export default {
     methods: {
         ajouterAuPanier(produit) {
             this.$store.commit("ajouterAuPanier", produit);
-            alert("Produit ajouté au panier !");
         },
     },
     watch: {
@@ -75,27 +86,27 @@ h2 {
 }
 
 .rupture {
-    opacity: 0.6; 
-    color: #666; 
+    opacity: 0.6;
+    color: #666;
     position: relative;
 }
 
 .rupture::after {
-    content: "Rupture de stock"; 
-    background-color: #8a2121; 
-    color: #fff; 
+    content: "Rupture de stock";
+    background-color: #8a2121;
+    color: #fff;
     position: absolute;
-    top: 50%; 
-    left: 50%; 
-    transform: translate(-50%, -50%); 
-    padding: 6px 10px; 
-    border-radius: 4px; 
-    font-size: 2rem; 
-    line-height: 1; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 2rem;
+    line-height: 1;
 }
 
 .product-card.rupture {
-    background-color: #eee; 
+    background-color: #eee;
 }
 
 .body {
@@ -126,7 +137,7 @@ h2 {
 
 .img-produit {
     width: 100%;
-    max-width: 400px; 
+    max-width: 400px;
     min-width: 200px;
     object-fit: cover;
     border-radius: 8px;
