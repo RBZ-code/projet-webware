@@ -81,6 +81,7 @@ export default {
     padding: 50px;
     text-align: center;
     padding: 40px;
+    margin-top: 50px;
 }
 
 .main-footer h3 {

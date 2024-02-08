@@ -321,7 +321,7 @@ export default createStore({
                     JSON.stringify(currentUser)
                 );
                 state.showThankYouModal = true;
-                console.log(state.commandes);
+         
             }
         },
 

@@ -108,17 +108,16 @@ export default {
 
             this.$store.commit("validerCommande");
             this.showThankYouModal = true;
-            console.log(this.showThankYouModal);
-            console.log(this.$store.state.produits);
+        
             setTimeout(() => {
                 this.showThankYouModal = false;
-                console.log(this.showThankYouModal);
+   
             }, 2000);
             setTimeout(() => {
                 this.$router.push("/");
             }, 2000);
 
-            console.log(this.showThankYouModal);
+      
         },
         calculateSubtotal(prod) {
             const subtotal = prod.prix * prod.quantity;
