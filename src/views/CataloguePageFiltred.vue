@@ -6,7 +6,7 @@
     </nav>
     <div>
         <h1>{{ categorieName }}</h1>
-
+   
         <form class="filter-bar">
             <label for="search">Filtrer les catégories : </label>
             <input type="search" id="search" name="search" placeholder="Nom de la catégorie" autocomplete="on"
@@ -20,28 +20,22 @@
                     <h4>{{ prod.titre }}</h4>
                     <p>{{ prod.description }}</p>
                     <p>{{ prod.prix }} €</p>
-                    <p>MOQ : {{ prod.moq }}</p>
-                    <p>en stock : {{ prod.sctock }}</p>
+                    <p>MOQ: {{ prod.moq }}</p>
                 </div>
                 <div class="product-actions">
                     <button
                         @click="ajouterAuPanier(prod)"
-
-                        v-if="$store.state.currentUser !== null"
-                        :disabled="prod.stock < prod.moq"
-
+                        v-if="$store.state.currentUser !== null && prod.available"
                     >
                         Ajouter au panier 🛒
                     </button>
 
-
-                    <router-link
-                        class="listing-link"
-                        :to="'/product-page/' + prod.id"
+                    <button
+                        class="details-btn"
+                        @click="redirectToDescriptionPage(prod)"
                     >
-                        <button class="details-btn">Voir Détails</button>
-                        
-                    </router-link>
+                        Voir Détails
+                    </button>
                 </div>
             </div>
         </div>
@@ -57,15 +51,13 @@ export default {
         };
     },
     computed: {
-        categorieName() {
+        categorieName(){
             return this.$store.state.categories.find(
                 (cat) => cat.id === this.categoryId
             ).name;
         },
         products() {
-            return this.$store.state.produits.filter(
-                (prod) => prod.disponibilite == true
-            );
+            return this.$store.state.produits;
         },
         filteredProducts() {
             if (!this.query) return this.categoryProducts;
@@ -86,9 +78,9 @@ export default {
     },
     methods: {
         ajouterAuPanier(produit) {
-            this.$store.commit("ajouterAuPanier", produit);
-            alert("Produit ajouté au panier !");
-        },
+        this.$store.commit("ajouterAuPanier", produit);
+        alert("Produit ajouté au panier !");
+      },
         redirectToDescriptionPage(product) {
             this.$store.commit("setSelectedProduct", product);
             this.$router.push({ name: "description-product" });
@@ -108,7 +100,8 @@ export default {
 </script>
 
 <style scoped>
-h1 {
+
+h1{
     text-align: center;
     margin-bottom: 20px;
 }

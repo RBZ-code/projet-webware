@@ -1,5 +1,6 @@
 <template>
 
+
     <header class="order-progress">
         <div class="order-progress_step order-progress--active"></div>
         <div class="order-progress_bar"></div>
@@ -17,6 +18,7 @@
             <p><strong>Total HT :</strong> {{ calculateTotalWithoutTax().toFixed(2) }} €</p>
             <p><strong>Total TTC :</strong> {{ calculateTotal().toFixed(2) }} €</p>
         </section>
+
 
         <div
             v-for="(prod, index) in cartWithInitialQuantity"
@@ -46,7 +48,6 @@
                     <button
                         @click="updateQuantity(prod.id, 1)"
                         class="quantity-btn"
-                        :disabled="prod.stock === prod.quantity"
                     >
                         +
                     </button>
@@ -78,15 +79,20 @@
     <div class="empty-cart" v-else>
         <p>Panier vide</p>
     </div>
+
     
-    
+
+    <CarrouselComponent />
+
 </template>
 
 <script>
 import MyButton from "@/components/FrontOffice/MyButton.vue";
+import CarrouselComponent from "@/components/FrontOffice/CarrouselComponent.vue";
 export default {
     components: {
         MyButton,
+        CarrouselComponent,
     },
     computed: {
         cartWithInitialQuantity() {
@@ -108,6 +114,9 @@ export default {
         },
     },
     methods: {
+        panierUser(){
+            return this.$store.state.currentUser.panier.length > 0;
+        },
         supprimerDuPanier(produit) {
             this.$store.commit("supprimerDuPanier", produit.id);
             alert("Produit supprimé du panier !");
@@ -120,6 +129,7 @@ export default {
                 productId,
                 changement,
             });
+     
         },
         // ...
 
@@ -152,6 +162,7 @@ export default {
     },
 };
 </script>
+
 
 <style>
 
@@ -195,6 +206,7 @@ h1 {
     align-items: center;
     height: 70vh;
 }
+
 
 
 
@@ -291,12 +303,12 @@ h1 {
     background-color: var(--clr-light-grey);
     border-radius: 15px;
     padding: 25px;
-    margin: 25px auto;
-    text-align: center;
+    text-align: center !important;
     /* text-decoration-line: underline; */
     width: 80%;
     max-width: 1000px;
     margin-left: 10%;
+    margin: 25px auto;
 }
 
 .total-section p {

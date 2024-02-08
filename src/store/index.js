@@ -42,8 +42,10 @@ export default createStore({
                     prix: 49.99,
                     moq: 5,
                     categorieId: 1,
+
                     stock: 50,
                     disponibilite: true,
+
                 },
                 {
                     id: 2,
@@ -55,7 +57,9 @@ export default createStore({
                     moq: 10,
                     categorieId: 1,
                     stock: 50,
+
                     disponibilite: true,
+
                 },
                 {
                     id: 3,
@@ -68,6 +72,7 @@ export default createStore({
                     categorieId: 1,
                     stock: 50,
                     disponibilite: true,
+
                 },
                 {
                     id: 4,
@@ -80,6 +85,8 @@ export default createStore({
                     categorieId: 1,
                     stock: 50,
                     disponibilite: true,
+
+
                 },
                 {
                     id: 5,
@@ -92,6 +99,7 @@ export default createStore({
                     categorieId: 1,
                     stock: 50,
                     disponibilite: true,
+
                 },
                 {
                     id: 6,
@@ -104,6 +112,7 @@ export default createStore({
                     categorieId: 2,
                     stock: 50,
                     disponibilite: true,
+
                 },
                 {
                     id: 7,
@@ -116,6 +125,7 @@ export default createStore({
                     categorieId: 2,
                     stock: 50,
                     disponibilite: true,
+
                 },
                 {
                     id: 8,
@@ -126,8 +136,10 @@ export default createStore({
                     prix: 149.99,
                     moq: 15,
                     categorieId: 2,
+
                     stock: 50,
                     disponibilite: true,
+
                 },
                 {
                     id: 9,
@@ -138,8 +150,10 @@ export default createStore({
                     prix: 159.99,
                     moq: 20,
                     categorieId: 2,
+
                     stock: 50,
                     disponibilite: true,
+
                 },
                 {
                     id: 10,
@@ -150,8 +164,10 @@ export default createStore({
                     prix: 169.99,
                     moq: 25,
                     categorieId: 2,
+
                     stock: 50,
                     disponibilite: true,
+
                 },
                 {
                     id: 11,
@@ -162,8 +178,10 @@ export default createStore({
                     prix: 299.99,
                     moq: 5,
                     categorieId: 3,
+
                     stock: 50,
                     disponibilite: true,
+
                 },
                 {
                     id: 12,
@@ -174,8 +192,10 @@ export default createStore({
                     prix: 289.99,
                     moq: 10,
                     categorieId: 3,
+
                     stock: 50,
                     disponibilite: true,
+
                 },
                 {
                     id: 13,
@@ -186,8 +206,10 @@ export default createStore({
                     prix: 279.99,
                     moq: 15,
                     categorieId: 3,
+
                     stock: 50,
                     disponibilite: true,
+
                 },
                 {
                     id: 14,
@@ -198,8 +220,10 @@ export default createStore({
                     prix: 269.99,
                     moq: 20,
                     categorieId: 3,
+
                     stock: 50,
                     disponibilite: true,
+
                 },
                 {
                     id: 15,
@@ -210,8 +234,10 @@ export default createStore({
                     prix: 259.99,
                     moq: 25,
                     categorieId: 3,
+
                     stock: 50,
                     disponibilite: true,
+
                 },
                 {
                     id: 16,
@@ -222,8 +248,10 @@ export default createStore({
                     prix: 89.99,
                     moq: 5,
                     categorieId: 4,
+
                     stock: 50,
                     disponibilite: true,
+
                 },
                 {
                     id: 17,
@@ -234,8 +262,10 @@ export default createStore({
                     prix: 79.99,
                     moq: 10,
                     categorieId: 4,
+
                     stock: 50,
                     disponibilite: true,
+
                 },
                 {
                     id: 18,
@@ -246,8 +276,10 @@ export default createStore({
                     prix: 69.99,
                     moq: 15,
                     categorieId: 4,
+
                     stock: 50,
                     disponibilite: true,
+
                 },
                 {
                     id: 19,
@@ -257,9 +289,10 @@ export default createStore({
                         "Tapis doux en laine avec motif géométrique.",
                     prix: 59.99,
                     moq: 20,
-                    categorieId: 4,
+
                     stock: 50,
                     disponibilite: true,
+
                 },
                 {
                     id: 20,
@@ -270,10 +303,12 @@ export default createStore({
                     prix: 99.99,
                     moq: 25,
                     categorieId: 4,
+
                     stock: 50,
                     disponibilite: true,
                 },
             ],
+
 
 
         commandes: localStorage.getItem("order")
@@ -324,52 +359,35 @@ export default createStore({
                 console.log(state.commandes);
             }
         },
+
         ajouterAuPanier(state, produit) {
             const utilisateur = state.currentUser;
-          
+        
             if (utilisateur && utilisateur.panier) {
-              const produitExistant = utilisateur.panier.find((p) => p.id === produit.id);
-          
-              if (produitExistant) {
-                const quantiteDisponible = produitExistant.moq;
-                const quantiteAjoutee = 1;
-          
-                // Vérifie si la quantité ajoutée ne dépasse pas la quantité disponible
-                produitExistant.quantity += quantiteAjoutee <= quantiteDisponible ? quantiteAjoutee : 0;
-                produitExistant.stock -= quantiteAjoutee <= quantiteDisponible ? quantiteAjoutee : 0;
-              } else {
-                const quantiteDisponible = produit.moq;
-          
-                if (quantiteDisponible > 0) {
-                  const quantiteAjoutee = quantiteDisponible <= produit.stock ? quantiteDisponible : produit.stock;
-          
-                  utilisateur.panier.push({
-                    id: produit.id,
-                    quantity: quantiteAjoutee,
-                    moq: produit.moq,
-                    stock: produit.stock,
-                    available: true,
-                  });
-          
-                  produit.stock -= quantiteAjoutee;
+                const produitExistant = utilisateur.panier.find(
+                    (p) => p.id === produit.id
+                );
+        
+                if (produitExistant) {
+                    produitExistant.quantity++;
                 } else {
-                  utilisateur.panier.push({
-                    id: produit.id,
-                    quantity: 0,
-                    moq: produit.moq,
-                    stock: produit.stock,
-                    available: false,
-                  });
+                    produit.quantity = produit.moq;
+                    utilisateur.panier.push(produit);
                 }
-              }
-          
-              localStorage.setItem(`user_${utilisateur.id}`, JSON.stringify(utilisateur));
-              state.currentUser = { ...utilisateur };
+        
+        
+                localStorage.setItem(
+                    `user_${utilisateur.id}`,
+                    JSON.stringify(utilisateur)
+                );
+        
+                state.currentUser = { ...utilisateur };
             } else {
-              console.error("Utilisateur ou panier non défini.");
-              console.log(state.currentUser);
+                console.error("Utilisateur ou panier non défini.");
+                console.log(state.currentUser);
             }
-          },          
+        },
+
         updateQuantity(state, { productId, changement }) {
             const utilisateur = state.currentUser;
             if (utilisateur && utilisateur.panier) {
@@ -379,9 +397,9 @@ export default createStore({
                 if (produit) {
                     produit.quantity += changement;
                     if (produit.quantity < 0) {
-                        produit.quantity = 0;
+                        produit.quantity = 0; 
                     }
-
+                   
                     localStorage.setItem(
                         `user_${utilisateur.id}`,
                         JSON.stringify(utilisateur)
@@ -487,7 +505,10 @@ export default createStore({
 
         setProducts(state, products) {
             state.produits = products;
-            
+            localStorage.setItem(
+                "copiedProduits",
+                JSON.stringify(state.produits)
+            );
         },
 
         // Catégories
@@ -623,22 +644,6 @@ export default createStore({
                 );
             }
         },
-        async loadProduits(context) {
-        try {
-            let produitsStockes = localStorage.getItem("copiedProduits");
-
-            if (produitsStockes) {
-                let produits = JSON.parse(produitsStockes);
-
-                context.commit("setProducts", produits);
-            }
-                  
-      
-        } catch (error) {
-            console.error("Erreur lors du chargement des produits :", error);
-        }
-    },
-        
     },
 
     getters: {
