@@ -18,13 +18,15 @@
                 </div>
                 <div class="product-details">
                     <p>
+                        <strong>{{ selectedProduct.description }}</strong>
+                    </p>
+                    <p>
                         <strong>Description : </strong>Lorem ipsum dolor, sit
                         amet consectetur adipisicing elit. Odit possimus
                         assumenda tempora quaerat id repellat quibusdam ipsam
                         praesentium dolor, consectetur quisquam quos deleniti
                         quod rem omnis voluptatum at. Rerum, odit.
                     </p>
-                    <p>{{ selectedProduct.description }}</p>
                     <p><strong>Prix :</strong> {{ selectedProduct.prix }} €</p>
                     <p><strong>MOQ :</strong> {{ selectedProduct.moq }}</p>
                     <p>
@@ -60,6 +62,17 @@ export default {
         selectedProduct() {
             return this.products.find(
                 (product) => product.id === this.descriptionId
+            );
+        },
+        relatedProducts() {
+            if (!this.selectedProduct || !this.selectedProduct.categorie) {
+                return [];
+            }
+
+            return this.products.filter(
+                (product) =>
+                    product.categorie === this.selectedProduct.categorie &&
+                    product.id !== this.selectedProduct.id
             );
         },
     },
@@ -116,7 +129,7 @@ h2 {
 .products-container {
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* Alignement en haut */
+    align-items: flex-start;
 }
 
 .product-card {
@@ -147,6 +160,10 @@ h2 {
     flex-grow: 1;
 }
 
+.product-details :nth-child(2) {
+    margin-top: 30px;
+}
+
 .product-details p {
     margin-bottom: 10px;
 }
@@ -159,7 +176,7 @@ h2 {
     background-color: #44b9da;
     color: #ffffff;
     border: none;
-    padding: 10px 20px;
+    padding: 15px 25px;
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease;

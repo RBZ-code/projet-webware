@@ -1,5 +1,6 @@
 import { createStore } from "vuex";
 
+
 function getLastUser() {
     let lastUser = localStorage.getItem("lastUserId");
     return lastUser ? parseInt(lastUser) : 0;
