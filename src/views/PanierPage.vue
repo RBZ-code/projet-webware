@@ -6,6 +6,7 @@
     </header>
     <h1>Votre panier (1/2)</h1>
     <MyButton
+    v-if="panierUser"
         label="Passer commande"
         modifier="action"
         @GeneralEventBtn="checkout()"

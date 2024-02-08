@@ -24,9 +24,10 @@
                     <p class="moq">en stock : {{ selectedProduct.stock }}</p>
                     <div class="product-quantity">
                         <div class="basket-container">
-                            <button class="add-basket" @click="ajouterAuPanier(selectedProduct)"
-                            :disabled="selectedProduct.stock < selectedProduct.moq"
-                            >Ajouter au panier 🛒</button>
+                            <MyButton  modifier="action" @GeneralEventBtn="ajouterAuPanier(selectedProduct)"
+                            label='Ajouter au panier 🛒'
+                            :disabled="selectedProduct.stock < selectedProduct.moq || !currentUser"
+                            ></MyButton>
                         </div>
 
                     </div>
@@ -37,12 +38,18 @@
 </template>
 
 <script>
+import MyButton from "@/components/FrontOffice/MyButton.vue";
 export default {
     data() {
         return {
             descriptionId: null,
             isTablette: 508 < window.innerWidth < 768,
+            currentUser: this.$store.state.currentUser,
+
         }
+    },
+    components: {
+        MyButton
     },
     mounted() {
         window.addEventListener('resize', this.handleResize);
