@@ -21,12 +21,11 @@
                     <p>{{ prod.description }}</p>
                     <p>{{ prod.prix }} €</p>
                     <p>MOQ : {{ prod.moq }}</p>
-                    <p>en stock : {{ prod.sctock }}</p>
+                    <p>en stock : {{ prod.stock }}</p>
                 </div>
                 <div class="product-actions">
                     <button
                         @click="ajouterAuPanier(prod)"
-
                         v-if="$store.state.currentUser !== null"
                         :disabled="prod.stock < prod.moq"
 

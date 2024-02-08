@@ -10,6 +10,7 @@ export default {
         label: String,
         modifier: String,
         backgroundColor: String,
+        disabled: Boolean,
     },
     methods: {
         GeneralEventBtn() {
