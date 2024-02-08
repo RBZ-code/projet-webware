@@ -324,52 +324,35 @@ export default createStore({
                 console.log(state.commandes);
             }
         },
+
         ajouterAuPanier(state, produit) {
             const utilisateur = state.currentUser;
-          
+        
             if (utilisateur && utilisateur.panier) {
-              const produitExistant = utilisateur.panier.find((p) => p.id === produit.id);
-          
-              if (produitExistant) {
-                const quantiteDisponible = produitExistant.moq;
-                const quantiteAjoutee = 1;
-          
-                // Vérifie si la quantité ajoutée ne dépasse pas la quantité disponible
-                produitExistant.quantity += quantiteAjoutee <= quantiteDisponible ? quantiteAjoutee : 0;
-                produitExistant.stock -= quantiteAjoutee <= quantiteDisponible ? quantiteAjoutee : 0;
-              } else {
-                const quantiteDisponible = produit.moq;
-          
-                if (quantiteDisponible > 0) {
-                  const quantiteAjoutee = quantiteDisponible <= produit.stock ? quantiteDisponible : produit.stock;
-          
-                  utilisateur.panier.push({
-                    id: produit.id,
-                    quantity: quantiteAjoutee,
-                    moq: produit.moq,
-                    stock: produit.stock,
-                    available: true,
-                  });
-          
-                  produit.stock -= quantiteAjoutee;
+                const produitExistant = utilisateur.panier.find(
+                    (p) => p.id === produit.id
+                );
+        
+                if (produitExistant) {
+                    produitExistant.quantity++;
                 } else {
-                  utilisateur.panier.push({
-                    id: produit.id,
-                    quantity: 0,
-                    moq: produit.moq,
-                    stock: produit.stock,
-                    available: false,
-                  });
+                    produit.quantity = produit.moq;
+                    utilisateur.panier.push(produit);
                 }
-              }
-          
-              localStorage.setItem(`user_${utilisateur.id}`, JSON.stringify(utilisateur));
-              state.currentUser = { ...utilisateur };
+        
+        
+                localStorage.setItem(
+                    `user_${utilisateur.id}`,
+                    JSON.stringify(utilisateur)
+                );
+        
+                state.currentUser = { ...utilisateur };
             } else {
-              console.error("Utilisateur ou panier non défini.");
-              console.log(state.currentUser);
+                console.error("Utilisateur ou panier non défini.");
+                console.log(state.currentUser);
             }
-          },          
+        },
+
         updateQuantity(state, { productId, changement }) {
             const utilisateur = state.currentUser;
             if (utilisateur && utilisateur.panier) {
@@ -379,9 +362,9 @@ export default createStore({
                 if (produit) {
                     produit.quantity += changement;
                     if (produit.quantity < 0) {
-                        produit.quantity = 0;
+                        produit.quantity = 0; 
                     }
-
+                   
                     localStorage.setItem(
                         `user_${utilisateur.id}`,
                         JSON.stringify(utilisateur)

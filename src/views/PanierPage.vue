@@ -1,5 +1,4 @@
 <template>
-
     <header class="order-progress">
         <div class="order-progress_step order-progress--active"></div>
         <div class="order-progress_bar"></div>
@@ -14,8 +13,13 @@
     />
     <main class="cart-container" v-if="panierUser">
         <section class="total-section">
-            <p><strong>Total HT :</strong> {{ calculateTotalWithoutTax().toFixed(2) }} €</p>
-            <p><strong>Total TTC :</strong> {{ calculateTotal().toFixed(2) }} €</p>
+            <p>
+                <strong>Total HT :</strong>
+                {{ calculateTotalWithoutTax().toFixed(2) }} €
+            </p>
+            <p>
+                <strong>Total TTC :</strong> {{ calculateTotal().toFixed(2) }} €
+            </p>
         </section>
 
         <div
@@ -32,7 +36,9 @@
                 />
             </div>
             <div class="product-details">
-                <p class="product-description"><strong>{{ prod.titre }}</strong></p>
+                <p class="product-description">
+                    <strong>{{ prod.titre }}</strong>
+                </p>
                 <p class="product-description">{{ prod.description }}</p>
                 <div class="quantity">
                     <button
@@ -73,13 +79,10 @@
                 <img src="@/assets/trash-icon.png" alt="Supprimer" />
             </button>
         </div>
-
     </main>
     <div class="empty-cart" v-else>
         <p>Panier vide</p>
     </div>
-    
-    
 </template>
 
 <script>
@@ -106,8 +109,19 @@ export default {
                 return [];
             }
         },
+        
     },
     methods: {
+        panierUser() {
+            if(
+                this.$store.state.currentUser &&
+                this.$store.state.currentUser.panier
+            ){
+                return this.$store.state.currentUser.panier.length > 0;
+            }else {
+                return false;
+            }
+    },
         supprimerDuPanier(produit) {
             this.$store.commit("supprimerDuPanier", produit.id);
             alert("Produit supprimé du panier !");
@@ -154,8 +168,6 @@ export default {
 </script>
 
 <style>
-
-
 .order-progress {
     margin: 25px auto;
     display: flex;
@@ -180,23 +192,19 @@ export default {
 .order-progress--active {
     background-color: var(--clr-blue);
 }
-
 </style>
 
 <style scoped>
-
 h1 {
     text-align: center;
 }
 
-.empty-cart{
+.empty-cart {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 70vh;
 }
-
-
 
 .remove {
     background: none;
@@ -291,12 +299,12 @@ h1 {
     background-color: var(--clr-light-grey);
     border-radius: 15px;
     padding: 25px;
-    margin: 25px auto;
-    text-align: center;
+    text-align: center !important;
     /* text-decoration-line: underline; */
     width: 80%;
     max-width: 1000px;
     margin-left: 10%;
+    margin: 25px auto;
 }
 
 .total-section p {
