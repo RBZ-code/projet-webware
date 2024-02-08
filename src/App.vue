@@ -492,4 +492,20 @@ nav a:hover {
 .modal-content p {
     font-size: 1rem;
 }
+
+/* Breadcrumb ---------------------------------- */
+
+.breadcrumb {
+    width: 80%;
+    margin: 15px auto 25px auto;
+}
+
+.breadcrumb a {
+    color: var(--clr-dark);
+    text-decoration: none;
+}
+
+.breadcrumb span {
+    font-weight: bold;
+}
 </style>

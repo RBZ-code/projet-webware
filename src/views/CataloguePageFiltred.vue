@@ -1,25 +1,20 @@
 <template>
+    <nav class="breadcrumb">
+        <router-link to="/">Home</router-link> >
+        <router-link to="/catalogue">Catalogue</router-link> >
+        <span> {{ categorieName }}</span>
+    </nav>
     <div>
         <h1>{{ categorieName }}</h1>
 
         <form class="filter-bar">
             <label for="search">Filtrer les catégories : </label>
-            <input
-                type="search"
-                id="search"
-                name="search"
-                placeholder="nom de la catégorie"
-                autocomplete="on"
-                v-model="query"
-            />
+            <input type="search" id="search" name="search" placeholder="Nom de la catégorie" autocomplete="on"
+                v-model="query" />
         </form>
 
         <div class="products-container">
-            <div
-                v-for="(prod, index) in filteredProducts"
-                :key="index"
-                class="product-card"
-            >
+            <div v-for="(prod, index) in filteredProducts" :key="index" class="product-card">
                 <img :src="prod.image" :alt="prod.titre" class="img-produit" />
                 <div class="product-details">
                     <h4>{{ prod.titre }}</h4>
@@ -28,17 +23,11 @@
                     <p>MOQ: {{ prod.moq }}</p>
                 </div>
                 <div class="product-actions">
-                    <button
-                        @click="ajouterAuPanier(prod)"
-                        v-if="$store.state.currentUser !== null"
-                    >
+                    <button @click="ajouterAuPanier(prod)" v-if="$store.state.currentUser !== null">
                         Ajouter au panier 🛒
                     </button>
 
-                    <router-link
-                        class="listing-link"
-                        :to="'/product-page/' + prod.id"
-                    >
+                    <router-link class="listing-link" :to="'/product-page/' + prod.id">
                         <button class="details-btn">Voir Détails</button>
                     </router-link>
                 </div>
@@ -153,6 +142,7 @@ h1 {
     border-radius: 8px;
     margin-bottom: 10px;
 }
+
 .product-details {
     flex-grow: 1;
 }

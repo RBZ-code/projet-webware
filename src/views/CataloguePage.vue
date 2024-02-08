@@ -1,22 +1,16 @@
 <template>
+    <nav class="breadcrumb">
+        <router-link to="/">Home</router-link> >
+        <span> {{ this.$route.name }}</span>
+    </nav>
     <div>
         <form class="filter-bar">
             <label for="search">Filtrer les produits : </label>
-            <input
-                type="search"
-                id="search"
-                name="search"
-                placeholder="Nom du produit"
-                autocomplete="on"
-                v-model="query"
-            />
+            <input type="search" id="search" name="search" placeholder="Nom du produit" autocomplete="on" v-model="query" />
         </form>
 
         <div class="products-container">
-            <div
-                v-for="prod in filteredProducts"
-                :key="prod.id"
-                class="product-card">
+            <div v-for="prod in filteredProducts" :key="prod.id" class="product-card">
 
                 <img :src="prod.image" :alt="prod.titre" class="img-produit" />
                 <div class="product-details">
@@ -30,11 +24,9 @@
                         Ajouter au panier 🛒
                     </button>
                     <router-link class="listing-link" :to="'/product-page/' + prod.id">
-                    <button
-                        class="details-btn"
-                    >
-                        Voir Détails
-                    </button>
+                        <button class="details-btn">
+                            Voir Détails
+                        </button>
                     </router-link>
                 </div>
             </div>
@@ -67,15 +59,15 @@ export default {
         },
     },
     methods: {
-        
+
         redirectToDescriptionPage(product) {
             this.$store.commit("setSelectedProduct", product);
             this.$router.push({ name: "description-product" });
         },
-       ajouterAuPanier(produit) {
-        this.$store.commit("ajouterAuPanier", produit);
-        alert("Produit ajouté au panier !");
-      },
+        ajouterAuPanier(produit) {
+            this.$store.commit("ajouterAuPanier", produit);
+            alert("Produit ajouté au panier !");
+        },
     },
 };
 </script>

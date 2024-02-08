@@ -29,7 +29,7 @@ const routes = [
     },
     {
         path: "/catalogue",
-        name: "catalogue",
+        name: "Catalogue",
         component: Catalogue,
     },
     {
