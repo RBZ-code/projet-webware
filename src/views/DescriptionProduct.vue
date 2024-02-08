@@ -25,7 +25,7 @@
                     <div class="product-quantity">
                         <div class="basket-container">
                             <button class="add-basket" @click="ajouterAuPanier(selectedProduct)"
-                            :disabled="selectedProduct.stock < selectedProduct.moq"
+                            :disabled="selectedProduct.stock < selectedProduct.moq || !currentUser "
                             >Ajouter au panier 🛒</button>
                         </div>
 
@@ -42,6 +42,7 @@ export default {
         return {
             descriptionId: null,
             isTablette: 508 < window.innerWidth < 768,
+            currentUser: this.$store.state.currentUser,
         }
     },
     mounted() {
