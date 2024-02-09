@@ -37,9 +37,8 @@ export default {
             this.currentIndex = (this.currentIndex + 1) % this.products.length;
         },
         voirProduit(productId) {
-            this.$router.push({ name: "description-product", params: { productId } });
+            this.$emit('voir-produit', productId);
         },
-       
     },
 };
 </script>

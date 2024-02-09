@@ -47,7 +47,10 @@
         <div class="related-products">
             <h3>Vous aimerez peut-être</h3>
             <div class="carousel-container">
-                <carousel-page :products="relatedProducts" />
+                <carousel-page
+                    :products="relatedProducts"
+                    @voir-produit="voirProduit()"
+                />
             </div>
         </div>
     </div>
@@ -88,8 +91,13 @@ export default {
             this.$store.commit("ajouterAuPanier", produit);
             console.log(this.relatedProducts);
         },
-        
-       
+        voirProduit(productId) {
+            this.$router.push({
+                name: "description-product",
+                params: { productId },
+            });
+           console.log(productId);
+        },
     },
     watch: {
         "$route.params.descriptionId"(newDescriptionId) {
@@ -210,7 +218,4 @@ h2 {
 .product-actions button:hover {
     background-color: #252525;
 }
-
-
-
 </style>
