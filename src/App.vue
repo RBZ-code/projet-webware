@@ -328,15 +328,7 @@ nav a:hover {
     padding: 12px 16px !important;
 }
 
-/* Burger Menu */
 
-/* .burger-menu {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row-reverse;
-    align-items: center;
-    padding: 20px;
-} */
 
 .burger-icon {
     cursor: pointer;

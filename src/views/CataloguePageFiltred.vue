@@ -101,8 +101,6 @@ export default {
     },
     created() {
         this.categoryId = parseInt(this.$route.params.categoryId);
-        console.log("categoryId:", this.categoryId);
-        console.log("categoryProducts:", this.categoryProducts);
     },
 };
 </script>

@@ -44,11 +44,22 @@
                 </div>
             </div>
         </div>
+        <div class="related-products">
+            <h3>Vous aimerez peut-être</h3>
+            <div class="carousel-container">
+                <carousel-page :products="relatedProducts" />
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
+import CarouselPage from "@/components/FrontOffice/CarouselPage.vue";
+
 export default {
+    components: {
+        CarouselPage,
+    },
     data() {
         return {
             descriptionId: null,
@@ -65,13 +76,9 @@ export default {
             );
         },
         relatedProducts() {
-            if (!this.selectedProduct || !this.selectedProduct.categorie) {
-                return [];
-            }
-
             return this.products.filter(
                 (product) =>
-                    product.categorie === this.selectedProduct.categorie &&
+                    product.categorieId === this.selectedProduct.categorieId &&
                     product.id !== this.selectedProduct.id
             );
         },
@@ -79,7 +86,10 @@ export default {
     methods: {
         ajouterAuPanier(produit) {
             this.$store.commit("ajouterAuPanier", produit);
+            console.log(this.relatedProducts);
         },
+        
+       
     },
     watch: {
         "$route.params.descriptionId"(newDescriptionId) {
@@ -93,6 +103,21 @@ export default {
 </script>
 
 <style scoped>
+.related-products {
+    margin-top: 50px;
+}
+
+.related-products h3 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.carousel-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
 h2 {
     text-align: center;
     margin: 50px;
@@ -184,5 +209,14 @@ h2 {
 
 .product-actions button:hover {
     background-color: #252525;
+}
+
+.related-products {
+    margin-top: 50px;
+}
+
+.related-products h3 {
+    text-align: center;
+    margin-bottom: 20px;
 }
 </style>
