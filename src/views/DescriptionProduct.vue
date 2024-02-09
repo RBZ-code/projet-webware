@@ -109,7 +109,8 @@ export default {
 
 .related-products h3 {
     text-align: center;
-    margin-bottom: 20px;
+    margin-top: 100px;
+    margin-bottom: 10px;
 }
 
 .carousel-container {
@@ -169,7 +170,6 @@ h2 {
 
 .img-produit-container {
     width: 100%;
-    text-align: center;
     margin-bottom: 20px;
 }
 
@@ -211,12 +211,6 @@ h2 {
     background-color: #252525;
 }
 
-.related-products {
-    margin-top: 50px;
-}
 
-.related-products h3 {
-    text-align: center;
-    margin-bottom: 20px;
-}
+
 </style>
