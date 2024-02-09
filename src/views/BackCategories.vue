@@ -141,9 +141,7 @@ export default {
                 alert("Veuillez renseigner un nom");
             }
         },
-        editData() {
-            return console.log("edit");
-        },
+       
     },
     computed: {
         categories() {

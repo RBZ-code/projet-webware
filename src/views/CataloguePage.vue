@@ -1,21 +1,23 @@
 <template>
-    <nav class="breadcrumb">
-        <router-link to="/">Home</router-link> >
-        <span> {{ this.$route.name }}</span>
-    </nav>
     <div>
         <form class="filter-bar">
             <label for="search">Filtrer les produits : </label>
-            <input type="search" id="search" name="search" placeholder="Nom du produit" autocomplete="on" v-model="query" />
+            <input
+                type="search"
+                id="search"
+                name="search"
+                placeholder="Nom du produit"
+                autocomplete="on"
+                v-model="query"
+            />
         </form>
 
-
-        <div class="products-container" >
+        <div class="products-container">
             <div
                 v-for="(prod, index) in filteredProducts"
                 :key="index"
                 class="product-card"
-                :class= "[{disabledProduct : rupture}, 'product-card']"
+                :class="[{'rupture': prod.stock < prod.moq}, 'product-card']"
             >
                 <img :src="prod.image" :alt="prod.titre" class="img-produit" />
                 <div class="product-details">
@@ -29,7 +31,6 @@
                     <button
                         v-if="currentUser"
                         @click="ajouterAuPanier(prod)"
-                        
                         :disabled="prod.stock < prod.moq"
                     >
                         Ajouter au panier 🛒
@@ -43,7 +44,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 </template>
 
@@ -72,18 +72,15 @@ export default {
         currentUser() {
             return this.$store.state.currentUser !== null;
         },
-        disabledProduct(){
-            return this.prod.stock < this.prod.moq
-        }
     },
     methods: {
         redirectToDescriptionPage(product) {
             this.$store.commit("setSelectedProduct", product);
             this.$router.push({ name: "description-product" });
         },
+
         ajouterAuPanier(produit) {
             this.$store.commit("ajouterAuPanier", produit);
-            alert("Produit ajouté au panier !");
         },
     },
 };
@@ -91,7 +88,27 @@ export default {
 
 <style scoped>
 .rupture {
-    background-color: red !;
+    opacity: 0.6; 
+    color: #666; 
+    position: relative;
+}
+
+.rupture::after {
+    content: "Rupture de stock"; 
+    background-color: #8a2121; 
+    color: #fff; 
+    position: absolute;
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    padding: 6px 10px; 
+    border-radius: 4px; 
+    font-size: 2rem; 
+    line-height: 1; 
+}
+
+.product-card.rupture {
+    background-color: #eee; 
 }
 
 .product-form {
@@ -174,6 +191,4 @@ export default {
     background-color: #44b9da;
     color: #ffffff;
 }
-
 </style>
-

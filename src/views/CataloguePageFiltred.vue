@@ -14,7 +14,9 @@
         </form>
 
         <div class="products-container">
-            <div v-for="(prod, index) in filteredProducts" :key="index" class="product-card">
+            <div v-for="(prod, index) in filteredProducts" :key="index" 
+            :class="[{'rupture': prod.stock < prod.moq}, 'product-card']"
+            >
                 <img :src="prod.image" :alt="prod.titre" class="img-produit" />
                 <div class="product-details">
                     <h4>{{ prod.titre }}</h4>
@@ -86,7 +88,6 @@ export default {
     methods: {
         ajouterAuPanier(produit) {
             this.$store.commit("ajouterAuPanier", produit);
-            alert("Produit ajouté au panier !");
         },
         redirectToDescriptionPage(product) {
             this.$store.commit("setSelectedProduct", product);
@@ -100,13 +101,36 @@ export default {
     },
     created() {
         this.categoryId = parseInt(this.$route.params.categoryId);
-        console.log("categoryId:", this.categoryId);
-        console.log("categoryProducts:", this.categoryProducts);
     },
 };
 </script>
 
 <style scoped>
+
+.rupture {
+    opacity: 0.6; 
+    color: #666; 
+    position: relative;
+}
+
+.rupture::after {
+    content: "Rupture de stock"; 
+    background-color: #8a2121; 
+    color: #fff; 
+    position: absolute;
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    padding: 6px 10px; 
+    border-radius: 4px; 
+    font-size: 2rem; 
+    line-height: 1; 
+}
+
+.product-card.rupture {
+    background-color: #eee; 
+}
+
 h1 {
     text-align: center;
     margin-bottom: 20px;

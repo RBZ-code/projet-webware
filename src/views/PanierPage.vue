@@ -111,7 +111,15 @@ export default {
             }
         },
         panierUser() {
-            return this.$store.state.currentUser.panier.length > 0;
+            if (
+                this.$store.state.currentUser &&
+                this.$store.state.currentUser.panier
+            ) {
+                return this.$store.state.currentUser.panier.length > 0;
+            } else {
+                return 0;
+            }
+            
         },
     },
     methods: {

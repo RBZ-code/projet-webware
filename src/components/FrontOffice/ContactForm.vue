@@ -70,9 +70,9 @@ export default {
             this.localVisitor.message = "";
         },
         addToLocalStorage(visitor) {
-            let currentData = JSON.parse(localStorage.getItem("visitor")) || [];
+            let currentData = JSON.parse(localStorage.getItem("prospects")) || [];
             currentData.push(visitor);
-            localStorage.setItem("visitor", JSON.stringify(currentData));
+            localStorage.setItem("prospects", JSON.stringify(currentData));
         },
     },
 
