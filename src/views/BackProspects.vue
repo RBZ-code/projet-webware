@@ -27,12 +27,19 @@ export default {
     },
     data() {
         return {
+            prospects: [],
         }
     },
-    computed: {
-        prospects() {
-            return this.$store.state.prospects;
+   watch: {
+    "$store.state.prospects": {
+        handler(newProspects) {
+            this.prospects = newProspects;
         },
+        deep: true 
+    }
+},
+    created() {
+        this.prospects = this.$store.state.prospects;
     },
 }
 
