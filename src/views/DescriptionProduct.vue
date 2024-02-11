@@ -92,8 +92,8 @@ export default {
        
     },
     watch: {
-        "$route.params.descriptionId"(newDescriptionId) {
-            this.descriptionId = parseInt(newDescriptionId);
+        '$route.params.productId'(newProductId) {
+            this.descriptionId = parseInt(newProductId);
         },
     },
     created() {

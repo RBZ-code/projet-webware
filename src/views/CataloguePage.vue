@@ -17,7 +17,7 @@
                 v-for="(prod, index) in filteredProducts"
                 :key="index"
                 class="product-card"
-                :class="[{'rupture': prod.stock < prod.moq}, 'product-card']"
+                :class="[{ rupture: prod.stock < prod.moq }, 'product-card']"
             >
                 <img :src="prod.image" :alt="prod.titre" class="img-produit" />
                 <div class="product-details">
@@ -35,10 +35,7 @@
                     >
                         Ajouter au panier 🛒
                     </button>
-                    <router-link
-                        class="listing-link"
-                        :to="'/product-page/' + prod.id"
-                    >
+                    <router-link :to="'/product-page/' + prod.id">
                         <button class="details-btn">Voir Détails</button>
                     </router-link>
                 </div>
@@ -74,10 +71,6 @@ export default {
         },
     },
     methods: {
-        redirectToDescriptionPage(product) {
-            this.$store.commit("setSelectedProduct", product);
-            this.$router.push({ name: "description-product" });
-        },
 
         ajouterAuPanier(produit) {
             this.$store.commit("ajouterAuPanier", produit);
@@ -88,27 +81,27 @@ export default {
 
 <style scoped>
 .rupture {
-    opacity: 0.6; 
-    color: #666; 
+    opacity: 0.6;
+    color: #666;
     position: relative;
 }
 
 .rupture::after {
-    content: "Rupture de stock"; 
-    background-color: #8a2121; 
-    color: #fff; 
+    content: "Rupture de stock";
+    background-color: #8a2121;
+    color: #fff;
     position: absolute;
-    top: 50%; 
-    left: 50%; 
-    transform: translate(-50%, -50%); 
-    padding: 6px 10px; 
-    border-radius: 4px; 
-    font-size: 2rem; 
-    line-height: 1; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 2rem;
+    line-height: 1;
 }
 
 .product-card.rupture {
-    background-color: #eee; 
+    background-color: #eee;
 }
 
 .product-form {

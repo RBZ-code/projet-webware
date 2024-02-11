@@ -1,14 +1,24 @@
 <template>
     <div class="carousel">
-        <div class="carousel-images" :style="{ transform: `translateX(-${currentIndex * 100}%)` }">
+        <div
+            class="carousel-images"
+            :style="{ transform: `translateX(-${currentIndex * 100}%)` }"
+        >
             <div
                 v-for="(product, index) in products"
                 :key="index"
                 class="carousel-slide"
                 :class="{ active: index === currentIndex }"
             >
-                <img :src="product.image" :alt="product.title" @click="voirProduit(product.id)" />
-                <button class="voir-produit-btn" @click="voirProduit(product.id)">Voir produit</button>
+                <div class="image-container">
+                    <img
+                        :src="product.image"
+                        :alt="product.title"
+                    />
+                </div>
+                <router-link :to="'/product-page/' + product.id">
+                    <button class="voir-produit-btn" @click="scrollToTop" >Voir produit</button>
+                </router-link>
             </div>
         </div>
         <button class="carousel-control prev" @click="prevSlide">&lt;</button>
@@ -31,25 +41,31 @@ export default {
     },
     methods: {
         prevSlide() {
-            this.currentIndex = (this.currentIndex - 1 + this.products.length) % this.products.length;
+            this.currentIndex =
+                (this.currentIndex - 1 + this.products.length) %
+                this.products.length;
         },
         nextSlide() {
             this.currentIndex = (this.currentIndex + 1) % this.products.length;
         },
-        voirProduit(productId) {
-            this.$router.push({ name: "description-product", params: { productId } });
-        },
-       
+         scrollToTop() {
+            window.scrollTo(0, 0);
+        }
     },
 };
 </script>
 
 <style scoped>
+.image-container img {
+    width: 100%;
+    height: 100%;
+}
+
 .carousel {
     margin: 5rem;
     position: relative;
     width: 50%;
-    height: 400px; 
+    height: 400px;
     overflow: hidden;
 }
 
